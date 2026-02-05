@@ -4,14 +4,19 @@ const express = require("express");
 
 // Cria a aplicação Express (o servidor)
 const app = express();
+
 // Middleware que permite o servidor entender JSON
 // Sem isso, req.body vem vazio em requisições POST
 app.use(express.json());
 
-// Importa rotas
+// ---------------------------
+// IMPORTA ROTAS
+// ---------------------------
 const authRoutes = require("./routes/auth.routes");
+
 // Usa rotas
 app.use("/auth", authRoutes);
+
 // ---------------------------
 // ROTA GET /
 // ---------------------------
@@ -19,6 +24,7 @@ app.use("/auth", authRoutes);
 app.get("/", (req, res) => {
   res.send("Api Netflix funcionando");
 });
+
 // ---------------------------
 // INICIAR O SERVIDOR
 // ---------------------------
