@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Netflix backend API",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "studio": "prisma studio --config=prisma/prisma.config.ts",
+    "prisma:generate": "prisma generate --config=prisma/prisma.config.ts",
+    "prisma:migrate": "prisma migrate dev --config=prisma/prisma.config.ts"
+  },
+  "keywords": [],
+  "author": "Weslley de Castro Santos",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/adapter-mariadb": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "express": "^5.2.1",
+    "mariadb": "^3.4.5"
+  },
+  "devDependencies": {
+    "@prisma/config": "^7.3.0",
+    "dotenv": "^17.2.3",
+    "nodemon": "^3.1.11",
+    "prisma": "^7.3.0"
+  }
+}
