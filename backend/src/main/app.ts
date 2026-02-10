@@ -1,14 +1,12 @@
+import "dotenv/config";
 import express from "express";
+import router from "./route";
 
 const app = express();
 
-// middlewares
 app.use(express.json());
 
-// rota teste
-app.get("/health", (_req, res) => {
-  return res.status(200).json({ status: "ok" });
-});
+app.use(router);
 
 const PORT = process.env.PORT || 3000;
 
