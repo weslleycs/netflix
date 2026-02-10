@@ -1,15 +1,16 @@
-import { PrismaClient } from "@prisma/client";
+import PrismaService from "@infrastructure/services/prisma.service";
 import { UserType } from "@domain/types/user.type";
 
 class UserRepository {
-  private readonly prisma: PrismaClient;
+  private readonly prismaService: PrismaService;
 
-  constructor(prisma: PrismaClient) {
-    this.prisma = prisma;
+  constructor(prismaService: PrismaService) {
+    this.prismaService = prismaService;
   }
 
   async findAll(): Promise<UserType[]> {
-    return this.prisma.user.findMany({
+    const prisma = this.prismaService.getConnection();
+    return prisma.user.findMany({
       select: {
         id: true,
         name: true,

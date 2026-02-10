@@ -1,12 +1,14 @@
 import "dotenv/config";
 import express from "express";
-import router from "./route";
+import PrismaService from "@infrastructure/services/prisma.service";
+import { createRouter } from "./route";
 
 const app = express();
+const prismaService = new PrismaService();
 
 app.use(express.json());
 
-app.use(router);
+app.use(createRouter(prismaService));
 
 const PORT = process.env.PORT || 3000;
 

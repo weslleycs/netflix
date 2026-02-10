@@ -9,6 +9,7 @@ class GetUserUseCase {
   }
 
   async execute(): Promise<UserType[]> {
+
     return this.userRepository.findAll();
   }
 }
