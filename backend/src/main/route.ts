@@ -19,5 +19,9 @@ export function createRouter(prismaService: PrismaService) {
     expressRouteAdapter(req, res, registertUserFactory(prismaService)),
   );
 
+  router.post("/login", (req, res) =>
+    expressRouteAdapter(req, res, loginUserFactory(prismaService)),
+  );
+
   return router;
 }

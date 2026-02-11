@@ -22,18 +22,18 @@ class AuthenticationRepository {
     return true
   }
 
-  // async login(input: loginInput): Promise<{ email: string}> {
-  //   const prisma = this.prismaService.getConnection();
-  //   const user = await prisma.user.findUnique({
-  //     where: { email: input.email },
-  //   });
-  //   if (!user) {
-  //    throw new Error("Usuário não encontrado");
-  //   }
-  //   return  {
-  //     email: user.email,
-  //   }; 
-  // }
+  async login(input: loginInput): Promise<{ email: string}> {
+    const prisma = this.prismaService.getConnection();
+    const user = await prisma.user.findUnique({
+      where: { email: input.email },
+    });
+    if (!user) {
+     throw new Error("Usuário não encontrado");
+    }
+    return  {
+      email: user.email,
+    }; 
+  }
 }
 
 export default AuthenticationRepository;
