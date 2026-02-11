@@ -1,6 +1,6 @@
 import PrismaService from "@infrastructure/services/prisma.service";
-import { loginInput, registerInput } from "@domain/types/authentication.type";
-import { UserType } from "@domain/types/user.type";
+import {  registerInput } from "@domain/types/authentication.type";
+
 
 
 class AuthenticationRepository {
