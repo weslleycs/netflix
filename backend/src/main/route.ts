@@ -2,7 +2,8 @@ import { Router } from "express";
 import { getUserFactory } from "@infrastructure/factories/getUser.factory";
 import expressRouteAdapter from "@infrastructure/adapters/expressRoute.adapter";
 import PrismaService from "@infrastructure/services/prisma.service";
-import { registertUserFactory } from "@infrastructure/factories/registerUser.factory";
+import { registerUserFactory } from "@infrastructure/factories/authentication/registerUser.factory";
+import { loginFactory } from "@infrastructure/factories/authentication/login.factory";
 
 export function createRouter(prismaService: PrismaService) {
   const router = Router();
@@ -16,11 +17,11 @@ export function createRouter(prismaService: PrismaService) {
   );
 
   router.post("/register", (req, res) =>
-    expressRouteAdapter(req, res, registertUserFactory(prismaService)),
+    expressRouteAdapter(req, res, registerUserFactory(prismaService)),
   );
 
   router.post("/login", (req, res) =>
-    expressRouteAdapter(req, res, loginUserFactory(prismaService)),
+    expressRouteAdapter(req, res, loginFactory(prismaService)),
   );
 
   return router;

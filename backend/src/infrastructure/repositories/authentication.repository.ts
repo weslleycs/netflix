@@ -22,17 +22,15 @@ class AuthenticationRepository {
     return true
   }
 
-  async login(input: loginInput): Promise<{ email: string}> {
+  async login(email: string): Promise<string> {
     const prisma = this.prismaService.getConnection();
     const user = await prisma.user.findUnique({
-      where: { email: input.email },
+      where: { email: email },
     });
     if (!user) {
-     throw new Error("Usuário não encontrado");
+      throw new Error("Usuário não encontrado");
     }
-    return  {
-      email: user.email,
-    }; 
+    return user.password; 
   }
 }
 

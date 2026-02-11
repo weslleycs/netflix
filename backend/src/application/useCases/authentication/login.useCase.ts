@@ -10,18 +10,13 @@ class LoginUseCase {
   }
 
   async execute(input: loginInput): Promise<boolean> {
-    
-    const saltRounds = 10;
-    const cryptPassword = await bcrypt.hash(
+    const passwordDataBase = await this.authenticationRepository.login(input.email);
+    const isCorrectPassword = await bcrypt.compare(
       input.password,
-      saltRounds
+      passwordDataBase
     );
-    const newUser = {
-      ...input,
-      password: cryptPassword,
-    };
-    return this.authenticationRepository.register(newUser);
+    return isCorrectPassword
   }
 }
 
-export default RegisterUserUseCase;
+export default LoginUseCase;

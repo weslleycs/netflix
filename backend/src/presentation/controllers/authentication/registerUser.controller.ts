@@ -1,5 +1,5 @@
 import { controllerInputType, httpResponseType } from "@domain/types/controller.type";
-import RegisterUserUseCase from "@application/useCases/registerUser.useCase";
+import RegisterUserUseCase from "@application/useCases/authentication/registerUser.useCase";
 import { registerInput } from "@domain/types/authentication.type";
 
 
