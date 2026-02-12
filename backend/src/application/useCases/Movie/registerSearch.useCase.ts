@@ -1,15 +1,16 @@
-import { MovieSearchOutput, MovieSerchInput } from "@domain/types/movie.type";
+import { MovieSearchInput, MovieSearchOutput} from "@domain/types/movie.type";
+import MovieRepository from "@infrastructure/repositories/movie.repository";
 
 
 class MovieSearchUseCase {
-  private readonly movieSearchRepository: MovieSearchRepository;
+  private readonly movieRepository: MovieRepository;
 
-  constructor(movieSearchRepository: MovieSearchRepository) {
-    this.movieSearchRepository = movieSearchRepository;
+  constructor(movieRepository: MovieRepository) {
+    this.movieRepository = movieRepository;
   }
 
-  async execute(input: MovieSerchInput): Promise<MovieSearchOutput[]> {
-    return this.movieSearchRepository.search(input);
+  async execute(input: MovieSearchInput): Promise<MovieSearchOutput[]> {
+    return this.movieRepository.serchByTitle(input);
   }
 }
 

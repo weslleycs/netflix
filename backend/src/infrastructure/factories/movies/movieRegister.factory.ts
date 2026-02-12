@@ -1,7 +1,8 @@
 import PrismaService from "@infrastructure/services/prisma.service";
 import RegisterMovieUseCase from "@application/useCases/Movie/registerMovie.useCase";
 import MovieRepository from "@infrastructure/repositories/movie.repository";
-import MovieController from "@presentation/controllers/Movies/registerMovie.controller";
+import MovieController from "@presentation/controllers/Movies/movieRegister.controller";
+
 
 
 export function movieRegisterFactory(prismaService: PrismaService): MovieController {

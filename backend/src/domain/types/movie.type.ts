@@ -15,7 +15,7 @@ export type MovieSearchOutput = {
   title: string;
   description: string;
   imageUrl: string;
-  genre:string
+  genre:string;
 };
 
 

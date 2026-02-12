@@ -6,6 +6,7 @@ import { registerUserFactory } from "@infrastructure/factories/authentication/re
 import { loginFactory } from "@infrastructure/factories/authentication/login.factory";
 import { movieRegisterFactory } from "@infrastructure/factories/movies/movieRegister.factory";
 import { movieSearchFactory } from "@infrastructure/factories/movies/movieSearch.factory";
+import { moviesListFactory } from "@infrastructure/factories/movies/moviesList.factory";
 
 
 export function createRouter(prismaService: PrismaService) {
@@ -31,8 +32,12 @@ export function createRouter(prismaService: PrismaService) {
     expressRouteAdapter(req, res, movieRegisterFactory(prismaService)),
   );
 
-   router.get("/movie", (req, res) =>
+   router.get("/movie/Search", (req, res) =>
     expressRouteAdapter(req, res, movieSearchFactory(prismaService)),
+  );
+
+  router.get("/movies", (req, res) =>
+    expressRouteAdapter(req, res, moviesListFactory(prismaService)),
   );
 
 

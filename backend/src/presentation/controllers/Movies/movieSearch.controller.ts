@@ -11,7 +11,7 @@ class MovieSearchController {
     this.movieSearchUseCase = movieSearchUseCase;
   }
 
-  async run(input: controllerInputType<object, MovieSearchInput, object, object>): Promise<httpResponseType<MovieSearchOutput[]>> {
+  async run(input: controllerInputType<object,  object,MovieSearchInput, object>): Promise<httpResponseType<MovieSearchOutput[]>> {
     const movies = await this.movieSearchUseCase.execute(input.query);
 
     return {

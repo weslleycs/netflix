@@ -1,4 +1,4 @@
-import { CreateMovieInput } from "@domain/types/movie.type";
+import { CreateMovieInput, MovieSearchInput, MovieSearchOutput } from "@domain/types/movie.type";
 import PrismaService from "@infrastructure/services/prisma.service";
 
 
@@ -22,6 +22,22 @@ class MovieRepository {
     })
     return true
   }
+
+  async serchByTitle(input: MovieSearchInput): Promise<MovieSearchOutput[]> {
+    const prisma = this.prismaService.getConnection();
+    const movies= await prisma.movie.findMany({
+      where: {
+        title: input.title
+      }
+    })
+    return movies
+  }
+
+  async listAll(): Promise<MovieSearchOutput[]> {
+  const prisma = this.prismaService.getConnection();
+  return prisma.movie.findMany();
+}
+
 }
 
 export default MovieRepository;
