@@ -4,7 +4,9 @@ import expressRouteAdapter from "@infrastructure/adapters/expressRoute.adapter";
 import PrismaService from "@infrastructure/services/prisma.service";
 import { registerUserFactory } from "@infrastructure/factories/authentication/registerUser.factory";
 import { loginFactory } from "@infrastructure/factories/authentication/login.factory";
-import { movieFactory } from "@infrastructure/factories/movies/registerMovie.factory";
+import { movieRegisterFactory } from "@infrastructure/factories/movies/movieRegister.factory";
+import { movieSearchFactory } from "@infrastructure/factories/movies/movieSearch.factory";
+
 
 export function createRouter(prismaService: PrismaService) {
   const router = Router();
@@ -17,17 +19,22 @@ export function createRouter(prismaService: PrismaService) {
     expressRouteAdapter(req, res, getUserFactory(prismaService)),
   );
 
-  router.post("/register", (req, res) =>
+  router.post("/auth/register", (req, res) =>
     expressRouteAdapter(req, res, registerUserFactory(prismaService)),
   );
 
-  router.post("/login", (req, res) =>
+  router.post("/auth/login", (req, res) =>
     expressRouteAdapter(req, res, loginFactory(prismaService)),
   );
 
-   router.post("/movies", (req, res) =>
-    expressRouteAdapter(req, res, movieFactory(prismaService)),
+   router.post("/movie/register", (req, res) =>
+    expressRouteAdapter(req, res, movieRegisterFactory(prismaService)),
   );
+
+   router.get("/movie", (req, res) =>
+    expressRouteAdapter(req, res, movieSearchFactory(prismaService)),
+  );
+
 
   return router;
 }
