@@ -20,14 +20,34 @@ model User {
 }
 
 model Movie {
-  id          Int    @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
   description String
   imageUrl    String
-  genre       String
+  genre       GenreMovie
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("movies")
+}
+
+enum GenreMovie {
+  ACTION
+  ADVENTURE
+  COMEDY
+  DRAMA
+  HORROR
+  THRILLER
+  ROMANCE
+  SCIFI
+  FANTASY
+  ANIMATION
+  DOCUMENTARY
+  CRIME
+  MYSTERY
+  FAMILY
+  BIOGRAPHY
+  WAR
+  MUSICAL
 }

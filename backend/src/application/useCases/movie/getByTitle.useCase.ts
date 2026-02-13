@@ -2,7 +2,7 @@ import { MovieSearchInput, MovieSearchOutput} from "@domain/types/movie.type";
 import MovieRepository from "@infrastructure/repositories/movie.repository";
 
 
-class MovieSearchUseCase {
+class MovieGetByTitleUseCase {
   private readonly movieRepository: MovieRepository;
 
   constructor(movieRepository: MovieRepository) {
@@ -14,4 +14,4 @@ class MovieSearchUseCase {
   }
 }
 
-export default MovieSearchUseCase;
+export default MovieGetByTitleUseCase;

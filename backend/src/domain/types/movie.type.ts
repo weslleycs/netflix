@@ -18,6 +18,26 @@ export type MovieSearchOutput = {
   genre:string;
 };
 
+export type GetById = {
+  id: number;
+};
+
+export type UpdaterMovieBody = {
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+  genre?:string
+};
+
+export type UpdaterMovie = {
+  id: number;
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+  genre?:string
+};
+
+
 
 
 

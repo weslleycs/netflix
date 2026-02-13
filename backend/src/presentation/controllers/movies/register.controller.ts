@@ -1,4 +1,5 @@
-import RegisterMovieUseCase from "@application/useCases/Movie/registerMovie.useCase";
+
+import RegisterMovieUseCase from "@application/useCases/movie/register.useCase";
 import { controllerInputType, httpResponseType } from "@domain/types/controller.type";
 import { CreateMovieInput } from "@domain/types/movie.type";
 
