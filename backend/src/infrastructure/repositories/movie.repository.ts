@@ -39,18 +39,24 @@ class MovieRepository {
 }
 
 async getById(input: GetById): Promise<MovieSearchOutput> {
-  const prisma = this.prismaService.getConnection();
-  const movie = await prisma.movie.findUnique({
-    where: {
-      id: Number(input.id),
-    },
-  });
+  try {
+    const prisma = this.prismaService.getConnection();
+    const movie = await prisma.movie.findUnique({
+      where: {
+        id: Number(input.id),
+      },
+    });
 
-  if (!movie) {
-    throw new AppError(ErrorCode.NOT_FOUND, ErrorMessage.NOT_FOUND);
+    if (!movie) {
+      throw new AppError(ErrorCode.NOT_FOUND, ErrorMessage.NOT_FOUND);
+    }
+
+    return movie;
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+    throw new AppError(ErrorCode.INTERNAL, message);
   }
-
-  return movie;
 }
 
 async updater(data: UpdaterMovie): Promise<boolean > {
