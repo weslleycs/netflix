@@ -55,7 +55,10 @@ async updater(data: UpdaterMovie): Promise<boolean > {
   const prisma= this.prismaService.getConnection();
   const { id, ...updaterData } = data
   await prisma.movie.update({
-    data: updaterData,
+    data: {
+      ...updaterData,
+      updatedAt: new Date()
+    },
     where:{
       id: Number(id)
     }

@@ -1,8 +1,10 @@
+import { GenreMovie } from "@prisma/client";
+
 export type CreateMovieInput = {
   title: string;
   description: string;
   imageUrl: string;
-  genre:string
+  genre:GenreMovie
 };
 
 export type MovieSearchInput = {
@@ -15,7 +17,7 @@ export type MovieSearchOutput = {
   title: string;
   description: string;
   imageUrl: string;
-  genre:string;
+  genre:GenreMovie;
 };
 
 export type GetById = {
@@ -26,7 +28,7 @@ export type UpdaterMovieBody = {
   title?: string;
   description?: string;
   imageUrl?: string;
-  genre?:string
+  genre?:GenreMovie
 };
 
 export type UpdaterMovie = {
@@ -34,7 +36,7 @@ export type UpdaterMovie = {
   title?: string;
   description?: string;
   imageUrl?: string;
-  genre?:string
+  genre?:GenreMovie
 };
 
 

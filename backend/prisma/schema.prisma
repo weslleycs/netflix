@@ -14,7 +14,7 @@ model User {
   password String
 
   createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
 
   @@map("users")
 }
@@ -26,8 +26,8 @@ model Movie {
   imageUrl    String
   genre       GenreMovie
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
 
   @@map("movies")
 }

@@ -11,8 +11,6 @@ export function createRouter(prismaService: PrismaService) {
   const router = Router();
 
   router.get("/ping", (_req, res) => {
-    console.log("aaaaa");
-    
     return res.status(200).json("pong");
   });
     router.get("/users", (req, res) =>
