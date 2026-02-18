@@ -1,6 +1,6 @@
 import { CreateMovieInput, GetById, MovieSearchInput, MovieSearchOutput, UpdaterMovie } from "@domain/types/movie.type";
 import PrismaService from "@infrastructure/services/prisma.service";
-
+import { AppError, ErrorCode, ErrorMessage } from "@shared/errors/AppError";
 
 
 class MovieRepository {
@@ -38,17 +38,19 @@ class MovieRepository {
   return await prisma.movie.findMany();
 }
 
-async getById(input: GetById): Promise<MovieSearchOutput > {
-  const prisma= this.prismaService.getConnection();
-  const movie= await prisma.movie.findUnique({
+async getById(input: GetById): Promise<MovieSearchOutput> {
+  const prisma = this.prismaService.getConnection();
+  const movie = await prisma.movie.findUnique({
     where: {
-        id: Number(input.id)
-      }
+      id: Number(input.id),
+    },
   });
+
   if (!movie) {
-      throw new Error("Usuário não encontrado");
-    }
-   return movie
+    throw new AppError(ErrorCode.NOT_FOUND, ErrorMessage.NOT_FOUND);
+  }
+
+  return movie;
 }
 
 async updater(data: UpdaterMovie): Promise<boolean > {

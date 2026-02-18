@@ -7,25 +7,24 @@ import { movieUpdaterFactory } from "@infrastructure/factories/movies/updater.fa
 import PrismaService from "@infrastructure/services/prisma.service";
 import { Router } from "express";
 
-export function movieRoutes(router: Router, prismaService: PrismaService){
-   router.post("/movie/register", (req, res) =>
+export function movieRoutes(router: Router, prismaService: PrismaService) {
+  router.post("/movie/register", (req, res) =>
     expressRouteAdapter(req, res, movieRegisterFactory(prismaService)),
   );
 
-   router.get("/movie/GetByTitle", (req, res) =>
+  router.get("/movie/GetByTitle", (req, res) =>
     expressRouteAdapter(req, res, movieGetByTitlleFactory(prismaService)),
   );
 
-   router.get("/movie", (req, res) =>
+  router.get("/movie", (req, res) =>
     expressRouteAdapter(req, res, moviesGetAllFactory(prismaService)),
   );
 
-   router.get("/movie/:id", (req, res) =>
+  router.get("/movie/:id", (req, res) =>
     expressRouteAdapter(req, res, movieGetByIdFactory(prismaService)),
   );
 
   router.put("/movie/:id", (req, res) =>
-  expressRouteAdapter(req, res, movieUpdaterFactory(prismaService)),
-);
-
+    expressRouteAdapter(req, res, movieUpdaterFactory(prismaService)),
+  );
 }
