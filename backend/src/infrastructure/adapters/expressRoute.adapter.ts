@@ -1,25 +1,29 @@
 import { Request, Response } from "express";
-import { controllerInputType } from "@domain/types/controller.type";
+import { AppError, ErrorCode, ErrorMessage } from "@shared/errors/AppError"; // ajuste o path
 
-interface IController {
-  run(input: controllerInputType): Promise<{ statusCode: number; data: unknown }>;
-}
-
-const expressRouteAdapter = async (
+export default async function expressRouteAdapter(
   req: Request,
   res: Response,
-  controller: IController,
-): Promise<Response> => {
-  const input: controllerInputType = {
-    headers: req.headers,
-    params: req.params,
-    query: req.query,
-    body: req.body,
-  };
+  controller: any
+) {
+  try {
+    const input = {
+      body: req.body,
+      params: req.params,
+      query: req.query,
+      headers: req.headers,
+    };
 
-  const { statusCode, data } = await controller.run(input);
+    const response = await controller.run(input);
 
-  return res.status(statusCode).json(data);
-};
-
-export default expressRouteAdapter;
+    return res.status(response.statusCode).json(response.data);
+  } catch (err: any) {
+    if (err instanceof AppError) {
+      return res.status(err.statusCode).json({ message: err.message });
+    }
+    console.error(err);
+    return res.status(ErrorCode.INTERNAL).json({
+      message: ErrorMessage.INTERNAL,
+    });
+  }
+}

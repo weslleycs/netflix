@@ -7,11 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   name     String
   email    String @unique
   password String
+  role     Role   @default(USER)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
@@ -51,3 +57,5 @@ enum GenreMovie {
   WAR
   MUSICAL
 }
+
+

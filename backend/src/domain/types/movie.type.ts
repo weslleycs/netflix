@@ -39,6 +39,9 @@ export type UpdaterMovie = {
   genre?:GenreMovie
 };
 
+export type MoviesListQuery = {
+  genre?: GenreMovie;
+};
 
 
 

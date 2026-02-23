@@ -14,8 +14,8 @@ class RegisterUserController {
     await this.registerUserUseCase.execute(input.body);
 
     return {
-      statusCode: 200,
-      data: "User Register",
+      statusCode: 201,
+      data: "User registered successfully",
     };
   }
 }

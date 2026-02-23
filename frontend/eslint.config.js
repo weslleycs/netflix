@@ -1,23 +1,26 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import RegisterForm from "../components/RegisterForm";
+import { useRegisterForm } from "../hooks/useRegister";
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-  },
-])
+export default function RegisterPage() {
+  const { register, errors, isSubmitting, onSubmit, successMessage } =
+    useRegisterForm();
+
+  return (
+    <div className="min-h-[70vh] flex items-center justify-center">
+      <div className="w-full max-w-md bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
+        <h1 className="text-3xl font-extrabold">Register</h1>
+        <p className="text-zinc-600 mt-1">Create your account.</p>
+
+        <div className="mt-6">
+          <RegisterForm
+            register={register}
+            errors={errors}
+            isSubmitting={isSubmitting}
+            onSubmit={onSubmit}
+            successMessage={successMessage}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

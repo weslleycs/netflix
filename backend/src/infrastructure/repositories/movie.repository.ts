@@ -1,4 +1,4 @@
-import { CreateMovieInput, GetById, MovieSearchInput, MovieSearchOutput, UpdaterMovie } from "@domain/types/movie.type";
+import { CreateMovieInput, GetById, MovieSearchInput, MovieSearchOutput, MoviesListQuery, UpdaterMovie } from "@domain/types/movie.type";
 import PrismaService from "@infrastructure/services/prisma.service";
 import { AppError, ErrorCode, ErrorMessage } from "@shared/errors/AppError";
 
@@ -33,10 +33,13 @@ class MovieRepository {
     return movies
   }
 
-  async listAll(): Promise<MovieSearchOutput[]> {
-  const prisma= this.prismaService.getConnection();
-  return await prisma.movie.findMany();
-}
+  async listAll(input?: MoviesListQuery): Promise<MovieSearchOutput[]> {
+    const prisma = this.prismaService.getConnection();
+
+    return prisma.movie.findMany({
+      where: input?.genre ? { genre: input.genre } : undefined,
+    });
+  }     
 
 async getById(input: GetById): Promise<MovieSearchOutput> {
   try {
