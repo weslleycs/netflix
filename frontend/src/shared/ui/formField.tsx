@@ -11,7 +11,7 @@ export function FormField({ label, error, id, ...props }: Props) {
 
   return (
     <div className="space-y-1">
-      <label htmlFor={inputId} className="text-sm font-medium text-zinc-700">
+      <label htmlFor={inputId} className="text-sm font-medium text-white-60">
         {label}
       </label>
 
