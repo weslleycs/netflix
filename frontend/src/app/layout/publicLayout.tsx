@@ -1,47 +1,42 @@
-import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 
 export default function PublicLayout() {
-  const { pathname } = useLocation();
-  const isHome = pathname === "/";
-
   return (
-    <div className="min-h-screen bg-white text-zinc-900">
-      <header className="flex items-center justify-between px-8 py-5 border-b border-zinc-200">
-        {isHome ? (
-          <span className="text-2xl font-extrabold text-red-600 tracking-wide">
-            ProjetoNetflix
-          </span>
-        ) : (
-          <NavLink to="/" className="text-2xl font-extrabold text-red-600 tracking-wide">
-            ProjetoNetflix
-          </NavLink>
-        )}
+    <div className="min-h-screen text-white bg-black">
+      {/* glow */}
+      <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,rgba(229,9,20,0.22),transparent_60%)]">
+        <div className="min-h-screen bg-black/60">
+          {/* HEADER */}
+          <header className="w-full">
+            <div className="flex items-center justify-between max-w-6xl px-6 py-6 mx-auto">
+              <NavLink to="/" className="text-2xl font-extrabold tracking-wide text-red-600">
+                WESLLEYFLIX
+              </NavLink>
 
-        <div className="flex items-center gap-3">
-          {pathname !== "/login" && (
-            <NavLink
-              to="/login"
-              className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition font-semibold"
-            >
-              Login
-            </NavLink>
-          )}
-          {pathname !== "/register" && (
-            <NavLink
-              to="/register"
-              className="px-4 py-2 rounded border border-zinc-300 hover:bg-zinc-50 transition"
-            >
-              Register
-            </NavLink>
-          )}
-        </div>
-      </header>
+              <div className="flex gap-3">
+                <NavLink
+                  to="/login"
+                  className="px-4 py-2 text-sm font-semibold transition bg-red-600 rounded hover:bg-red-700"
+                >
+                  Login
+                </NavLink>
 
-      <main className="px-6 py-12">
-        <div className="max-w-6xl mx-auto">
-          <Outlet />
+                <NavLink
+                  to="/register"
+                  className="px-4 py-2 text-sm font-semibold transition border rounded border-white/20 bg-white/5 hover:bg-white/10"
+                >
+                  Register
+                </NavLink>
+              </div>
+            </div>
+          </header>
+          <main>
+            <div className="max-w-6xl px-6 mx-auto">
+              <Outlet />
+            </div>
+          </main>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

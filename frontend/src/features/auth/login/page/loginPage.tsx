@@ -1,56 +1,57 @@
 import { NavLink } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
 
+import { Input } from "@/shared/ui/input";
+import { Button } from "@/shared/ui/button";
+
 export default function LoginPage() {
   const { register, errors, onSubmit, isPending, isError } = useLogin();
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center">
-      <div className="w-full max-w-md bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
+      <div className="w-full max-w-md p-6 bg-white border shadow-sm border-zinc-200 rounded-2xl">
         <h1 className="text-3xl font-extrabold">Login</h1>
-        <p className="text-zinc-600 mt-1">Enter your credentials to continue.</p>
+        <p className="mt-1 text-zinc-600">Enter your credentials to continue.</p>
 
-        <form onSubmit={onSubmit} className="space-y-4 mt-6">
+        <form onSubmit={onSubmit} className="mt-6 space-y-4">
           <div>
             <label className="text-sm text-zinc-700">Email</label>
-            <input
-              className="mt-1 w-full px-3 py-2 rounded border border-zinc-300 outline-none focus:border-red-600"
+            <Input
+              type="email"
               placeholder="you@email.com"
               {...register("email")}
             />
             {errors.email && (
-              <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
             )}
           </div>
 
           <div>
             <label className="text-sm text-zinc-700">Password</label>
-            <input
+            <Input
               type="password"
-              className="mt-1 w-full px-3 py-2 rounded border border-zinc-300 outline-none focus:border-red-600"
               placeholder="••••••••"
               {...register("password")}
             />
             {errors.password && (
-              <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>
+              <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
             )}
           </div>
 
           {isError && (
-            <p className="text-red-600 text-sm">Login failed. Check your credentials.</p>
+            <p className="text-sm text-red-600">
+              Login failed. Check your credentials.
+            </p>
           )}
 
-          <button
-            disabled={isPending}
-            className="w-full bg-red-600 text-white py-2 rounded font-semibold hover:bg-red-700 transition disabled:opacity-60"
-          >
+          <Button type="submit" disabled={isPending} className="w-full">
             {isPending ? "Signing in..." : "Login"}
-          </button>
+          </Button>
         </form>
 
-        <p className="text-sm text-zinc-600 mt-4">
+        <p className="mt-4 text-sm text-zinc-600">
           New here?{" "}
-          <NavLink className="text-red-600 font-semibold" to="/register">
+          <NavLink className="font-semibold text-red-600" to="/register">
             Create an account
           </NavLink>
         </p>

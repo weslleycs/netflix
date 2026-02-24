@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import PublicLayout from "../layout/publicLayout";
 import LandingPage from "@/features/public/landing/page/landingPage";
 import LoginPage from "@/features/auth/login/page/loginPage";
 import RegisterPage from "@/features/auth/register/page/registerPage";
 import ProtectedRoute from "./protectedRoute";
 import MoviesHomePage from "@/features/movies/home/page/moviesHomePage";
+import PublicLayout from "../layout/publicLayout";
 
 
 export const routes = [
