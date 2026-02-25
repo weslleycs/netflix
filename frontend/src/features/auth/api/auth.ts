@@ -4,7 +4,7 @@ import type { User } from "@/features/auth/store/auth.store";
 export type LoginDTO = { email: string; password: string };
 export type LoginResponse = { token: string; user: User };
 
-export async function login(dto: LoginDTO): Promise<LoginResponse> {
+export async function loginUser(dto: LoginDTO): Promise<LoginResponse> {
   const { data } = await http.post("/auth/login", dto);
   return data;
 }
