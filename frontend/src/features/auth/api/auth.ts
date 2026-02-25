@@ -9,7 +9,7 @@ export async function loginUser(dto: LoginDTO): Promise<LoginResponse> {
   return data;
 }
 
-export type RegisterDTO = { email: string; password: string };
+export type RegisterDTO = { name: string; email: string; password: string };
 
 export async function registerUser(dto: RegisterDTO): Promise<void> {
   await http.post("/auth/register", dto);

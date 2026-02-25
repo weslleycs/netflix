@@ -4,7 +4,7 @@ import { FormField } from "@/shared/ui/formField";
 import type { LoginFormValues } from "../schemas/loginSchema";
 
 type Props = {
-  login: UseFormRegister<LoginFormValues>;
+  register: UseFormRegister<LoginFormValues>;
   errors: FieldErrors<LoginFormValues>;
   isSubmitting: boolean;
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function LoginForm({
-  login,
+  register,
   errors,
   isSubmitting,
   onSubmit,
@@ -24,14 +24,14 @@ export default function LoginForm({
         label="Email"
         type="email"
         placeholder="you@email.com"
-        {...login("email")}
+        {...register("email")}
         error={errors.email?.message}
       />
       <FormField
         label="Password"
         type="password"
         placeholder="••••••••"
-        {...login("password")}
+        {...register("password")}
         error={errors.password?.message}
       />
       {errors.root?.message ? (

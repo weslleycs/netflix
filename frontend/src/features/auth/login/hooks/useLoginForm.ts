@@ -4,14 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { loginSchema, type LoginFormValues } from "../schemas/loginSchema";
 import { loginUser } from "../../api/auth";
-
+import { useAuthStore } from "../../store/auth.store";
 
 export function useLoginForm() {
   const navigate = useNavigate();
+  const setAuth = useAuthStore((s) => s.setAuth);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const {
-    login,
+    register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
@@ -20,39 +21,35 @@ export function useLoginForm() {
   });
 
   const onSubmit = handleSubmit(async (values) => {
-    const { ...payload } = values;
-
     try {
-      await loginUser(payload);
+      const { token, user } = await loginUser(values);
+      setAuth({ token, user });
 
-      setSuccessMessage("Conta criada com sucesso! Redirecionando...");
+      setSuccessMessage("Login realizado com sucesso! Redirecionando...");
 
       setTimeout(() => {
-        navigate("/login");
+        navigate("/");
       }, 1500);
-
     } catch (err: any) {
-        console.log(err?.response);
-        
       const status = err?.response?.status;
 
-      if (status === 409) {
-        setError("email", {
+      if (status === 401) {
+        setError("root", {
           type: "server",
-          message: "Email already in use",
+          message: "Email ou senha incorretos.",
         });
         return;
       }
 
       setError("root", {
         type: "server",
-        message: "Something went wrong. Please try again.",
+        message: "Algo deu errado. Tente novamente.",
       });
     }
   });
 
   return {
-    login,
+    register,
     errors,
     isSubmitting,
     onSubmit,
