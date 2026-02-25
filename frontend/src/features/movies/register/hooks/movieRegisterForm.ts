@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { loginSchema, type LoginFormValues } from "../schemas/loginSchema";
-import { loginUser } from "@/features/auth/api/auth";
-import { useAuthStore } from "@/features/auth/store/auth.store";
 
-export function useLoginForm() {
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { registerSchema, type RegisterFormValues } from "../schema/registerSchema";
+import { registerMovie } from "@/features/auth/api/movie";
+
+export function movieRegisterForm() {
   const navigate = useNavigate();
-  const setAuth = useAuthStore((s) => s.setAuth);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const {
@@ -16,34 +16,38 @@ export function useLoginForm() {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
   });
 
   const onSubmit = handleSubmit(async (values) => {
-    try {
-      const { token, user } = await loginUser(values);
-      setAuth({ token, user });
+    const { ...payload } = values;
 
-      setSuccessMessage("Login successful! Redirecting...");
+    try {
+      await registerMovie(payload);
+
+      setSuccessMessage("Movie created successfully! Redirecting...");
 
       setTimeout(() => {
-        navigate("/movies");
+        navigate("/movie");
       }, 1500);
+
     } catch (err: any) {
+        console.log(err?.response);
+        
       const status = err?.response?.status;
 
-      if (status === 401) {
-        setError("root", {
+      if (status === 409) {
+        setError("title", {
           type: "server",
-          message: "Email ou senha incorretos.",
+          message: "Movie already in use",
         });
         return;
       }
 
       setError("root", {
         type: "server",
-        message: "Algo deu errado. Tente novamente.",
+        message: "Something went wrong. Please try again.",
       });
     }
   });
