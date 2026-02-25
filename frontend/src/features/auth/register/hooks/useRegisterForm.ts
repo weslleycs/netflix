@@ -28,7 +28,7 @@ export function useRegisterForm() {
     try {
       await registerUser(payload);
 
-      setSuccessMessage("Conta criada com sucesso! Redirecionando...");
+      setSuccessMessage("Account created successfully! Redirecting...");
 
       setTimeout(() => {
         navigate("/login");
