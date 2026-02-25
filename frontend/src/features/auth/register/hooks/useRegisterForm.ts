@@ -7,7 +7,7 @@ import {
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../../api/auth";
+import { registerUser } from "@/features/auth/api/auth";
 
 export function useRegisterForm() {
   const navigate = useNavigate();

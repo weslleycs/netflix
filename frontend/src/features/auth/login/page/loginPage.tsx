@@ -1,5 +1,5 @@
 import { Card } from "@/shared/ui/card";
-import LoginForm from "../ components/loginForm";
+import LoginForm from "../components/loginForm";
 import { useLoginForm } from "../hooks/useLoginForm";
 
 export default function LoginPage() {
