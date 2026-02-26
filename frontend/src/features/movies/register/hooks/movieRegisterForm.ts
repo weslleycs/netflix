@@ -22,6 +22,7 @@ export function movieRegisterForm() {
   });
 
   const onSubmit = handleSubmit(async (values) => {
+
     const { ...payload } = values;
 
     try {
@@ -29,10 +30,8 @@ export function movieRegisterForm() {
 
       setSuccessMessage("Movie created successfully! Redirecting...");
 
-      setTimeout(() => {
-        navigate("/movie");
-      }, 1500);
-
+      navigate("/movies/listAll");
+      
     } catch (err: any) {
         console.log(err?.response);
         

@@ -5,8 +5,8 @@ import RegisterPage from "@/features/auth/register/page/registerPage";
 import ProtectedRoute from "./protectedRoute";
 import MoviesHomePage from "@/features/movies/home/page/moviesHomePage";
 import PublicLayout from "../layout/publicLayout";
-import CardContainer from "@/features/movies/home/components/cardContainerMovies";
 import MoviesListAllPage from "@/features/movies/home/page/listAllMoviesPage";
+import RegisterMoviePage from "@/features/movies/register/page/registerPage";
 
 
 export const routes = [
@@ -25,7 +25,8 @@ export const routes = [
     element: <ProtectedRoute />,
     children: [
       { index: true, element: <MoviesHomePage /> },
-      { path: "listAll", element: <MoviesListAllPage /> },
+      { path: "listAll", element: <MoviesListAllPage/> },
+      { path: "register", element: <RegisterMoviePage/> },
     ],
   },
 ];

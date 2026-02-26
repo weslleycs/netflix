@@ -1,8 +1,7 @@
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
-
 import { Button } from "@/shared/ui/button";
 import { FormField } from "@/shared/ui/formField";
-import type { RegisterFormValues } from "../schema/registerSchema";
+import { GENRES, type RegisterFormValues } from "../schema/registerSchema";
 
 type Props = {
   register: UseFormRegister<RegisterFormValues>;
@@ -23,6 +22,7 @@ export default function RegisterForm({
     <form onSubmit={onSubmit} className="space-y-4">
       <FormField
         label="Title"
+        type="text"
         placeholder="Your title"
         {...register("title")}
         error={errors.title?.message}
@@ -30,24 +30,24 @@ export default function RegisterForm({
 
       <FormField
         label="Description"
-        type="description"
-        placeholder="you@email.com"
+        type="text"
+        placeholder="Description"
         {...register("description")}
         error={errors.description?.message}
       />
 
       <FormField
         label="ImagenUrl"
-        type="image"
-        placeholder="••••••••"
+        type="text"
+        placeholder="URL"
         {...register("imageUrl")}
         error={errors.imageUrl?.message}
       />
 
       <FormField
-        label="genre"
-        type="genre"
-        placeholder="genre"
+        label="Genre"
+        as="select"
+        options={GENRES.map((genre) => ({ label: genre.label, value: genre.value }))}
         {...register("genre")}
         error={errors.genre?.message}
       />

@@ -30,9 +30,7 @@ export function useRegisterForm() {
 
       setSuccessMessage("Account created successfully! Redirecting...");
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
+      navigate("/login");
 
     } catch (err: any) {
         console.log(err?.response);

@@ -31,6 +31,10 @@ export default function MoviesHomePage() {
   navigate("/movies/listAll");
 }
 
+function handleRegister() {
+  navigate("/movies/register");
+}
+
   return (
     <div className="min-h-screen text-white bg-black">
       <div className="w-full max-w-6xl px-4 py-6 mx-auto space-y-6">
@@ -51,6 +55,12 @@ export default function MoviesHomePage() {
               className="px-4 py-2 transition rounded bg-zinc-800 hover:bg-zinc-700"
             >
               Listar todos
+          </button>
+          <button
+              onClick={handleRegister}
+              className="px-4 py-2 transition rounded bg-zinc-800 hover:bg-zinc-700"
+            >
+              Register
           </button>
         </div>
         <CardContainerCarouselMovies title="Lançamentos" movies={movies} />        
