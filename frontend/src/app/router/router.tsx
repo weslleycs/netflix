@@ -20,6 +20,6 @@ export const routes = [
   },
   {
     element: <ProtectedRoute />,
-    children: [{ path: "/app", element: <MoviesHomePage /> }],
+    children: [{ path: "/movies", element: <MoviesHomePage /> }],
   },
 ];

@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerSchema, type RegisterFormValues } from "../schema/registerSchema";
-import { registerMovie } from "@/features/auth/api/movie";
+import { registerMovie } from "../../api/movie";
+
 
 export function movieRegisterForm() {
   const navigate = useNavigate();

@@ -12,7 +12,7 @@ export default function MoviesHomePage() {
   }
 
   return (
-    <div className="text-white space-y-4">
+    <div className="space-y-4 text-white">
       <h1 className="text-3xl font-bold">Private Area</h1>
       <p className="text-zinc-400">
         Logged as: <span className="text-white">{user?.email ?? "Unknown"}</span>
@@ -20,7 +20,7 @@ export default function MoviesHomePage() {
 
       <button
         onClick={handleLogout}
-        className="bg-zinc-800 px-4 py-2 rounded hover:bg-zinc-700 transition"
+        className="px-4 py-2 transition rounded bg-zinc-800 hover:bg-zinc-700"
       >
         Logout
       </button>

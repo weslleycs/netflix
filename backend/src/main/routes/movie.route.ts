@@ -12,7 +12,7 @@ import { Router } from "express";
 
 export function movieRoutes(router: Router, prismaService: PrismaService) {
 
-  router.post("/movie/register", authMiddleware, adminOnly, (req, res) =>
+  router.post("/movie/register", authMiddleware, (req, res) =>
     expressRouteAdapter(req, res, movieRegisterFactory(prismaService)),
   );
 
