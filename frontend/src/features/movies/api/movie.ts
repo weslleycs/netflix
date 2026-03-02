@@ -19,3 +19,10 @@ export async function getMovies(): Promise<Movie[]> {
   const res = await http.get("/movie");
   return res.data;
 }
+
+export async function getMoviesByTitle(title: string) {
+  const { data } = await http.get("/move/title", {
+    params: { title }, 
+  });
+  return data;
+}

@@ -37,7 +37,7 @@ export default function AppHeader() {
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     if (!search.trim()) return;
-    navigate(`/movies/listAll?q=${search}`);
+    navigate(`/movies/listAll?title=${search}`);
   }
 
   function handleLogout() {

@@ -11,8 +11,8 @@ class MovieGetByTitleController {
     this.movieGetByTitleUseCase = movieGetByTitleUseCase;
   }
 
-  async run(input: controllerInputType<object,  object,MovieSearchInput, object>): Promise<httpResponseType<MovieSearchOutput[]>> {
-    const movies = await this.movieGetByTitleUseCase.execute(input.query);
+  async run(input: controllerInputType<object,  MovieSearchInput,object, object>): Promise<httpResponseType<MovieSearchOutput[]>> {
+    const movies = await this.movieGetByTitleUseCase.execute(input.params);
 
     return {
       statusCode: 200,

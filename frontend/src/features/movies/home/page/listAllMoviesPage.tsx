@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
-import { getMovies } from "@/features/movies/api/movie";
 import CardContainer from "@/features/movies/home/components/cardContainerMovies";
 import AppHeader from "@/features/movies/home/components/appHeader";
 import type { Movie } from "../schema/movie";
+import { getMovies, getMoviesByTitle } from "@/features/movies/api/movie";
 
 const PAGE_SIZE = 10;
 
@@ -42,29 +41,32 @@ function movieHasGenre(movie: any, genre: string) {
 export default function MoviesListAllPage() {
   const [params] = useSearchParams();
   const genre = params.get("genre"); 
-  const q = params.get("q"); 
-
+  const title = params.get("title"); 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    async function load() {
-      setIsLoading(true);
-      try {
-        const data = await getMovies();
-        setMovies(data);
-      } finally {
-        setIsLoading(false);
-      }
+useEffect(() => {
+  async function load() {
+    setIsLoading(true);
+    try {
+      const data = title?.trim()
+        ? await getMoviesByTitle(title.trim())
+        : await getMovies();
+
+      setMovies(data);
+    } finally {
+      setIsLoading(false);
     }
-    load();
-  }, []);
+  }
+
+  load();
+}, [title]);
 
 
   useEffect(() => {
     setPage(1);
-  }, [genre, q]);
+  }, [genre, title]);
 
   const filtered = useMemo(() => {
     let list: Movie[] = movies;
@@ -75,8 +77,8 @@ export default function MoviesListAllPage() {
     }
 
    
-    if (q) {
-      const nq = normalize(q);
+    if (title) {
+      const nq = normalize(title);
       list = list.filter((m) => {
         const hay = normalize(`${m.title} ${m.description ?? ""}`);
         return hay.includes(nq);
@@ -84,7 +86,7 @@ export default function MoviesListAllPage() {
     }
 
     return list;
-  }, [movies, genre, q]);
+  }, [movies, genre, title]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const safePage = Math.min(Math.max(page, 1), totalPages);
@@ -96,8 +98,8 @@ export default function MoviesListAllPage() {
 
   const pageTitle = genre
     ? `Movies • ${genre}`
-    : q
-    ? `Results • "${q}"`
+    : title
+    ? `Results • "${title}"`
     : "All Movies";
 
   return (
