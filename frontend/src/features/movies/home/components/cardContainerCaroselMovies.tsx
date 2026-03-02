@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import type { Movie } from "../movie.type";
 import CardMovie from "./cardMovie";
+import type { Movie } from "../schema/movie";
 
 type Props = {
   title?: string;
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function CardContainerCarouselMovies({
-  title = "Lançamentos",
+  title = "New Releases",
   movies,
 }: Props) {
   const scrollerRef = useRef<HTMLUListElement | null>(null);
@@ -17,7 +17,7 @@ export default function CardContainerCarouselMovies({
     const el = scrollerRef.current;
     if (!el) return;
 
-    const amount = 320 * 4; // ~4 cards
+    const amount = 320 * 4; 
     el.scrollBy({
       left: direction === "next" ? amount : -amount,
       behavior: "smooth",
@@ -29,7 +29,7 @@ export default function CardContainerCarouselMovies({
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold">{title}</h2>
-          <span className="text-sm text-zinc-400">{movies.length} itens</span>
+          <span className="text-sm text-zinc-400">{movies.length} items</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ export default function CardContainerCarouselMovies({
 
       <div className="mt-4">
         {movies.length === 0 ? (
-          <p className="text-zinc-400">Nenhum filme encontrado.</p>
+          <p className="text-zinc-400">No movies found.</p>
         ) : (
           <ul
             ref={scrollerRef}

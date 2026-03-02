@@ -1,5 +1,6 @@
 import { http } from "@/app/api/http";
-import type { Movie } from "../home/movie.type";
+import type { Movie } from "../home/schema/movie";
+
 
 export type RegisterDTO = { 
     title: string;

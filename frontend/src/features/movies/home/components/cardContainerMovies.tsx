@@ -1,4 +1,5 @@
-import type { Movie } from "../movie.type";
+
+import type { Movie } from "../schema/movie";
 import CardMovie from "./cardMovie";
 
 type Props = {
@@ -11,12 +12,12 @@ export default function CardContainer({ title = "Movies", movies }: Props) {
     <section className="p-6 border rounded-2xl border-zinc-800 bg-zinc-950/60">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">{title}</h2>
-        <span className="text-sm text-zinc-400">{movies.length} itens</span>
+        <span className="text-sm text-zinc-400">{movies.length} items</span>
       </div>
 
       <div className="mt-4">
         {movies.length === 0 ? (
-          <p className="text-zinc-400">Nenhum filme encontrado.</p>
+          <p className="text-zinc-400">No movies found.</p>
         ) : (
           <ul className="flex flex-wrap gap-6">
             {movies.map((movie) => (
