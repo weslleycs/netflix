@@ -1,5 +1,5 @@
-import { http } from "@/app/api/http";
-import type { User } from "@/features/auth/store/auth.store";
+import { http } from "@/shared/api/http";
+import type { User } from "@/entities/user/model/user";
 
 export type LoginDTO = { email: string; password: string };
 export type LoginResponse = { token: string; user: User };

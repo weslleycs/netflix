@@ -1,5 +1,5 @@
 
-import type { Movie } from "../schema/movie";
+import type { Movie } from "@/entities/movie/model/movie";
 import CardMovie from "./cardMovie";
 
 type Props = {

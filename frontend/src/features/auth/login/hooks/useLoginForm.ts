@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { loginSchema, type LoginFormValues } from "../schemas/loginSchema";
 import { loginUser } from "@/features/auth/api/auth";
-import { useAuthStore } from "@/features/auth/store/auth.store";
+import { useAuthStore } from "@/entities/session/model/auth.store";
 
 export function useLoginForm() {
   const navigate = useNavigate();
@@ -23,14 +23,11 @@ export function useLoginForm() {
   const onSubmit = handleSubmit(async (values) => {
     try {
       const { token, user } = await loginUser(values);
-      console.log("token",token);
-      console.log("user",user);
-      
       setAuth({ token, user });
 
       setSuccessMessage("Login successful! Redirecting...");
 
-      navigate("/movies", { replace: true });;
+      navigate("/movies", { replace: true });
     } catch (err: any) {
       const status = err?.response?.status;
 

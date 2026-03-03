@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import CardMovie from "./cardMovie";
-import type { Movie } from "../schema/movie";
+import type { Movie } from "@/entities/movie/model/movie";
 
 type Props = {
   title?: string;

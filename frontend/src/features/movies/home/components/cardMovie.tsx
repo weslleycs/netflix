@@ -1,4 +1,4 @@
-import type { Movie } from "../schema/movie";
+import type { Movie } from "@/entities/movie/model/movie";
 
 
 type Props = {
@@ -26,7 +26,7 @@ export default function CardMovie({ movie }: Props) {
       <div className="absolute text-white bottom-4 left-4 right-4">
         <h3 className="text-lg font-semibold">{movie.title}</h3>
         <div className="flex justify-between mt-1 text-sm text-zinc-300">
-          <span>{2026}</span>
+          <span>{new Date(movie.createdAt).getFullYear()}</span>
         </div>
       </div>
     </li>

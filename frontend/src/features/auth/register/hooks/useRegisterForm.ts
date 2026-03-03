@@ -33,8 +33,6 @@ export function useRegisterForm() {
       navigate("/login");
 
     } catch (err: any) {
-        console.log(err?.response);
-        
       const status = err?.response?.status;
 
       if (status === 409) {

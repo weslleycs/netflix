@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerSchema, type RegisterFormValues } from "../schema/registerSchema";
-import { registerMovie } from "../../api/movie";
+import { registerMovie } from "@/entities/movie/api/movie";
 
 
-export function movieRegisterForm() {
+export function useMovieRegisterForm() {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -22,7 +22,6 @@ export function movieRegisterForm() {
   });
 
   const onSubmit = handleSubmit(async (values) => {
-
     const { ...payload } = values;
 
     try {
@@ -30,11 +29,8 @@ export function movieRegisterForm() {
 
       setSuccessMessage("Movie created successfully! Redirecting...");
 
-      navigate("/movies/listAll");
-      
+      navigate("/movies/list");
     } catch (err: any) {
-        console.log(err?.response);
-        
       const status = err?.response?.status;
 
       if (status === 409) {

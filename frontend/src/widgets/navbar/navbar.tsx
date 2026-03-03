@@ -1,0 +1,68 @@
+import { GENRES } from "@/entities/movie/model/genre";
+import { useEffect, useState } from "react";
+import { FaUserCircle } from "react-icons/fa";
+import { NavLink, useNavigate } from "react-router-dom";
+
+export default function Navbar() {
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+  const [selectValue, setSelectValue] = useState("");
+
+  useEffect(() => {
+    if (selectValue === "listAll") {
+      navigate(`list`);
+    } else if (selectValue) {
+      navigate(`list?genre=${selectValue}`);
+    }
+    setSearch("");
+  }, [selectValue]);
+
+  useEffect(() => {
+    if (search) {
+      navigate(`list?title=${search}`);
+    }
+    setSelectValue("");
+  }, [search]);
+
+  return (
+    <header className="w-full">
+      <div className="flex items-center justify-between max-w-6xl px-6 py-6 mx-auto">
+        <NavLink to="/" className="text-2xl font-extrabold tracking-wide text-red-600">
+          WESLLEYFLIX
+        </NavLink>
+
+        <div className="flex gap-3">
+          <nav>
+            <select
+              id="nav-select"
+              onChange={(e) => setSelectValue(e.target.value)}
+              value={selectValue}
+              className="px-4 py-2 text-white border rounded-md bg-zinc-900 border-white/20 focus:outline-none focus:ring-2 focus:ring-red-600"
+            >
+              <option value="">Movies</option>
+              <option value="listAll">Todos os filmes</option>
+              {GENRES.map((genre) => (
+                <option value={`${genre.value}`} key={genre.value}>
+                  {genre.label}
+                </option>
+              ))}
+            </select>
+          </nav>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-48 px-4 py-2 pr-10 text-sm text-white border rounded-md bg-zinc-900 border-white/20 focus:outline-none focus:ring-2 focus:ring-red-600 placeholder:text-white/50"
+          />
+          <button
+            type="button"
+            className="flex items-center pr-3 text-[2rem] text-white/60 hover:text-white"
+          >
+            <FaUserCircle />
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}

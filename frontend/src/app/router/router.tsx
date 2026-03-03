@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
-import LandingPage from "@/features/public/landing/page/landingPage";
-import LoginPage from "@/features/auth/login/page/loginPage";
-import RegisterPage from "@/features/auth/register/page/registerPage";
-import MoviesHomePage from "@/features/movies/home/page/moviesHomePage";
+import LandingPage from "@/pages/landing/index";
+import LoginPage from "@/pages/login/index";
+import RegisterPage from "@/pages/register/index";
+import MoviesHomePage from "@/pages/movies-home/index";
+import MoviesListPage from "@/pages/movies-list/index";
+import MoviesRegisterPage from "@/pages/movies-register/index";
 import PublicLayout from "../layout/publicLayout";
-import MoviesListPage from "@/features/movies/home/page/listMoviesPage";
 import PrivateLayout from "../layout/privateLayout";
-
 
 export const routes = [
   {
@@ -24,7 +24,18 @@ export const routes = [
     element: <PrivateLayout />,
     children: [
       { index: true, element: <MoviesHomePage /> },
-      { path: "list", element: <MoviesListPage/> },
+      { path: "list", element: <MoviesListPage /> },
+      { path: "register", element: <MoviesRegisterPage /> },
     ],
   },
+  // /series — futuro: mesmo padrão de /movies
+  // {
+  //   path: "/series",
+  //   element: <PrivateLayout />,
+  //   children: [
+  //     { index: true, element: <SeriesHomePage /> },
+  //     { path: "list", element: <SeriesListPage /> },
+  //     { path: "register", element: <SeriesRegisterPage /> },
+  //   ],
+  // },
 ];

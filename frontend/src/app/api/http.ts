@@ -1,9 +1,5 @@
-import axios from "axios";
-import { useAuthStore } from "@/features/auth/store/auth.store";
-
-export const http = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-});
+import { http } from "@/shared/api/http";
+import { useAuthStore } from "@/entities/session/model/auth.store";
 
 http.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;

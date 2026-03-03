@@ -1,7 +1,8 @@
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Button } from "@/shared/ui/button";
 import { FormField } from "@/shared/ui/formField";
-import { GENRES, type RegisterFormValues } from "../schema/registerSchema";
+import { GENRES } from "@/entities/movie/model/genre";
+import type { RegisterFormValues } from "../schema/registerSchema";
 
 type Props = {
   register: UseFormRegister<RegisterFormValues>;
@@ -37,7 +38,7 @@ export default function RegisterForm({
       />
 
       <FormField
-        label="ImagenUrl"
+        label="Image URL"
         type="text"
         placeholder="URL"
         {...register("imageUrl")}
