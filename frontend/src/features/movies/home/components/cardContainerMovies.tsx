@@ -1,5 +1,4 @@
-
-import type { Movie } from "../schema/movie";
+import type { Movie } from "../../schema/movie";
 import CardMovie from "./cardMovie";
 
 type Props = {

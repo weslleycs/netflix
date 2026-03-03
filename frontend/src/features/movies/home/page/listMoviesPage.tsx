@@ -26,6 +26,8 @@ export default function MoviesListPage() {
     loadMovies()
   },[titleUrl,genreUrl])
 
+  
+
   return(
     <div>
       <CardContainer  movies= {movies}/>

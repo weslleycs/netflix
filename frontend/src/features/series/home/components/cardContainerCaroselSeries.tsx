@@ -1,15 +1,16 @@
+import CardMovie from "@/features/movies/home/components/cardMovie";
 import { useRef } from "react";
-import CardMovie from "./cardMovie";
-import type { Movie } from "../../schema/movie";
+import type { Serie } from "../../schema/series";
+
 
 type Props = {
   title?: string;
-  movies: Movie[];
+  series: Serie[];
 };
 
-export default function CardContainerCarouselMovies({
+export default function CardContainerCarouselSeries({
   title = "New Releases",
-  movies,
+  series,
 }: Props) {
   const scrollerRef = useRef<HTMLUListElement | null>(null);
 
@@ -29,7 +30,7 @@ export default function CardContainerCarouselMovies({
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold">{title}</h2>
-          <span className="text-sm text-zinc-400">{movies.length} items</span>
+          <span className="text-sm text-zinc-400">{series.length} items</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -53,8 +54,8 @@ export default function CardContainerCarouselMovies({
       </div>
 
       <div className="mt-4">
-        {movies.length === 0 ? (
-          <p className="text-zinc-400">No movies found.</p>
+        {series.length === 0 ? (
+          <p className="text-zinc-400">No series found.</p>
         ) : (
           <ul
             ref={scrollerRef}
@@ -64,8 +65,8 @@ export default function CardContainerCarouselMovies({
               [&::-webkit-scrollbar]:hidden
             "
           >
-            {movies.map((movie) => (
-              <CardMovie key={movie.id} movie={movie} />
+            {series.map((serie) => (
+              <CardMovie key={serie.id} movie={serie} />
             ))}
           </ul>
         )}

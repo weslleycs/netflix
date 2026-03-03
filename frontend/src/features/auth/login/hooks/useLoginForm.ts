@@ -30,7 +30,7 @@ export function useLoginForm() {
 
       setSuccessMessage("Login successful! Redirecting...");
 
-      navigate("/movies", { replace: true });;
+      navigate("/home", { replace: true });;
     } catch (err: any) {
       const status = err?.response?.status;
 

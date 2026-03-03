@@ -20,11 +20,11 @@ export const routes = [
     ],
   },
   {
-    path: "/movies",
     element: <PrivateLayout />,
     children: [
-      { index: true, element: <MoviesHomePage /> },
-      { path: "list", element: <MoviesListPage/> },
+      { path: "/home", element: <MoviesHomePage /> },
+      { path: "/listmovies", element: <MoviesListPage /> },
+      { path: "*", element: <Navigate to="/home" replace /> },
     ],
   },
 ];
