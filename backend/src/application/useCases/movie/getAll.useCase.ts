@@ -1,11 +1,11 @@
-import { MovieSearchOutput, MoviesListQuery } from "@domain/types/movie.type";
+import { MovieSearchOutput } from "@domain/types/movie.type";
 import MovieRepository from "@infrastructure/repositories/movie.repository";
 
 class MoviesGetAllUseCase {
   constructor(private readonly movieRepository: MovieRepository) {}
 
-  async execute(input?: MoviesListQuery): Promise<MovieSearchOutput[]> {
-    return this.movieRepository.listAll(input);
+  async execute(): Promise<MovieSearchOutput[]> {
+    return this.movieRepository.listAll();
   }
 }
 

@@ -27,18 +27,27 @@ class MovieRepository {
     const prisma= this.prismaService.getConnection();
     const movies= await prisma.movie.findMany({
       where: {
-        title: input.title
+        title: {
+          contains: input.title,
+        }
       }
     })
     return movies
   }
 
-  async listAll(input?: MoviesListQuery): Promise<MovieSearchOutput[]> {
-    const prisma = this.prismaService.getConnection();
+  async serchByGenre(input: MovieSearchInput): Promise<MovieSearchOutput[]> {
+    const prisma= this.prismaService.getConnection();
+    const movies= await prisma.movie.findMany({
+      where: {
+        genre: input.genre
+      }
+    })
+    return movies
+  }
 
-    return prisma.movie.findMany({
-      where: input?.genre ? { genre: input.genre } : undefined,
-    });
+  async listAll(): Promise<MovieSearchOutput[]> {
+    const prisma = this.prismaService.getConnection();
+    return prisma.movie.findMany();
   }     
 
 async getById(input: GetById): Promise<MovieSearchOutput> {

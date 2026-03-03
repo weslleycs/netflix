@@ -8,7 +8,8 @@ export type CreateMovieInput = {
 };
 
 export type MovieSearchInput = {
-  title: string;
+  title?: string;
+  genre?:GenreMovie
 };
 
 

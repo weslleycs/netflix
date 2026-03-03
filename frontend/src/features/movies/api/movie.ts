@@ -1,5 +1,5 @@
 import { http } from "@/app/api/http";
-import type { Movie } from "../home/schema/movie";
+import type { Movie } from "../schema/movie";
 
 
 export type RegisterDTO = { 
@@ -21,8 +21,14 @@ export async function getMovies(): Promise<Movie[]> {
 }
 
 export async function getMoviesByTitle(title: string) {
-  const { data } = await http.get("/move/title", {
+  const { data } = await http.get("/movie/title", {
     params: { title }, 
+  });
+  return data;
+}
+export async function getMoviesByGenre(genre: string) {
+  const { data } = await http.get("/movie/genre", {
+    params: { genre }, 
   });
   return data;
 }

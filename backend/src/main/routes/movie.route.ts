@@ -1,7 +1,8 @@
 import expressRouteAdapter from "@infrastructure/adapters/expressRoute.adapter";
 import { moviesGetAllFactory } from "@infrastructure/factories/movies/getAll.factory";
+import { movieGetByGenreFactory } from "@infrastructure/factories/movies/getByGenre.factory";
 import { movieGetByIdFactory } from "@infrastructure/factories/movies/getById.factory";
-import { movieGetByTitlleFactory } from "@infrastructure/factories/movies/getByTitle.factory";
+import { movieGetByTitleFactory } from "@infrastructure/factories/movies/getByTitle.factory";
 import { movieRegisterFactory } from "@infrastructure/factories/movies/register.factory";
 import { movieUpdaterFactory } from "@infrastructure/factories/movies/updater.factory";
 import { adminOnly } from "@infrastructure/middlewares/adminOnly.middleware";
@@ -17,7 +18,10 @@ export function movieRoutes(router: Router, prismaService: PrismaService) {
   );
 
   router.get("/movie/title",authMiddleware, (req, res) =>
-    expressRouteAdapter(req, res, movieGetByTitlleFactory(prismaService)),
+    expressRouteAdapter(req, res, movieGetByTitleFactory(prismaService)),
+  );
+  router.get("/movie/genre",authMiddleware, (req, res) =>
+    expressRouteAdapter(req, res, movieGetByGenreFactory(prismaService)),
   );
 
   router.get("/movie", authMiddleware, (req, res) =>

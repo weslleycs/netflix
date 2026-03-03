@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMovies } from "../../api/movie";
 import CardContainerCarouselMovies from "../components/cardContainerCaroselMovies";
-
-import AppHeader from "../components/appHeader";
 import type { Movie } from "../schema/movie";
 
 
@@ -20,10 +18,10 @@ export default function MoviesHomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <AppHeader />
+    <div className="min-h-screen text-white bg-black">
+     
 
-      <main className="max-w-6xl mx-auto px-4 pt-24 pb-10">
+      <main className="max-w-6xl px-4 pt-24 pb-10 mx-auto">
         {loading ? (
           <p className="text-zinc-400">Loading...</p>
         ) : (

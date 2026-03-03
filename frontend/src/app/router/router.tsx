@@ -2,11 +2,10 @@ import { Navigate } from "react-router-dom";
 import LandingPage from "@/features/public/landing/page/landingPage";
 import LoginPage from "@/features/auth/login/page/loginPage";
 import RegisterPage from "@/features/auth/register/page/registerPage";
-import ProtectedRoute from "./protectedRoute";
 import MoviesHomePage from "@/features/movies/home/page/moviesHomePage";
 import PublicLayout from "../layout/publicLayout";
-import MoviesListAllPage from "@/features/movies/home/page/listAllMoviesPage";
-import RegisterMoviePage from "@/features/movies/register/page/registerPage";
+import MoviesListPage from "@/features/movies/home/page/listMoviesPage";
+import PrivateLayout from "../layout/privateLayout";
 
 
 export const routes = [
@@ -22,11 +21,10 @@ export const routes = [
   },
   {
     path: "/movies",
-    element: <ProtectedRoute />,
+    element: <PrivateLayout />,
     children: [
       { index: true, element: <MoviesHomePage /> },
-      { path: "listAll", element: <MoviesListAllPage/> },
-      { path: "register", element: <RegisterMoviePage/> },
+      { path: "list", element: <MoviesListPage/> },
     ],
   },
 ];

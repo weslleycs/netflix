@@ -3,10 +3,8 @@ import { Outlet, NavLink } from "react-router-dom";
 export default function PublicLayout() {
   return (
     <div className="min-h-screen text-white bg-black">
-      {/* glow */}
       <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,rgba(229,9,20,0.22),transparent_60%)]">
         <div className="min-h-screen bg-black/60">
-          {/* HEADER */}
           <header className="w-full">
             <div className="flex items-center justify-between max-w-6xl px-6 py-6 mx-auto">
               <NavLink to="/" className="text-2xl font-extrabold tracking-wide text-red-600">

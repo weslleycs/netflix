@@ -6,7 +6,7 @@ import MovieGetByTitleController from "@presentation/controllers/movies/getByTit
 
 
 
-export function movieGetByTitlleFactory(prismaService: PrismaService): MovieGetByTitleController {
+export function movieGetByTitleFactory(prismaService: PrismaService): MovieGetByTitleController {
   const movieGetByTitlleRepository = new MovieRepository(prismaService);
   const movieGetByTitlleUseCase = new MovieGetByTitleUseCase(movieGetByTitlleRepository);
   const controller = new MovieGetByTitleController(movieGetByTitlleUseCase);
