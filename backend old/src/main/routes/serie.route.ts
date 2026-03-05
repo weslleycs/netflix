@@ -1,4 +1,5 @@
 import expressRouteAdapter from "@infrastructure/adapters/expressRoute.adapter";
+import { seriesGetAllFactory } from "@infrastructure/factories/series/getAll.factory";
 import { serieRegisterFactory } from "@infrastructure/factories/series/register.factory";
 import PrismaService from "@infrastructure/services/prisma.service";
 import { Router } from "express";
@@ -7,6 +8,9 @@ export function serieRoutes(router: Router, prismaService: PrismaService) {
 
   router.post("/serie/register", (req, res) =>
     expressRouteAdapter(req, res, serieRegisterFactory(prismaService)),
+  ),
+  router.get("/serie", (req, res) =>
+    expressRouteAdapter(req, res, seriesGetAllFactory(prismaService)),
   );
 }
 //   router.get("/serie/title",authMiddleware, (req, res) =>
@@ -15,11 +19,6 @@ export function serieRoutes(router: Router, prismaService: PrismaService) {
 //   router.get("/serie/genre",authMiddleware, (req, res) =>
 //     expressRouteAdapter(req, res, serieGetByGenreFactory(prismaService)),
 //   );
-
-//   router.get("/serie", authMiddleware, (req, res) =>
-//     expressRouteAdapter(req, res, seriesGetAllFactory(prismaService)),
-//   );
-
 
 //   router.get("/serie/:id",authMiddleware, (req, res) =>
 //     expressRouteAdapter(req, res, serieGetByIdFactory(prismaService)),

@@ -13,8 +13,6 @@ class SerieRepository {
   async register(input: CreateSerieInput): Promise<boolean> {
     const prisma= this.prismaService.getConnection(); 
     try {
-      
-      
     const dataSerie = await prisma.serie.create({
       data: {
             title: input.title,
@@ -23,22 +21,21 @@ class SerieRepository {
             genre:input.genre
       }
     })
-     await Promise.all(
-      input.seasons.map((season)=>{
-       prisma.season.create({
-        data: {
-          season: season.season,
-          episodes: season.episodes,
-          serieId: dataSerie.id,
-        }
-      })
-    })
-     ) 
-    return true
-    } catch (error) {
-      console.log(error);
-      
-    }
+      for(const season of input.seasons){
+        await prisma.season.create({
+          data: {
+            season: season.season,
+            episodes: season.episodes,
+            serieId: dataSerie.id,
+          }
+        })
+      }
+     return true
+    }  catch (error) {
+    if (error instanceof AppError) throw error;
+    const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+    throw new AppError(ErrorCode.INTERNAL, message);
+  }
   }
 
   async serchByTitle(input: SerieSearchInput): Promise<SerieSearchOutput[]> {
