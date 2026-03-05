@@ -7,89 +7,119 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  ADMIN
+model users {
+  id               Int       @id @default(autoincrement())
+  name             String
+  password         String
+  email            String    @unique
+  active           Boolean?  @default(true)
+  session          String?
+  refreshToken     String?
+  codResetPassword String?
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime  @default(now())
+
+  movies  movies[]
+  series  series[]
+  rates   rates[]
+  coments coments[]
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
-  movies    Movie[]
-  series    Serie[]
-  seasons   Season[]
-
-  @@map("users")
-}
-
-model Movie {
+model movies {
   id          Int       @id @default(autoincrement())
   title       String
-  description String
-  imageUrl    String
-  genre       Genre
+  description String?
+  imageUrl    String?
   userId      Int?
-  createdAt   DateTime? @default(now()) @map("created_at")
-  updatedAt   DateTime  @default(now()) @map("updated_at")
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime  @default(now())
 
-  user User? @relation(fields: [userId], references: [id])
-
-  @@map("movies")
+  user         users?          @relation(fields: [userId], references: [id])
+  seasons      seasons[]
+  moviesGenres movies_genres[]
+  rates        rates[]
+  coments      coments[]
 }
 
-enum Genre {
-  ACTION
-  ADVENTURE
-  COMEDY
-  DRAMA
-  HORROR
-  THRILLER
-  ROMANCE
-  SCIFI
-  FANTASY
-  ANIMATION
-  DOCUMENTARY
-  CRIME
-  MYSTERY
-  FAMILY
-  BIOGRAPHY
-  WAR
-  MUSICAL
+model series {
+  id           Int             @id @default(autoincrement())
+  title        String
+  description  String
+  imageUrl     String
+  userId       Int?
+  createdAt    DateTime?       @default(now())
+  updatedAt    DateTime        @default(now())
+  user         users?          @relation(fields: [userId], references: [id])
+  seriesGenres series_genres[]
+  rates        rates[]
+  coments      coments[]
 }
 
-model Serie {
-  id          Int    @id @default(autoincrement())
-  title       String
-  description String
-  imageUrl    String
-  genre       Genre
-  userId      Int?
-
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedAt DateTime  @default(now()) @map("updated_at")
-
-  user    User?    @relation(fields: [userId], references: [id])
-  seasons Season[]
-
-  @@map("series")
-}
-
-model Season {
+model seasons {
   id        Int       @id @default(autoincrement())
-  season    Int
+  seasons   Int
   episodes  Int
-  userId    Int?
+  seriesId  Int
+  createdAt DateTime? @default(now())
+  updatedAt DateTime  @default(now())
+
+  movies movies @relation(fields: [seriesId], references: [id])
+}
+
+model genres {
+  id           Int             @id @default(autoincrement())
+  name         String
+  description  String
+  createdAt    DateTime?       @default(now())
+  updatedAt    DateTime        @default(now())
+  seriesGenres series_genres[]
+  moviesGenres movies_genres[]
+}
+
+model series_genres {
+  id        Int       @id @default(autoincrement())
+  genreId   Int
   serieId   Int
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedAt DateTime  @default(now()) @map("updated_at")
+  createdAt DateTime? @default(now())
+  updatedAt DateTime  @default(now())
+  genre     genres    @relation(fields: [genreId], references: [id])
+  serie     series    @relation(fields: [serieId], references: [id])
+}
 
-  user  User? @relation(fields: [userId], references: [id])
-  serie Serie @relation(fields: [serieId], references: [id])
+model movies_genres {
+  id        Int       @id @default(autoincrement())
+  genreId   Int
+  moviesId  Int
+  createdAt DateTime? @default(now())
+  updatedAt DateTime  @default(now())
+  genre     genres    @relation(fields: [genreId], references: [id])
+  movie     movies    @relation(fields: [moviesId], references: [id])
+}
 
-  @@map("seasons")
+model rates {
+  id        Int       @id @default(autoincrement())
+  rate      Int
+  userId    Int
+  serieId   Int?
+  movieId   Int?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime  @default(now())
+
+  user  users   @relation(fields: [userId], references: [id])
+  serie series? @relation(fields: [serieId], references: [id])
+  movie movies? @relation(fields: [movieId], references: [id])
+}
+
+model coments {
+  id        Int       @id @default(autoincrement())
+  coment    String
+  userId    Int
+  serieId   Int?
+  movieId   Int?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime  @default(now())
+
+  user  users   @relation(fields: [userId], references: [id])
+  serie series? @relation(fields: [serieId], references: [id])
+  movie movies? @relation(fields: [movieId], references: [id])
 }
