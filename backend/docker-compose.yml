@@ -1,14 +1,15 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: mysql-netflix
+    container_name: mysql-wflix
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: netflix
+      MYSQL_DATABASE: wflix
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   mysql_data:
