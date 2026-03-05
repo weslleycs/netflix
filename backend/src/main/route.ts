@@ -4,6 +4,7 @@ import expressRouteAdapter from "@infrastructure/adapters/expressRoute.adapter";
 import PrismaService from "@infrastructure/services/prisma.service";
 import { authenticationRoutes } from "./routes/authentication.route";
 import { movieRoutes } from "./routes/movie.route";
+import { serieRoutes } from "./routes/serie.route";
 
 export function createRouter(prismaService: PrismaService) {
   const router = Router();
@@ -18,6 +19,7 @@ export function createRouter(prismaService: PrismaService) {
 
   authenticationRoutes(router, prismaService);
   movieRoutes(router, prismaService);
+  serieRoutes(router, prismaService);
 
   return router;
 }
