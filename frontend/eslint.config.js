@@ -1,26 +1,29 @@
-import RegisterForm from "../components/RegisterForm";
-import { useRegisterForm } from "../hooks/useRegister";
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
 
-export default function RegisterPage() {
-  const { register, errors, isSubmitting, onSubmit, successMessage } =
-    useRegisterForm();
-
-  return (
-    <div className="min-h-[70vh] flex items-center justify-center">
-      <div className="w-full max-w-md bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
-        <h1 className="text-3xl font-extrabold">Register</h1>
-        <p className="text-zinc-600 mt-1">Create your account.</p>
-
-        <div className="mt-6">
-          <RegisterForm
-            register={register}
-            errors={errors}
-            isSubmitting={isSubmitting}
-            onSubmit={onSubmit}
-            successMessage={successMessage}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
+export default tseslint.config(
+  { ignores: ['dist'] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig],
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+      prettier,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'prettier/prettier': 'warn',
+    },
+  },
+);
