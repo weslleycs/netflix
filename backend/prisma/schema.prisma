@@ -68,12 +68,14 @@ model seasons {
 
 model genres {
   id           Int             @id @default(autoincrement())
-  name         String
-  description  String
+  name         String          @unique
+  description  String?
   createdAt    DateTime?       @default(now())
   updatedAt    DateTime        @default(now())
   seriesGenres series_genres[]
   moviesGenres movies_genres[]
+
+  @@index([name])
 }
 
 model series_genres {

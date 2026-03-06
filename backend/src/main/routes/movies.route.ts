@@ -3,9 +3,9 @@ import { registerUserFactory } from "@infrastructure/factories/authentication/re
 import PrismaService from "@infrastructure/services/prisma.service";
 import { Router } from "express";
 
-export function authenticationRoutes(router: Router, prismaService: PrismaService) {
+export function movieRoutes(router: Router, prismaService: PrismaService) {
  
-  router.post("/auth/registera", (req, res) =>
+  router.post("/movie/register", (req, res) =>
     expressRouteAdapter(req, res, registerUserFactory(prismaService)),
   );
 }
