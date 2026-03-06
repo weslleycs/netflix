@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import type { User } from "@/entities/user/model/user";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import type { User } from '@/entities/user/model/user';
 
 type AuthState = {
   token: string | null;
@@ -17,6 +17,6 @@ export const useAuthStore = create<AuthState>()(
       setAuth: ({ token, user }) => set({ token, user }),
       logout: () => set({ token: null, user: null }),
     }),
-    { name: "auth-storage" }
-  )
+    { name: 'auth-storage' },
+  ),
 );

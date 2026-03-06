@@ -1,6 +1,6 @@
-import { useAuthStore } from "@/entities/session/model/auth.store";
-import Navbar from "@/widgets/navbar/navbar";
-import { Navigate, Outlet } from "react-router-dom";
+import { useAuthStore } from '@/entities/session/model/auth.store';
+import Navbar from '@/widgets/navbar/navbar';
+import { Navigate, Outlet } from 'react-router-dom';
 
 export default function PrivateLayout() {
   const token = useAuthStore((s) => s.token);
@@ -21,4 +21,3 @@ export default function PrivateLayout() {
     </div>
   );
 }
-

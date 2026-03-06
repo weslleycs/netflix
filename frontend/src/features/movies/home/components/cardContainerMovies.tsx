@@ -1,13 +1,12 @@
-
-import type { Movie } from "@/entities/movie/model/movie";
-import CardMovie from "./cardMovie";
+import type { Movie } from '@/entities/movie/model/movie';
+import CardMovie from './cardMovie';
 
 type Props = {
   title?: string;
   movies: Movie[];
 };
 
-export default function CardContainer({ title = "Movies", movies }: Props) {
+export default function CardContainer({ title = 'Movies', movies }: Props) {
   return (
     <section className="p-6 border rounded-2xl border-zinc-800 bg-zinc-950/60">
       <div className="flex items-center justify-between">

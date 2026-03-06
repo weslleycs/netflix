@@ -1,8 +1,6 @@
-import RegisterGenreUseCase from "@application/useCases/genres/registerUseCase";
-import { controllerInputType, httpResponseType } from "@domain/types/controller.type";
-import { CreateGenreInput } from "@domain/types/genreType";
-
-
+import RegisterGenreUseCase from '@application/useCases/genres/registerUseCase';
+import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
+import { CreateGenreInput } from '@domain/types/genreType';
 
 class RegisterGenreController {
   private readonly genreUseCase: RegisterGenreUseCase;
@@ -11,12 +9,14 @@ class RegisterGenreController {
     this.genreUseCase = genreUseCase;
   }
 
-  async run(input: controllerInputType<object, object, object, CreateGenreInput>): Promise<httpResponseType<string>> {
+  async run(
+    input: controllerInputType<object, object, object, CreateGenreInput>,
+  ): Promise<httpResponseType<string>> {
     await this.genreUseCase.execute(input.body);
 
     return {
       statusCode: 200,
-      data: " Genre Register",
+      data: ' Genre Register',
     };
   }
 }

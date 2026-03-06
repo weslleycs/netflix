@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { getMovies } from "@/entities/movie/api/movie";
-import CardContainerCarouselMovies from "@/features/movies/home/components/cardContainerCaroselMovies";
-import type { Movie } from "@/entities/movie/model/movie";
+import { useEffect, useState } from 'react';
+import { getMovies } from '@/entities/movie/api/movie';
+import CardContainerCarouselMovies from '@/features/movies/home/components/cardContainerCaroselMovies';
+import type { Movie } from '@/entities/movie/model/movie';
 
 export default function MoviesHomePage() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -22,10 +22,7 @@ export default function MoviesHomePage() {
         {loading ? (
           <p className="text-zinc-400">Loading...</p>
         ) : (
-          <CardContainerCarouselMovies
-            title="Movies"
-            movies={movies}
-          />
+          <CardContainerCarouselMovies title="Movies" movies={movies} />
         )}
       </main>
     </div>

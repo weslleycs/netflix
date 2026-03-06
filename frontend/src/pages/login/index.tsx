@@ -1,10 +1,9 @@
-import { Card } from "@/shared/ui/card";
-import LoginForm from "@/features/auth/login/components/loginForm";
-import { useLoginForm } from "@/features/auth/login/hooks/useLoginForm";
+import { Card } from '@/shared/ui/card';
+import LoginForm from '@/features/auth/login/components/loginForm';
+import { useLoginForm } from '@/features/auth/login/hooks/useLoginForm';
 
 export default function LoginPage() {
-  const { register, errors, isSubmitting, onSubmit, successMessage } =
-    useLoginForm();
+  const { register, errors, isSubmitting, onSubmit, successMessage } = useLoginForm();
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4">

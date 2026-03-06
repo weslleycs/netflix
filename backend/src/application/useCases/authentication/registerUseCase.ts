@@ -1,5 +1,5 @@
-import { registerInput } from "@domain/types/authenticationTypes";
-import AuthenticationRepository from "@infrastructure/repositories/authenticationRepository";
+import { registerInput } from '@domain/types/authenticationTypes';
+import AuthenticationRepository from '@infrastructure/repositories/authenticationRepository';
 
 class RegisterUserUseCase {
   private readonly authenticationRepository: AuthenticationRepository;

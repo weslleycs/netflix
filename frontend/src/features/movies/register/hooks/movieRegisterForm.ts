@@ -1,12 +1,10 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { registerSchema, type RegisterFormValues } from "../schema/registerSchema";
-import { registerMovie } from "@/entities/movie/api/movie";
-
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { registerSchema, type RegisterFormValues } from '../schema/registerSchema';
+import { registerMovie } from '@/entities/movie/api/movie';
 
 export function useMovieRegisterForm() {
   const navigate = useNavigate();
@@ -27,23 +25,23 @@ export function useMovieRegisterForm() {
     try {
       await registerMovie(payload);
 
-      setSuccessMessage("Movie created successfully! Redirecting...");
+      setSuccessMessage('Movie created successfully! Redirecting...');
 
-      navigate("/movies/list");
+      navigate('/movies/list');
     } catch (err: any) {
       const status = err?.response?.status;
 
       if (status === 409) {
-        setError("title", {
-          type: "server",
-          message: "Movie already in use",
+        setError('title', {
+          type: 'server',
+          message: 'Movie already in use',
         });
         return;
       }
 
-      setError("root", {
-        type: "server",
-        message: "Something went wrong. Please try again.",
+      setError('root', {
+        type: 'server',
+        message: 'Something went wrong. Please try again.',
       });
     }
   });

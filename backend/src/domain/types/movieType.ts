@@ -1,4 +1,4 @@
-export type CreateMovieInput={
-    title:       string
-    description?: string
-}
+export type CreateMovieInput = {
+  title: string;
+  description?: string;
+};

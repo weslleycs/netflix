@@ -1,8 +1,8 @@
-import type { FieldErrors, UseFormRegister } from "react-hook-form";
-import { Button } from "@/shared/ui/button";
-import { FormField } from "@/shared/ui/formField";
-import { GENRES } from "@/entities/movie/model/genre";
-import type { RegisterFormValues } from "../schema/registerSchema";
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { Button } from '@/shared/ui/button';
+import { FormField } from '@/shared/ui/formField';
+import { GENRES } from '@/entities/movie/model/genre';
+import type { RegisterFormValues } from '../schema/registerSchema';
 
 type Props = {
   register: UseFormRegister<RegisterFormValues>;
@@ -25,7 +25,7 @@ export default function RegisterForm({
         label="Title"
         type="text"
         placeholder="Your title"
-        {...register("title")}
+        {...register('title')}
         error={errors.title?.message}
       />
 
@@ -33,7 +33,7 @@ export default function RegisterForm({
         label="Description"
         type="text"
         placeholder="Description"
-        {...register("description")}
+        {...register('description')}
         error={errors.description?.message}
       />
 
@@ -41,7 +41,7 @@ export default function RegisterForm({
         label="Image URL"
         type="text"
         placeholder="URL"
-        {...register("imageUrl")}
+        {...register('imageUrl')}
         error={errors.imageUrl?.message}
       />
 
@@ -49,7 +49,7 @@ export default function RegisterForm({
         label="Genre"
         as="select"
         options={GENRES.map((genre) => ({ label: genre.label, value: genre.value }))}
-        {...register("genre")}
+        {...register('genre')}
         error={errors.genre?.message}
       />
 
@@ -57,12 +57,10 @@ export default function RegisterForm({
         <p className="text-sm text-red-600">{errors.root.message as string}</p>
       ) : null}
 
-      {successMessage ? (
-        <p className="text-sm text-green-600">{successMessage}</p>
-      ) : null}
+      {successMessage ? <p className="text-sm text-green-600">{successMessage}</p> : null}
 
       <Button type="submit" disabled={isSubmitting} className="w-full">
-        {isSubmitting ? "Creating..." : "Create movie"}
+        {isSubmitting ? 'Creating...' : 'Create movie'}
       </Button>
     </form>
   );

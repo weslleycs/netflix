@@ -1,17 +1,17 @@
-import "dotenv/config";
-import express from "express";
-import cors from "cors"; 
-import PrismaService from "@infrastructure/services/prisma.service";
-import { loggerMiddleware } from "@shared/logger";
-import { createRouter } from "./route";
-import { errorHandler } from "@infrastructure/middlewares/errorHandler.middleware";
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import PrismaService from '@infrastructure/services/prisma.service';
+import { loggerMiddleware } from '@shared/logger';
+import { createRouter } from './route';
+import { errorHandler } from '@infrastructure/middlewares/errorHandler.middleware';
 
 const app = express();
 const prismaService = new PrismaService();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: 'http://localhost:5173',
     credentials: true,
   }),
 );

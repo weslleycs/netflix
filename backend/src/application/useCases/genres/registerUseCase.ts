@@ -1,5 +1,5 @@
-import { CreateGenreInput } from "@domain/types/genreType";
-import GenreRepository from "@infrastructure/repositories/genreRepository";
+import { CreateGenreInput } from '@domain/types/genreType';
+import GenreRepository from '@infrastructure/repositories/genreRepository';
 
 class RegisterGenreUseCase {
   private readonly movieRepository: GenreRepository;
@@ -9,7 +9,6 @@ class RegisterGenreUseCase {
   }
 
   async execute(input: CreateGenreInput): Promise<boolean> {
-    
     return this.movieRepository.register(input);
   }
 }

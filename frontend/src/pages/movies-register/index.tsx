@@ -1,10 +1,9 @@
-import { Card } from "@/shared/ui/card";
-import RegisterForm from "@/features/movies/register/components/registerForm";
-import { useMovieRegisterForm } from "@/features/movies/register/hooks/movieRegisterForm";
+import { Card } from '@/shared/ui/card';
+import RegisterForm from '@/features/movies/register/components/registerForm';
+import { useMovieRegisterForm } from '@/features/movies/register/hooks/movieRegisterForm';
 
 export default function MoviesRegisterPage() {
-  const { register, errors, isSubmitting, onSubmit, successMessage } =
-    useMovieRegisterForm();
+  const { register, errors, isSubmitting, onSubmit, successMessage } = useMovieRegisterForm();
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center">

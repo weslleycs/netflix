@@ -1,10 +1,9 @@
-import { Card } from "@/shared/ui/card";
-import RegisterForm from "@/features/auth/register/components/registerForm";
-import { useRegisterForm } from "@/features/auth/register/hooks/useRegisterForm";
+import { Card } from '@/shared/ui/card';
+import RegisterForm from '@/features/auth/register/components/registerForm';
+import { useRegisterForm } from '@/features/auth/register/hooks/useRegisterForm';
 
 export default function RegisterPage() {
-  const { register, errors, isSubmitting, onSubmit, successMessage } =
-    useRegisterForm();
+  const { register, errors, isSubmitting, onSubmit, successMessage } = useRegisterForm();
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center">

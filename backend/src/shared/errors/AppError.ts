@@ -8,12 +8,12 @@ export enum ErrorCode {
 }
 
 export enum ErrorMessage {
-  BAD_REQUEST = "Bad request",
-  UNAUTHORIZED = "Unauthorized",
-  FORBIDDEN = "Forbidden",
-  NOT_FOUND = "Not found",
-  CONFLICT = "Resource already exists",
-  INTERNAL = "Internal server error",
+  BAD_REQUEST = 'Bad request',
+  UNAUTHORIZED = 'Unauthorized',
+  FORBIDDEN = 'Forbidden',
+  NOT_FOUND = 'Not found',
+  CONFLICT = 'Resource already exists',
+  INTERNAL = 'Internal server error',
 }
 
 export class AppError extends Error {

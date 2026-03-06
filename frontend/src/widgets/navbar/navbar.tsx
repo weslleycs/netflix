@@ -1,27 +1,27 @@
-import { GENRES } from "@/entities/movie/model/genre";
-import { useEffect, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
-import { NavLink, useNavigate } from "react-router-dom";
+import { GENRES } from '@/entities/movie/model/genre';
+import { useEffect, useState } from 'react';
+import { FaUserCircle } from 'react-icons/fa';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
-  const [selectValue, setSelectValue] = useState("");
+  const [search, setSearch] = useState('');
+  const [selectValue, setSelectValue] = useState('');
 
   useEffect(() => {
-    if (selectValue === "listAll") {
+    if (selectValue === 'listAll') {
       navigate(`list`);
     } else if (selectValue) {
       navigate(`list?genre=${selectValue}`);
     }
-    setSearch("");
+    setSearch('');
   }, [selectValue]);
 
   useEffect(() => {
     if (search) {
       navigate(`list?title=${search}`);
     }
-    setSelectValue("");
+    setSelectValue('');
   }, [search]);
 
   return (

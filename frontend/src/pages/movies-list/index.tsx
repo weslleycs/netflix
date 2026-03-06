@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import CardContainer from "@/features/movies/home/components/cardContainerMovies";
-import { getMovies, getMoviesByGenre, getMoviesByTitle } from "@/entities/movie/api/movie";
-import { useSearchParams } from "react-router-dom";
-import type { Movie } from "@/entities/movie/model/movie";
+import { useEffect, useState } from 'react';
+import CardContainer from '@/features/movies/home/components/cardContainerMovies';
+import { getMovies, getMoviesByGenre, getMoviesByTitle } from '@/entities/movie/api/movie';
+import { useSearchParams } from 'react-router-dom';
+import type { Movie } from '@/entities/movie/model/movie';
 
 export default function MoviesListPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [params] = useSearchParams();
-  const titleUrl = params.get("title");
-  const genreUrl = params.get("genre");
+  const titleUrl = params.get('title');
+  const genreUrl = params.get('genre');
 
   useEffect(() => {
     async function loadMovies() {

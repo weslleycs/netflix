@@ -7,9 +7,7 @@ export default function LandingPage() {
           <span className="text-red-600"> Netflix vibe.</span>
         </h1>
 
-        <p className="mt-4 text-lg text-white/70">
-          Watch anywhere. Cancel anytime.
-        </p>
+        <p className="mt-4 text-lg text-white/70">Watch anywhere. Cancel anytime.</p>
 
         <div className="mt-8">
           <a

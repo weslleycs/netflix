@@ -1,10 +1,4 @@
-export function AuthHeader({
-  title,
-  subtitle,
-}: {
-  title: string;
-  subtitle: string;
-}) {
+export function AuthHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div>
       <h1 className="text-2xl font-semibold">{title}</h1>

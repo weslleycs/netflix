@@ -1,7 +1,7 @@
-import type { FieldErrors, UseFormRegister } from "react-hook-form";
-import type { RegisterFormValues } from "../schemas/registerSchema";
-import { Button } from "@/shared/ui/button";
-import { FormField } from "@/shared/ui/formField";
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import type { RegisterFormValues } from '../schemas/registerSchema';
+import { Button } from '@/shared/ui/button';
+import { FormField } from '@/shared/ui/formField';
 
 type Props = {
   register: UseFormRegister<RegisterFormValues>;
@@ -23,7 +23,7 @@ export default function RegisterForm({
       <FormField
         label="Name"
         placeholder="Your name"
-        {...register("name")}
+        {...register('name')}
         error={errors.name?.message}
       />
 
@@ -31,7 +31,7 @@ export default function RegisterForm({
         label="Email"
         type="email"
         placeholder="you@email.com"
-        {...register("email")}
+        {...register('email')}
         error={errors.email?.message}
       />
 
@@ -39,7 +39,7 @@ export default function RegisterForm({
         label="Password"
         type="password"
         placeholder="••••••••"
-        {...register("password")}
+        {...register('password')}
         error={errors.password?.message}
       />
 
@@ -47,7 +47,7 @@ export default function RegisterForm({
         label="Confirm password"
         type="password"
         placeholder="••••••••"
-        {...register("confirmPassword")}
+        {...register('confirmPassword')}
         error={errors.confirmPassword?.message}
       />
 
@@ -55,12 +55,10 @@ export default function RegisterForm({
         <p className="text-sm text-red-600">{errors.root.message as string}</p>
       ) : null}
 
-      {successMessage ? (
-        <p className="text-sm text-green-600">{successMessage}</p>
-      ) : null}
+      {successMessage ? <p className="text-sm text-green-600">{successMessage}</p> : null}
 
       <Button type="submit" disabled={isSubmitting} className="w-full">
-        {isSubmitting ? "Creating..." : "Create account"}
+        {isSubmitting ? 'Creating...' : 'Create account'}
       </Button>
     </form>
   );

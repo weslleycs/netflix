@@ -1,9 +1,6 @@
-
-import RegisterMovieUseCase from "@application/useCases/movie/register.useCase";
-import { controllerInputType, httpResponseType } from "@domain/types/controller.type";
-import { CreateMovieInput } from "@domain/types/movie.type";
-
-
+import RegisterMovieUseCase from '@application/useCases/movie/register.useCase';
+import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
+import { CreateMovieInput } from '@domain/types/movie.type';
 
 class MovieController {
   private readonly movieUseCase: RegisterMovieUseCase;
@@ -12,12 +9,14 @@ class MovieController {
     this.movieUseCase = movieUseCase;
   }
 
-  async run(input: controllerInputType<object, object, object, CreateMovieInput>): Promise<httpResponseType<string>> {
+  async run(
+    input: controllerInputType<object, object, object, CreateMovieInput>,
+  ): Promise<httpResponseType<string>> {
     await this.movieUseCase.execute(input.body);
 
     return {
       statusCode: 200,
-      data: " Movie Register",
+      data: ' Movie Register',
     };
   }
 }

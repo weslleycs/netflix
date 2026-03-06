@@ -1,5 +1,5 @@
-import PublicNavbar from "@/widgets/navbar/publicNavbar";
-import { Outlet } from "react-router-dom";
+import PublicNavbar from '@/widgets/navbar/publicNavbar';
+import { Outlet } from 'react-router-dom';
 
 export default function PublicLayout() {
   return (

@@ -1,5 +1,5 @@
-import { http } from "@/shared/api/http";
-import type { Movie } from "../model/movie";
+import { http } from '@/shared/api/http';
+import type { Movie } from '../model/movie';
 
 export type RegisterDTO = {
   title: string;
@@ -9,23 +9,23 @@ export type RegisterDTO = {
 };
 
 export async function registerMovie(dto: RegisterDTO): Promise<void> {
-  await http.post("/movie/register", dto);
+  await http.post('/movie/register', dto);
 }
 
 export async function getMovies(): Promise<Movie[]> {
-  const res = await http.get("/movie");
+  const res = await http.get('/movie');
   return res.data;
 }
 
 export async function getMoviesByTitle(title: string) {
-  const { data } = await http.get("/movie/title", {
+  const { data } = await http.get('/movie/title', {
     params: { title },
   });
   return data;
 }
 
 export async function getMoviesByGenre(genre: string) {
-  const { data } = await http.get("/movie/genre", {
+  const { data } = await http.get('/movie/genre', {
     params: { genre },
   });
   return data;

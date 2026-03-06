@@ -1,11 +1,7 @@
-import { Request, Response } from "express";
-import { AppError, ErrorCode, ErrorMessage } from "@shared/errors/AppError"; // ajuste o path
+import { Request, Response } from 'express';
+import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError'; // ajuste o path
 
-export default async function expressRouteAdapter(
-  req: Request,
-  res: Response,
-  controller: any
-) {
+export default async function expressRouteAdapter(req: Request, res: Response, controller: any) {
   try {
     const input = {
       body: req.body,

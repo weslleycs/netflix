@@ -1,5 +1,5 @@
-import { CreateGenreInput } from "@domain/types/genreType";
-import PrismaService from "@infrastructure/services/prisma.service";
+import { CreateGenreInput } from '@domain/types/genreType';
+import PrismaService from '@infrastructure/services/prisma.service';
 
 class GenreRepository {
   private readonly prismaService: PrismaService;
@@ -9,15 +9,15 @@ class GenreRepository {
   }
 
   async register(input: CreateGenreInput): Promise<boolean> {
-    const prisma= this.prismaService.getConnection();
+    const prisma = this.prismaService.getConnection();
     await prisma.genres.create({
       data: {
         name: input.name,
-        description: input.description,            
-      }
-    })
-    return true
+        description: input.description,
+      },
+    });
+    return true;
   }
-  }
+}
 
-  export default GenreRepository;
+export default GenreRepository;
