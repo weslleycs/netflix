@@ -1,10 +1,10 @@
-export type CreateMovieInput = {
+export type CreateSerieInput = {
   title: string;
-  description?: string;
-  imageUrl?: string;
+  description?: string | null;
+  imageUrl?: string | null;
 };
 
-export type Movies = {
+export type Series = {
   id: number;
   title: string;
   description?: string | null;
@@ -14,6 +14,6 @@ export type Movies = {
   updatedAt: Date;
 };
 
-export type GetByTitleMovie = {
+export type SerieInput = {
   title: string;
 };

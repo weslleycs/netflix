@@ -1,8 +1,8 @@
-import RegisterMovieUseCase from '@application/useCases/movie/register.useCase';
+import RegisterMovieUseCase from '@application/useCases/movies/registerUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
-import { CreateMovieInput } from '@domain/types/movie.type';
+import { CreateMovieInput } from '@domain/types/movieType';
 
-class MovieController {
+class RegisterMovieController {
   private readonly movieUseCase: RegisterMovieUseCase;
 
   constructor(movieUseCase: RegisterMovieUseCase) {
@@ -21,4 +21,4 @@ class MovieController {
   }
 }
 
-export default MovieController;
+export default RegisterMovieController;

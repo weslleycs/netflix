@@ -1,7 +1,7 @@
-import RegisterMovieUseCase from '@application/useCases/movies/movieUseCase';
-import MovieRepository from '@infrastructure/repositories/movieRepository';
+import RegisterMovieUseCase from '@application/useCases/movies/registerUseCase';
+import RegisterMovieRepository from '@infrastructure/repositories/movieRepository';
 import PrismaService from '@infrastructure/services/prisma.service';
-import MovieController from '@presentation/controllers/movies/registerController';
+import RegisterMovieController from '@presentation/controllers/movies/registerController';
 
 export function registerMovieFactory(prismaService: PrismaService): RegisterMovieController {
   const movieRepository = new RegisterMovieRepository(prismaService);

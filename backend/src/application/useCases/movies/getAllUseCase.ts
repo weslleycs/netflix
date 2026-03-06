@@ -1,16 +1,16 @@
-import { CreateMovieInput } from '@domain/types/movieType';
+import { Movies } from '@domain/types/movieType';
 import MovieRepository from '@infrastructure/repositories/movieRepository';
 
-class RegisterMovieUseCase {
+class GetAllMovieUseCase {
   private readonly movieRepository: MovieRepository;
 
   constructor(movieRepository: MovieRepository) {
     this.movieRepository = movieRepository;
   }
 
-  async execute(input: CreateMovieInput): Promise<boolean> {
-    return this.movieRepository.register(input);
+  async execute(): Promise<Movies[]> {
+    return this.movieRepository.listAll();
   }
 }
 
-export default RegisterMovieUseCase;
+export default GetAllMovieUseCase;

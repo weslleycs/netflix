@@ -8,16 +8,16 @@ datasource db {
 }
 
 model users {
-  id               Int       @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   name             String
   password         String
-  email            String    @unique
-  active           Boolean?  @default(true)
+  email            String   @unique
+  active           Boolean? @default(true)
   session          String?
   refreshToken     String?
   codResetPassword String?
-  createdAt        DateTime? @default(now())
-  updatedAt        DateTime  @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now())
 
   movies  movies[]
   series  series[]
@@ -26,16 +26,15 @@ model users {
 }
 
 model movies {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String?
   imageUrl    String?
   userId      Int?
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime  @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 
   user         users?          @relation(fields: [userId], references: [id])
-  seasons      seasons[]
   moviesGenres movies_genres[]
   rates        rates[]
   coments      coments[]
@@ -44,33 +43,34 @@ model movies {
 model series {
   id           Int             @id @default(autoincrement())
   title        String
-  description  String
-  imageUrl     String
+  description  String?
+  imageUrl     String?
   userId       Int?
-  createdAt    DateTime?       @default(now())
+  createdAt    DateTime        @default(now())
   updatedAt    DateTime        @default(now())
   user         users?          @relation(fields: [userId], references: [id])
   seriesGenres series_genres[]
   rates        rates[]
   coments      coments[]
+  seasons      seasons[]
 }
 
 model seasons {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   seasons   Int
   episodes  Int
   seriesId  Int
-  createdAt DateTime? @default(now())
-  updatedAt DateTime  @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
-  movies movies @relation(fields: [seriesId], references: [id])
+  series series @relation(fields: [seriesId], references: [id])
 }
 
 model genres {
   id           Int             @id @default(autoincrement())
   name         String          @unique
   description  String?
-  createdAt    DateTime?       @default(now())
+  createdAt    DateTime        @default(now())
   updatedAt    DateTime        @default(now())
   seriesGenres series_genres[]
   moviesGenres movies_genres[]
@@ -79,33 +79,33 @@ model genres {
 }
 
 model series_genres {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   genreId   Int
   serieId   Int
-  createdAt DateTime? @default(now())
-  updatedAt DateTime  @default(now())
-  genre     genres    @relation(fields: [genreId], references: [id])
-  serie     series    @relation(fields: [serieId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  genre     genres   @relation(fields: [genreId], references: [id])
+  serie     series   @relation(fields: [serieId], references: [id])
 }
 
 model movies_genres {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   genreId   Int
   moviesId  Int
-  createdAt DateTime? @default(now())
-  updatedAt DateTime  @default(now())
-  genre     genres    @relation(fields: [genreId], references: [id])
-  movie     movies    @relation(fields: [moviesId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  genre     genres   @relation(fields: [genreId], references: [id])
+  movie     movies   @relation(fields: [moviesId], references: [id])
 }
 
 model rates {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   rate      Int
   userId    Int
   serieId   Int?
   movieId   Int?
-  createdAt DateTime? @default(now())
-  updatedAt DateTime  @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
   user  users   @relation(fields: [userId], references: [id])
   serie series? @relation(fields: [serieId], references: [id])
@@ -113,13 +113,13 @@ model rates {
 }
 
 model coments {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   coment    String
   userId    Int
   serieId   Int?
   movieId   Int?
-  createdAt DateTime? @default(now())
-  updatedAt DateTime  @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
   user  users   @relation(fields: [userId], references: [id])
   serie series? @relation(fields: [serieId], references: [id])
