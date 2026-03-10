@@ -17,3 +17,11 @@ export type Movies = {
 export type GetByTitleMovie = {
   title: string;
 };
+
+export type GetByGenreMovie = {
+  movieId: number;
+};
+
+export type Genres = {
+  genreId: number[];
+};

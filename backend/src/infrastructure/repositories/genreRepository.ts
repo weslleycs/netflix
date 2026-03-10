@@ -1,4 +1,4 @@
-import { CreateGenreInput } from '@domain/types/genreType';
+import { CreateGenreInput, InputGenreMovie } from '@domain/types/genreType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
@@ -25,20 +25,27 @@ class GenreRepository {
     }
   }
 
-  async updater(data: UpdaterMovie): Promise<boolean> {
-    const prisma = this.prismaService.getConnection();
-    const { id, ...updaterData } = data;
-    await prisma.movie.update({
-      data: {
-        ...updaterData,
-        updatedAt: new Date(),
-      },
-      where: {
-        id: Number(id),
-      },
-    });
-
-    return true;
+  async registerGenreMovie(input: InputGenreMovie): Promise<boolean> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const data = input.genreId.map((genreId) => ({
+        movieId: input.movieId,
+        genreId: Number(genreId),
+      }));
+      await prisma.movies_genres.deleteMany({
+        where: {
+          movieId: input.movieId,
+        },
+      });
+      await prisma.movies_genres.createMany({
+        data: data,
+      });
+      return true;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
   }
 }
 

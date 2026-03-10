@@ -91,11 +91,11 @@ model series_genres {
 model movies_genres {
   id        Int      @id @default(autoincrement())
   genreId   Int
-  moviesId  Int
+  movieId   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   genre     genres   @relation(fields: [genreId], references: [id])
-  movie     movies   @relation(fields: [moviesId], references: [id])
+  movie     movies   @relation(fields: [movieId], references: [id])
 }
 
 model rates {

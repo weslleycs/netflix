@@ -14,3 +14,8 @@ export type GetByoutpout = {
   imageUrl: string;
   genreIds: number[];
 };
+
+export type InputGenreMovie = {
+  movieId: number;
+  genreId: number[];
+};

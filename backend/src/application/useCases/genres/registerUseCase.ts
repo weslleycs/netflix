@@ -2,14 +2,14 @@ import { CreateGenreInput } from '@domain/types/genreType';
 import GenreRepository from '@infrastructure/repositories/genreRepository';
 
 class RegisterGenreUseCase {
-  private readonly movieRepository: GenreRepository;
+  private readonly genreRepository: GenreRepository;
 
-  constructor(movieRepository: GenreRepository) {
-    this.movieRepository = movieRepository;
+  constructor(genreRepository: GenreRepository) {
+    this.genreRepository = genreRepository;
   }
 
   async execute(input: CreateGenreInput): Promise<boolean> {
-    return this.movieRepository.register(input);
+    return this.genreRepository.register(input);
   }
 }
 

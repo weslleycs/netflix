@@ -1,4 +1,10 @@
-import { CreateMovieInput, GetByTitleMovie, Movies } from '@domain/types/movieType';
+import {
+  CreateMovieInput,
+  Genres,
+  GetByGenreMovie,
+  GetByTitleMovie,
+  Movies,
+} from '@domain/types/movieType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
@@ -41,6 +47,24 @@ class MovieRepository {
         where: {
           title: {
             contains: input.title,
+          },
+        },
+      });
+      return movies;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+
+  async serchByGenre(input: GetByGenreMovie): Promise<Genres[]> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const movies = await prisma.g.findMany({
+        where: {
+          title: {
+            contains: input.movieId,
           },
         },
       });

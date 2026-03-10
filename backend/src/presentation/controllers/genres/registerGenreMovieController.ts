@@ -1,22 +1,22 @@
-import RegisterGenreUseCase from '@application/useCases/genres/registerUseCase';
+import RegisterGenreMovieUseCase from '@application/useCases/genres/registerGenreMovieUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
-import { CreateGenreInput } from '@domain/types/genreType';
+import { InputGenreMovie } from '@domain/types/genreType';
 
 class RegisterGenreMovieController {
-  private readonly genreUseCase: RegisterGenreUseCase;
+  private readonly genreMovieUseCase: RegisterGenreMovieUseCase;
 
-  constructor(genreUseCase: RegisterGenreUseCase) {
-    this.genreUseCase = genreUseCase;
+  constructor(genreMovieUseCase: RegisterGenreMovieUseCase) {
+    this.genreMovieUseCase = genreMovieUseCase;
   }
 
   async run(
-    input: controllerInputType<object, object, object, CreateGenreInput>,
+    input: controllerInputType<object, object, object, InputGenreMovie>,
   ): Promise<httpResponseType<string>> {
-    await this.genreUseCase.execute(input.body);
+    await this.genreMovieUseCase.execute(input.body);
 
     return {
       statusCode: 200,
-      data: ' Genre Register',
+      data: ' Genre Movie Register',
     };
   }
 }

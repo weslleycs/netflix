@@ -16,4 +16,8 @@ export function movieRoutes(router: Router, prismaService: PrismaService) {
   router.get('/movie/title', (req, res) =>
     expressRouteAdapter(req, res, getByTitleMovieFactory(prismaService)),
   );
+
+  router.get('/movie/genre', (req, res) =>
+    expressRouteAdapter(req, res, getByGenreMovieFactory(prismaService)),
+  );
 }
