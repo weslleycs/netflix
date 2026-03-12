@@ -1,4 +1,4 @@
-import { Series } from '@domain/types/serieType';
+import { GetAllLimite, Series } from '@domain/types/serieType';
 import SerieRepository from '@infrastructure/repositories/serieRepository';
 
 class GetAllSerieUseCase {
@@ -8,8 +8,8 @@ class GetAllSerieUseCase {
     this.serieRepository = serieRepository;
   }
 
-  async execute(): Promise<Series[]> {
-    return this.serieRepository.listall();
+  async execute(input: GetAllLimite): Promise<Series[]> {
+    return this.serieRepository.listall(input);
   }
 }
 

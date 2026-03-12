@@ -5,8 +5,8 @@ import GetByTitleSerieController from '@presentation/controllers/series/getByTit
 
 export function getByTitleSerieFactory(prismaService: PrismaService): GetByTitleSerieController {
   const serieRepository = new SerieRepository(prismaService);
-  const serieUseCase = new GetByTitleSerieUseCase(serieRepository);
-  const controller = new GetByTitleSerieController(serieUseCase);
+  const getByTitleSerieUseCase = new GetByTitleSerieUseCase(serieRepository);
+  const controller = new GetByTitleSerieController(getByTitleSerieUseCase);
 
   return controller;
 }

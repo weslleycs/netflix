@@ -1,6 +1,6 @@
 import GetAllMovieUseCase from '@application/useCases/movies/getAllUseCase';
-import { httpResponseType } from '@domain/types/controller.type';
-import { Movies } from '@domain/types/movieType';
+import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
+import { MovieListAllInput, Movies } from '@domain/types/movieType';
 
 class GetAllMovieController {
   private readonly movieUseCase: GetAllMovieUseCase;
@@ -9,8 +9,10 @@ class GetAllMovieController {
     this.movieUseCase = movieUseCase;
   }
 
-  async run(): Promise<httpResponseType<Movies[]>> {
-    const movies = await this.movieUseCase.execute();
+  async run(
+    input: controllerInputType<object, object, MovieListAllInput, object>,
+  ): Promise<httpResponseType<Movies[]>> {
+    const movies = await this.movieUseCase.execute(input.query);
     return { statusCode: 200, data: movies };
   }
 }

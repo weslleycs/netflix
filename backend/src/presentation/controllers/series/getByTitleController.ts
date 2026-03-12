@@ -3,16 +3,16 @@ import { controllerInputType, httpResponseType } from '@domain/types/controller.
 import { SerieInput, Series } from '@domain/types/serieType';
 
 class GetByTitleSerieController {
-  private readonly serieUseCase: GetByTitleSerieUseCase;
+  private readonly getByTitleSerieUseCase: GetByTitleSerieUseCase;
 
-  constructor(serieUseCase: GetByTitleSerieUseCase) {
-    this.serieUseCase = serieUseCase;
+  constructor(getByTitleSerieUseCase: GetByTitleSerieUseCase) {
+    this.getByTitleSerieUseCase = getByTitleSerieUseCase;
   }
 
   async run(
     input: controllerInputType<object, object, SerieInput, object>,
   ): Promise<httpResponseType<Series[]>> {
-    const movies = await this.serieUseCase.execute(input.query);
+    const movies = await this.getByTitleSerieUseCase.execute(input.query);
 
     return {
       statusCode: 200,

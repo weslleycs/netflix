@@ -1,9 +1,13 @@
 import {
   CreateMovieInput,
-  Genres,
-  GetByGenreMovie,
   GetByTitleMovie,
+  GetCommentsAndRateMovieById,
+  GetCommentsAndRateMovieByIdOutput,
+  GetMoviesByGenreinput,
+  GetMoviesByGenreoutput,
+  MovieListAllInput,
   Movies,
+  UpdaterMovie,
 } from '@domain/types/movieType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
@@ -33,10 +37,12 @@ class MovieRepository {
     }
   }
 
-  async listAll(): Promise<Movies[]> {
+  async listAll(input: MovieListAllInput): Promise<Movies[]> {
     const prisma = this.prismaService.getConnection();
+    const { limit = 100, page = 1 } = input;
     return prisma.movies.findMany({
-      take: 10,
+      take: Number(limit),
+      skip: Number((page - 1) * limit),
     });
   }
 
@@ -58,70 +64,95 @@ class MovieRepository {
     }
   }
 
-  async serchByGenre(input: GetByGenreMovie): Promise<Genres[]> {
+  async searchByGenre(input: GetMoviesByGenreinput): Promise<GetMoviesByGenreoutput[]> {
     try {
       const prisma = this.prismaService.getConnection();
-      const movies = await prisma.g.findMany({
+
+      return await prisma.movies.findMany({
         where: {
-          title: {
-            contains: input.movieId,
+          moviesGenres: {
+            some: {
+              genre: {
+                name: input.genre,
+              },
+            },
           },
         },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          imageUrl: true,
+          userId: true,
+          createdAt: true,
+          updatedAt: true,
+        },
       });
-      return movies;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+
+  async GetCommentsAndRate(
+    input: GetCommentsAndRateMovieById,
+  ): Promise<GetCommentsAndRateMovieByIdOutput> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const dataComments = await prisma.coments.findMany({
+        where: {
+          movieId: Number(input.movieId),
+        },
+        select: {
+          coment: true,
+        },
+      });
+      const comments = dataComments.map((comment) => {
+        return comment.coment;
+      });
+      const rate = await prisma.rates.aggregate({
+        where: {
+          movieId: Number(input.movieId),
+        },
+        _avg: {
+          rate: true,
+        },
+      });
+      return {
+        comments,
+        rate: rate._avg.rate ?? 0,
+      };
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+
+  async updater(data: UpdaterMovie): Promise<boolean> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const { id, ...updaterData } = data;
+      await prisma.movies.update({
+        data: {
+          ...updaterData,
+          updatedAt: new Date(),
+        },
+        where: {
+          id: Number(id),
+        },
+      });
+
+      return true;
     } catch (error) {
       if (error instanceof AppError) throw error;
       const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
       throw new AppError(ErrorCode.INTERNAL, message);
     }
   }
-
-  // async serchByGenre(input: MovieSearchInput): Promise<MovieSearchOutput[]> {
-  //   const prisma = this.prismaService.getConnection();
-  //   const movies = await prisma.movie.findMany({
-  //     where: {
-  //       genre: input.genre,
-  //     },
-  //   });
-  //   return movies;
-  // }
-
-  // async getById(input: GetById): Promise<MovieSearchOutput> {
-  //   try {
-  //     const prisma = this.prismaService.getConnection();
-  //     const movie = await prisma.movie.findUnique({
-  //       where: {
-  //         id: Number(input.id),
-  //       },
-  //     });
-
-  //     if (!movie) {
-  //       throw new AppError(ErrorCode.NOT_FOUND, ErrorMessage.NOT_FOUND);
-  //     }
-
-  //     return movie;
-  //   } catch (error) {
-  //     if (error instanceof AppError) throw error;
-  //     const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
-  //     throw new AppError(ErrorCode.INTERNAL, message);
-  //   }
-  // }
-
-  // async updater(data: UpdaterMovie): Promise<boolean> {
-  //   const prisma = this.prismaService.getConnection();
-  //   const { id, ...updaterData } = data;
-  //   await prisma.movie.update({
-  //     data: {
-  //       ...updaterData,
-  //       updatedAt: new Date(),
-  //     },
-  //     where: {
-  //       id: Number(id),
-  //     },
-  //   });
-
-  //   return true;
-  // }
 }
 
 export default MovieRepository;

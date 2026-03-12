@@ -1,4 +1,4 @@
-import { Movies } from '@domain/types/movieType';
+import { MovieListAllInput, Movies } from '@domain/types/movieType';
 import MovieRepository from '@infrastructure/repositories/movieRepository';
 
 class GetAllMovieUseCase {
@@ -8,8 +8,8 @@ class GetAllMovieUseCase {
     this.movieRepository = movieRepository;
   }
 
-  async execute(): Promise<Movies[]> {
-    return this.movieRepository.listAll();
+  async execute(input: MovieListAllInput): Promise<Movies[]> {
+    return this.movieRepository.listAll(input);
   }
 }
 

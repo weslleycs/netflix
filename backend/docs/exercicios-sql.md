@@ -198,18 +198,36 @@ where g.name = "acao"
 ### 2.8 - Quantos filmes existem por genero?
 ```sql
 -- Retorne nome do genero e quantidade de filmes, ordenado do maior pro menor
+select count(m.title) ,g.name  
+from movies m 
+inner join movies_genres mg on m.id = mg.movieId
+inner join genres g on mg.genreId = g.id
+group by g.name 
+ORDER by count(*) desc
 ```
 
 ### 2.9 - Listar os comentarios de um filme especifico com o nome de quem comentou
 ```sql
 -- JOIN entre coments, users e movies
 -- Filtre por movieId = 1
+select u.name,c.coment  
+from users u 
+inner join coments c on u.id = c.userId
+WHERE c.movieId = 1
+
 ```
 
 ### 2.10 - Qual usuario deu mais avaliacoes (filmes + series somados)?
 ```sql
 -- Use COUNT() e GROUP BY userId na tabela rates
 -- Retorne nome do usuario e total de avaliacoes
+select count(*),u.name
+from rates r
+inner join users u on r.userId = u.id 
+group by u.name 
+order by count(*) desc
+limit 1
+
 ```
 
 ### 2.11 - Listar series com seus generos
@@ -217,12 +235,21 @@ where g.name = "acao"
 -- JOIN entre series, series_genres e genres
 -- Retorne titulo da serie e nome do genero
 -- Ordene por titulo da serie
+select s.title , g.name 
+from series s 
+inner join series_genres sg on s.id = sg.serieId
+inner join genres g on sg.genreId = g.id
+order by s.title desc
 ```
 
 ### 2.12 - Qual a menor e a maior nota dada para cada serie?
 ```sql
 -- Use MIN() e MAX() com GROUP BY
 -- Retorne titulo, menor nota e maior nota
+select min(r.rate ) as Minimo,max(r.rate )as maximo,s.title 
+from rates r 
+inner join series s on r.serieId = s.id
+group by s.title
 ```
 
 ### 2.13 - Listar filmes que NAO tem nenhuma avaliacao
@@ -236,6 +263,11 @@ where g.name = "acao"
 -- Use COUNT() na tabela coments, GROUP BY userId
 -- JOIN com users para pegar o nome
 -- LIMIT 3
+SELECT count(*),u.name 
+from coments c 
+inner join users u on c.userId = u.id
+group by c.userId 
+limit 3
 ```
 
 ### 2.15 - Listar todas as temporadas de uma serie especifica
@@ -243,18 +275,32 @@ where g.name = "acao"
 -- JOIN entre seasons e series
 -- Filtre por seriesId = 1 (Breaking Bad)
 -- Retorne nome da serie, numero da temporada e quantidade de episodios
+select s.title, s2.seasons, s2.episodes  
+from series s 
+inner join seasons s2 on s.id  = s2.seriesId 
+where s2.seriesId = 1
 ```
 
 ### 2.16 - Quantas series existem por genero?
 ```sql
 -- Mesmo conceito do 2.8 mas para series
 -- Retorne nome do genero e quantidade de series
+SELECT count(*), g.name 
+from series s 
+inner join series_genres sg on s.id = sg.serieId 
+inner join genres g on sg.genreId = g.id
+group by  g.name 
 ```
 
 ### 2.17 - Listar filmes com a quantidade de avaliacoes que receberam
 ```sql
 -- Use COUNT() com LEFT JOIN entre movies e rates
 -- Ordene do mais avaliado para o menos
+SELECT COUNT(r.rate)as total , m.title
+FROM movies m
+LEFT JOIN rates r ON m.id = r.movieId
+GROUP BY m.title
+ORDER BY total DESC
 ```
 
 ### 2.18 - Buscar todos os comentarios de series com nome do usuario e titulo da serie
@@ -269,6 +315,13 @@ where g.name = "acao"
 -- Duas queries separadas usando AVG()
 -- Uma filtrando movieId IS NOT NULL
 -- Outra filtrando serieId IS NOT NULL
+select AVG(r.rate )
+from rates r
+where r.movieId  is null 
+
+select AVG(r.rate )
+from rates r
+where r.serieId is null
 ```
 
 ### 2.20 - Listar series que tem exatamente 1 temporada
@@ -281,12 +334,23 @@ where g.name = "acao"
 ```sql
 -- JOIN entre movies e users
 -- Use LIKE 'J%' no nome do usuario
+SELECT s.title, COUNT(s2.seasons) AS total_temporadas
+FROM series s
+JOIN seasons s2 on s.id = s2.seriesId 
+GROUP BY s.id, s.title
+HAVING COUNT(s2.seasons  ) = 1;
 ```
 
 ### 2.22 - Qual genero tem mais series associadas?
 ```sql
 -- JOIN entre genres e series_genres
 -- GROUP BY genero, ORDER BY COUNT DESC, LIMIT 1
+SELECT g.name , COUNT(*) AS total_series
+FROM genres g
+INNER JOIN series_genres sg ON g.id = sg.genreId
+GROUP BY g.name
+ORDER BY total_series DESC
+LIMIT 1;
 ```
 
 ### 2.23 - Listar avaliacoes de filmes com nota entre 7 e 8

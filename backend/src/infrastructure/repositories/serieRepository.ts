@@ -1,4 +1,11 @@
-import { CreateSerieInput, SerieInput, Series } from '@domain/types/serieType';
+import {
+  CreateSerieInput,
+  GetAllLimite,
+  GetCommentsAndRateSerieById,
+  GetCommentsAndRateSerieByIdOutput,
+  SerieInput,
+  Series,
+} from '@domain/types/serieType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
@@ -8,7 +15,6 @@ class SerieRepository {
   constructor(prismaService: PrismaService) {
     this.prismaService = prismaService;
   }
-
   async register(input: CreateSerieInput): Promise<boolean> {
     try {
       const prisma = this.prismaService.getConnection();
@@ -27,10 +33,14 @@ class SerieRepository {
     }
   }
 
-  async listall(): Promise<Series[]> {
+  async listall(input: GetAllLimite): Promise<Series[]> {
     try {
       const prisma = this.prismaService.getConnection();
-      return prisma.series.findMany({ take: 10 });
+      const { limit = 100, page = 1 } = input;
+      return prisma.series.findMany({
+        take: Number(limit),
+        skip: Number((page - 1) * limit),
+      });
     } catch (error) {
       if (error instanceof AppError) throw error;
       const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
@@ -41,7 +51,10 @@ class SerieRepository {
   async serchByTitle(input: SerieInput): Promise<Series[]> {
     try {
       const prisma = this.prismaService.getConnection();
+      const { limit = 100, page = 1 } = input;
       const series = await prisma.series.findMany({
+        take: Number(limit),
+        skip: Number((page - 1) * limit),
         where: {
           title: {
             contains: input.title,
@@ -51,6 +64,42 @@ class SerieRepository {
       return series;
     } catch (error) {
       if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+
+  async GetCommentsAndRateSerie(
+    input: GetCommentsAndRateSerieById,
+  ): Promise<GetCommentsAndRateSerieByIdOutput> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const dataComments = await prisma.coments.findMany({
+        where: {
+          serieId: Number(input.serieId),
+        },
+        select: {
+          coment: true,
+        },
+      });
+      const comments = dataComments.map((comment) => {
+        return comment.coment;
+      });
+      const rate = await prisma.rates.aggregate({
+        where: {
+          serieId: Number(input.serieId),
+        },
+        _avg: {
+          rate: true,
+        },
+      });
+      return {
+        comments,
+        rate: rate._avg.rate ?? 0,
+      };
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+
       const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
       throw new AppError(ErrorCode.INTERNAL, message);
     }

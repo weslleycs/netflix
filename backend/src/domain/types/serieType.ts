@@ -16,4 +16,20 @@ export type Series = {
 
 export type SerieInput = {
   title: string;
+  page?: number;
+  limit?: number;
+};
+
+export type GetAllLimite = {
+  page?: number;
+  limit?: number;
+};
+
+export type GetCommentsAndRateSerieById = {
+  serieId: number;
+};
+
+export type GetCommentsAndRateSerieByIdOutput = {
+  rate: number;
+  comments: string[];
 };
