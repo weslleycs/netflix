@@ -1,5 +1,3 @@
-// controllers/getMoviesByGenreController.ts
-
 import GetMoviesByGenreUseCase from '@application/useCases/movies/getMoviesByGenreUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { GetMoviesByGenreinput, GetMoviesByGenreoutput } from '@domain/types/movieType';

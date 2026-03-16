@@ -4,7 +4,7 @@ export type CreateSerieInput = {
   imageUrl?: string | null;
 };
 
-export type Series = {
+export type Serie = {
   id: number;
   title: string;
   description?: string | null;
@@ -27,9 +27,17 @@ export type GetAllLimite = {
 
 export type GetCommentsAndRateSerieById = {
   serieId: number;
+  page?: number;
+  limit?: number;
 };
 
 export type GetCommentsAndRateSerieByIdOutput = {
   rate: number;
   comments: string[];
+};
+
+export type GetSeriesByGenre = {
+  genre: string;
+  page?: number;
+  limit?: number;
 };

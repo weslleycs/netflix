@@ -1,12 +1,12 @@
-import GetMoviesByGenreUseCase from '@application/useCases/movies/getMoviesByGenreUseCase';
-import MovieRepository from '@infrastructure/repositories/movieRepository';
+import GetSeriesByGenreUseCase from '@application/useCases/series/getMoviesByGenreUseCase';
+import SerieRepository from '@infrastructure/repositories/serieRepository';
 import PrismaService from '@infrastructure/services/prisma.service';
-import GetMoviesByGenreController from '@presentation/controllers/movies/getMoviesByGenreController';
+import GetSeriesByGenreController from '@presentation/controllers/series/getMoviesByGenreController';
 
-export function getMoviesByGenreFactory(prismaService: PrismaService): GetMoviesByGenreController {
-  const movieRepository = new MovieRepository(prismaService);
-  const getMoviesByGenreUseCase = new GetMoviesByGenreUseCase(movieRepository);
-  const controller = new GetMoviesByGenreController(getMoviesByGenreUseCase);
+export function getSeriesByGenreFactory(prismaService: PrismaService): GetSeriesByGenreController {
+  const serieRepository = new SerieRepository(prismaService);
+  const getSeriesByGenreUseCase = new GetSeriesByGenreUseCase(serieRepository);
+  const controller = new GetSeriesByGenreController(getSeriesByGenreUseCase);
 
   return controller;
 }

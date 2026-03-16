@@ -1,18 +1,16 @@
-// useCases/getMoviesByGenreUseCase.ts
+import { GetSeriesByGenre, Serie } from '@domain/types/serieType';
+import SerieRepository from '@infrastructure/repositories/serieRepository';
 
-import { GetMoviesByGenreinput, GetMoviesByGenreoutput } from '@domain/types/movieType';
-import MovieRepository from '@infrastructure/repositories/movieRepository';
+class GetSeriesByGenreUseCase {
+  private readonly serieRepository: SerieRepository;
 
-class GetMoviesByGenreUseCase {
-  private readonly movieRepository: MovieRepository;
-
-  constructor(movieRepository: MovieRepository) {
-    this.movieRepository = movieRepository;
+  constructor(serieRepository: SerieRepository) {
+    this.serieRepository = serieRepository;
   }
 
-  async execute(input: GetMoviesByGenreinput): Promise<GetMoviesByGenreoutput[]> {
-    return this.movieRepository.searchByGenre(input);
+  async execute(input: GetSeriesByGenre): Promise<Serie[]> {
+    return this.serieRepository.searchByGenre(input);
   }
 }
 
-export default GetMoviesByGenreUseCase;
+export default GetSeriesByGenreUseCase;

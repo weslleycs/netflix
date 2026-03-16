@@ -1,5 +1,3 @@
-// useCases/getMoviesByGenreUseCase.ts
-
 import { GetMoviesByGenreinput, GetMoviesByGenreoutput } from '@domain/types/movieType';
 import MovieRepository from '@infrastructure/repositories/movieRepository';
 
