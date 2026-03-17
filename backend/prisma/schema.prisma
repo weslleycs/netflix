@@ -22,7 +22,7 @@ model users {
   movies   movies[]
   series   series[]
   rates    rates[]
-  comments comment[]
+  comments comments[]
 }
 
 model movies {
@@ -37,7 +37,7 @@ model movies {
   user         users?          @relation(fields: [userId], references: [id])
   moviesGenres movies_genres[]
   rates        rates[]
-  comments     comment[]
+  comments     comments[]
 }
 
 model series {
@@ -101,20 +101,6 @@ model movies_genres {
 model rates {
   id        Int      @id @default(autoincrement())
   rate      Int
-  userId    Int
-  serieId   Int?
-  movieId   Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-
-  user  users   @relation(fields: [userId], references: [id])
-  serie series? @relation(fields: [serieId], references: [id])
-  movie movies? @relation(fields: [movieId], references: [id])
-}
-
-model coments {
-  id        Int      @id @default(autoincrement())
-  coment    String
   userId    Int
   serieId   Int?
   movieId   Int?
