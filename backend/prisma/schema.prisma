@@ -125,3 +125,17 @@ model coments {
   serie series? @relation(fields: [serieId], references: [id])
   movie movies? @relation(fields: [movieId], references: [id])
 }
+
+model comments {
+  id        Int      @id @default(autoincrement())
+  comment   String
+  userId    Int
+  serieId   Int?
+  movieId   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  user  users   @relation(fields: [userId], references: [id])
+  serie series? @relation(fields: [serieId], references: [id])
+  movie movies? @relation(fields: [movieId], references: [id])
+}
