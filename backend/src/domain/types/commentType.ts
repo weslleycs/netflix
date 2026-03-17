@@ -1,5 +1,5 @@
 export type registerCommentSerie = {
-  coment: string;
+  comment: string;
   serieId: number;
   userId: number;
 };

@@ -11,9 +11,9 @@ class CommentRepository {
   async register(input: registerCommentSerie): Promise<boolean> {
     try {
       const prisma = this.prismaService.getConnection();
-      await prisma.coments.create({
+      await prisma.comments.create({
         data: {
-          coment: input.coment,
+          comment: input.comment,
           serieId: input.serieId,
           userId: input.userId,
         },

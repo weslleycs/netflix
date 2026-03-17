@@ -76,18 +76,18 @@ class SerieRepository {
     try {
       const prisma = this.prismaService.getConnection();
       const { limit = 100, page = 1 } = input;
-      const dataComments = await prisma.coments.findMany({
+      const dataComments = await prisma.comments.findMany({
         take: Number(limit),
         skip: Number((page - 1) * limit),
         where: {
           serieId: Number(input.serieId),
         },
         select: {
-          coment: true,
+          comment: true,
         },
       });
       const comments = dataComments.map((comment) => {
-        return comment.coment;
+        return comment.comment;
       });
       const rate = await prisma.rates.aggregate({
         where: {

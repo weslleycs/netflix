@@ -101,16 +101,16 @@ class MovieRepository {
   ): Promise<GetCommentsAndRateMovieByIdOutput> {
     try {
       const prisma = this.prismaService.getConnection();
-      const dataComments = await prisma.coments.findMany({
+      const dataComments = await prisma.comments.findMany({
         where: {
           movieId: Number(input.movieId),
         },
         select: {
-          coment: true,
+          comment: true,
         },
       });
       const comments = dataComments.map((comment) => {
-        return comment.coment;
+        return comment.comment;
       });
       const rate = await prisma.rates.aggregate({
         where: {
