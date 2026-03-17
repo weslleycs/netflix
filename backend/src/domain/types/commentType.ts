@@ -3,3 +3,9 @@ export type registerCommentSerie = {
   serieId: number;
   userId: number;
 };
+
+export type registerCommentMovie = {
+  comment: string;
+  movieId: number;
+  userId: number;
+};

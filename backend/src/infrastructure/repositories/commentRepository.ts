@@ -1,4 +1,4 @@
-import { registerCommentSerie } from '@domain/types/commentType';
+import { registerCommentMovie, registerCommentSerie } from '@domain/types/commentType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
@@ -8,13 +8,31 @@ class CommentRepository {
     this.prismaService = prismaService;
   }
 
-  async register(input: registerCommentSerie): Promise<boolean> {
+  async registerSerie(input: registerCommentSerie): Promise<boolean> {
     try {
       const prisma = this.prismaService.getConnection();
       await prisma.comments.create({
         data: {
           comment: input.comment,
           serieId: input.serieId,
+          userId: input.userId,
+        },
+      });
+      return true;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+
+  async registerMovie(input: registerCommentMovie): Promise<boolean> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      await prisma.comments.create({
+        data: {
+          comment: input.comment,
+          movieId: input.movieId,
           userId: input.userId,
         },
       });

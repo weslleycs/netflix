@@ -7,7 +7,7 @@ class RegisterCommentSerieUseCase {
     this.commentRepository = commentRepository;
   }
   async execute(input: registerCommentSerie): Promise<boolean> {
-    return await this.commentRepository.register(input);
+    return await this.commentRepository.registerSerie(input);
   }
 }
 
