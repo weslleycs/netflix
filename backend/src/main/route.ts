@@ -5,6 +5,7 @@ import { serieRoutes } from './routes/serieRoute';
 import { movieRoutes } from './routes/moviesRoute';
 import { genreRoutes } from './routes/genreRoute';
 import { commentRoutes } from './routes/commentRoute';
+import { rateRoutes } from './routes/ratesRoute';
 
 export function createRouter(prismaService: PrismaService) {
   const router = Router();
@@ -18,6 +19,7 @@ export function createRouter(prismaService: PrismaService) {
   genreRoutes(router, prismaService);
   serieRoutes(router, prismaService);
   commentRoutes(router, prismaService);
+  rateRoutes(router, prismaService);
 
   return router;
 }

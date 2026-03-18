@@ -1,4 +1,4 @@
-import { registerCommentMovie } from '@domain/types/commentType';
+import { RegisterCommentMovie } from '@domain/types/commentType';
 import CommentRepository from '@infrastructure/repositories/commentRepository';
 
 class RegisterCommentMovieUseCase {
@@ -6,7 +6,7 @@ class RegisterCommentMovieUseCase {
   constructor(commentRepository: CommentRepository) {
     this.commentRepositoy = commentRepository;
   }
-  async execute(input: registerCommentMovie): Promise<boolean> {
+  async execute(input: RegisterCommentMovie): Promise<boolean> {
     return await this.commentRepositoy.registerMovie(input);
   }
 }

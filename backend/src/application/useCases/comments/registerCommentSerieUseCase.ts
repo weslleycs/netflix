@@ -1,4 +1,4 @@
-import { registerCommentSerie } from '@domain/types/commentType';
+import { RegisterCommentSerie } from '@domain/types/commentType';
 import CommentRepository from '@infrastructure/repositories/commentRepository';
 
 class RegisterCommentSerieUseCase {
@@ -6,7 +6,7 @@ class RegisterCommentSerieUseCase {
   constructor(commentRepository: CommentRepository) {
     this.commentRepository = commentRepository;
   }
-  async execute(input: registerCommentSerie): Promise<boolean> {
+  async execute(input: RegisterCommentSerie): Promise<boolean> {
     return await this.commentRepository.registerSerie(input);
   }
 }
