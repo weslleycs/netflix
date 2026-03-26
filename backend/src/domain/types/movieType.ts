@@ -15,6 +15,9 @@ export type Movies = {
 };
 
 export type MovieListAllInput = {
+  id?: number;
+  title?: string;
+  genre?: string;
   limit?: number;
   page?: number;
 };

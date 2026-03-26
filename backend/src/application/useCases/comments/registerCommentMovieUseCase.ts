@@ -7,7 +7,7 @@ class RegisterCommentMovieUseCase {
     this.commentRepositoy = commentRepository;
   }
   async execute(input: RegisterCommentMovie): Promise<boolean> {
-    return await this.commentRepositoy.registerMovie(input);
+    return await this.commentRepositoy.registerCommentMovie(input);
   }
 }
 
