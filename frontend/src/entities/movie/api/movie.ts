@@ -13,7 +13,7 @@ export async function registerMovie(dto: RegisterDTO): Promise<void> {
 }
 
 export async function getMovies(): Promise<Movie[]> {
-  const res = await http.get('/movie');
+  const res = await http.get('/movie/list');
   return res.data;
 }
 

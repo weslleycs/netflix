@@ -27,21 +27,21 @@ export function useLoginForm() {
 
       setSuccessMessage('Login successful! Redirecting...');
 
-      navigate('/movies', { replace: true });
+      navigate('/movies/list', { replace: true });
     } catch (err: any) {
       const status = err?.response?.status;
 
       if (status === 401) {
         setError('root', {
           type: 'server',
-          message: 'Email ou senha incorretos.',
+          message: 'Email of Password Not Found.',
         });
         return;
       }
 
       setError('root', {
         type: 'server',
-        message: 'Algo deu errado. Tente novamente.',
+        message: 'Something went wrong. Please try again.',
       });
     }
   });

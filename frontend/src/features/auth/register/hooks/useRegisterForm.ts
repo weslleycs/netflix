@@ -23,10 +23,9 @@ export function useRegisterForm() {
     const { confirmPassword, ...payload } = values;
 
     try {
+      await new Promise(res=> setTimeout(res,25000))
       await registerUser(payload);
-
       setSuccessMessage('Account created successfully! Redirecting...');
-
       navigate('/login');
     } catch (err: any) {
       const status = err?.response?.status;

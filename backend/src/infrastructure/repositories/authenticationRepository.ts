@@ -1,6 +1,6 @@
-import { registerInput } from '@domain/types/authenticationTypes';
+import { registerInput, User } from '@domain/types/authenticationTypes';
 import PrismaService from '@infrastructure/services/prisma.service';
-import { AppError, ErrorCode } from '@shared/errors/AppError';
+import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
 class AuthenticationRepository {
   private readonly prismaService: PrismaService;
@@ -8,49 +8,47 @@ class AuthenticationRepository {
   constructor(prismaService: PrismaService) {
     this.prismaService = prismaService;
   }
+  async findByEmail(email: string): Promise<User | null> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const user = await prisma.users.findUnique({
+        where: {
+          email: email,
+        },
+        select: {
+          id: true,
+          name: true,
+          password: true,
+          email: true,
+          active: true,
+        },
+      });
 
-  async register(input: registerInput): Promise<boolean> {
-    const prisma = this.prismaService.getConnection();
-
-    const existing = await prisma.users.findUnique({
-      where: { email: input.email },
-      select: { id: true },
-    });
-    console.log('existing: ', existing);
-
-    if (existing) {
-      throw new AppError(ErrorCode.CONFLICT, 'Email already in use');
+      return user;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
     }
-
-    await prisma.users.create({
-      data: {
-        name: input.name,
-        email: input.email,
-        password: input.password,
-      },
-    });
-
-    return true;
   }
 
-  // async login(email: string): Promise<LoginUserData> {
-  //   const prisma = this.prismaService.getConnection();
-
-  //   const user = await prisma.user.findUnique({
-  //     where: { email },
-  //   });
-
-  //   if (!user) {
-  //     throw new Error("Email or password invalid");
-  //   }
-
-  //   return {
-  //     id: user.id,
-  //     email: user.email,
-  //     password: user.password,
-  //     role: user.role,
-  //   };
-  // }
+  async create(input: registerInput): Promise<boolean> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      await prisma.users.create({
+        data: {
+          name: input.name,
+          email: input.email,
+          password: input.password,
+        },
+      });
+      return true;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
 }
 
 export default AuthenticationRepository;
