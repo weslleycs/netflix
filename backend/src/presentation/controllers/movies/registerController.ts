@@ -16,7 +16,7 @@ class RegisterMovieController {
 
     return {
       statusCode: 200,
-      data: ' Movie Register',
+      data: 'Movie Register',
     };
   }
 }

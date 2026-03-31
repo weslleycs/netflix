@@ -1,4 +1,5 @@
 import { GENRES } from '@/entities/movie/model/genre';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 import { useEffect, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -7,22 +8,25 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [selectValue, setSelectValue] = useState('');
+  const debouncedSearch = useDebounce(search, 400);
 
   useEffect(() => {
     if (selectValue === 'listAll') {
-      navigate(`list`);
+      navigate('/list');
     } else if (selectValue) {
-      navigate(`list?genre=${selectValue}`);
+      navigate(`/list?genre=${selectValue}`);
     }
+
     setSearch('');
-  }, [selectValue]);
+  }, [selectValue, navigate]);
 
   useEffect(() => {
-    if (search) {
-      navigate(`list?title=${search}`);
+    if (debouncedSearch.trim()) {
+      navigate(`/list?title=${debouncedSearch}`);
     }
+
     setSelectValue('');
-  }, [search]);
+  }, [debouncedSearch, navigate]);
 
   return (
     <header className="w-full">
@@ -42,12 +46,13 @@ export default function Navbar() {
               <option value="">Movies</option>
               <option value="listAll">Todos os filmes</option>
               {GENRES.map((genre) => (
-                <option value={`${genre.value}`} key={genre.value}>
+                <option value={genre.value} key={genre.value}>
                   {genre.label}
                 </option>
               ))}
             </select>
           </nav>
+
           <input
             type="text"
             placeholder="Search..."
@@ -55,6 +60,7 @@ export default function Navbar() {
             onChange={(e) => setSearch(e.target.value)}
             className="w-48 px-4 py-2 pr-10 text-sm text-white border rounded-md bg-zinc-900 border-white/20 focus:outline-none focus:ring-2 focus:ring-red-600 placeholder:text-white/50"
           />
+
           <button
             type="button"
             className="flex items-center pr-3 text-[2rem] text-white/60 hover:text-white"

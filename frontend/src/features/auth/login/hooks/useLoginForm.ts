@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { loginSchema, type LoginFormValues } from '../schemas/loginSchema';
 import { loginUser } from '@/features/auth/api/auth';
 import { useAuthStore } from '@/entities/session/model/auth.store';
+import type { User } from '@/entities/user/model/user';
 
 export function useLoginForm() {
   const navigate = useNavigate();
@@ -22,7 +23,12 @@ export function useLoginForm() {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const { token, user } = await loginUser(values);
+      const { token, id, name, email } = await loginUser(values);
+      const user: User = {
+        id, 
+        name,
+        email
+      }
       setAuth({ token, user });
 
       setSuccessMessage('Login successful! Redirecting...');

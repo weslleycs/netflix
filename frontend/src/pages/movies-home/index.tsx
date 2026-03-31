@@ -1,30 +1,29 @@
-import { useEffect, useState } from 'react';
-import { getMovies } from '@/entities/movie/api/movie';
-import CardContainerCarouselMovies from '@/features/movies/home/components/cardContainerCaroselMovies';
-import type { Movie } from '@/entities/movie/model/movie';
-
+import { getMovies } from "@/entities/movie/api/movie";
+import CardContainerCarouselMovies from "@/features/movies/home/components/cardContainerCaroselMovies";
+import { useQuery } from "@tanstack/react-query";
 export default function MoviesHomePage() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function load() {
-      const data = await getMovies();
-      setMovies(data);
-      setLoading(false);
-    }
-    load();
-  }, []);
+  const {
+    data: movies = [],
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey:['movies'],
+    queryFn:getMovies,
+  }) 
 
   return (
     <div className="min-h-screen text-white bg-black">
       <main className="max-w-6xl px-4 pt-24 pb-10 mx-auto">
-        {loading ? (
+        {isLoading ? (
           <p className="text-zinc-400">Loading...</p>
-        ) : (
+        ) : isError ? (
+          <p className="text-zinc-400">Not Found...</p>
+        ):(
           <CardContainerCarouselMovies title="Movies" movies={movies} />
         )}
       </main>
     </div>
   );
 }
+
+

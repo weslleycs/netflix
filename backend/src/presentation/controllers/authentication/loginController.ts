@@ -1,5 +1,5 @@
 import LoginUseCase from '@application/useCases/authentication/loginUseCase';
-import { LoginInput } from '@domain/types/authenticationTypes';
+import { LoginInput, LoginOutput } from '@domain/types/authenticationTypes';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 
 class LoginController {
@@ -9,11 +9,11 @@ class LoginController {
   }
   async run(
     input: controllerInputType<object, object, object, LoginInput>,
-  ): Promise<httpResponseType<string>> {
-    await this.loginUseCase.execute(input.body);
+  ): Promise<httpResponseType<LoginOutput>> {
+    const data = await this.loginUseCase.execute(input.body);
     return {
       statusCode: 200,
-      data: 'Login Success',
+      data,
     };
   }
 }
