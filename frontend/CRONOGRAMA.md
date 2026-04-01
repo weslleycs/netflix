@@ -67,7 +67,7 @@ O React Query ja esta instalado e configurado, mas nao esta sendo usado nessas p
 
 - [ ] **Melhorar**: `src/pages/movies-list/index.tsx`
   - Mesma coisa. Lembre que a queryKey precisa mudar quando os filtros mudam
-  - Pesquise: como a queryKey funciona no React Query
+  - Pesquise: como a queryKey funciona no React Query   VVVVVVVVVVV
 
 > **Por que?** O React Query cuida de loading, erro, cache e refetch. Voce vai escrever menos codigo e ele vai funcionar melhor.
 
@@ -78,7 +78,7 @@ O React Query ja esta instalado e configurado, mas nao esta sendo usado nessas p
 - [ ] **Melhorar**: `src/widgets/navbar/navbar.tsx`
   - Tem um problema de caminho relativo no `navigate()`. Descubra qual e e corrija
   - O campo de busca dispara navegacao a CADA LETRA digitada. Pesquise sobre **debounce** e aplique
-  - Pesquise: "debounce react hook" - tente criar um hook reutilizavel em `shared/hooks/`
+  - Pesquise: "debounce react hook" - tente criar um hook reutilizavel em `shared/hooks/` VVVVVVVVV
 
 ---
 
@@ -87,7 +87,7 @@ O React Query ja esta instalado e configurado, mas nao esta sendo usado nessas p
 - [ ] **Melhorar**: `src/pages/movies-home/index.tsx`
 - [ ] **Melhorar**: `src/pages/movies-list/index.tsx`
   - Se a API estiver fora do ar, o que acontece? Teste desligando o backend e veja
-  - Adicione tratamento de erro. Mostre uma mensagem pro usuario quando falhar
+  - Adicione tratamento de erro. Mostre uma mensagem pro usuario quando falhar. Ok
 
 ---
 

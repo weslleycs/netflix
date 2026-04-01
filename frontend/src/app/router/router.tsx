@@ -7,6 +7,7 @@ import MoviesListPage from '@/pages/movies-list/index';
 import MoviesRegisterPage from '@/pages/movies-register/index';
 import PublicLayout from '../layout/publicLayout';
 import PrivateLayout from '../layout/privateLayout';
+import MoviesDetailPage from '@/pages/movie-detail';
 
 export const routes = [
   {
@@ -26,6 +27,7 @@ export const routes = [
       { index: true, element: <MoviesHomePage /> },
       { path: 'list', element: <MoviesListPage /> },
       { path: 'register', element: <MoviesRegisterPage /> },
+      { path: 'details', element: <MoviesDetailPage /> },
     ],
   },
   // /series — futuro: mesmo padrão de /movies

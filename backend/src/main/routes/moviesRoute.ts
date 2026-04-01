@@ -1,4 +1,5 @@
 import expressRouteAdapter from '@infrastructure/adapters/expressRoute.adapter';
+import { commentMovieFactory } from '@infrastructure/factories/movies/commentMovieFactory';
 import { getAllMovieFactory } from '@infrastructure/factories/movies/getAllFactory';
 import { getByTitleMovieFactory } from '@infrastructure/factories/movies/getByTitleFactory';
 import { getCommentsAndRateMovieByIdFactory } from '@infrastructure/factories/movies/getCommentsAndRateMovieByIdFactory';
@@ -28,5 +29,8 @@ export function movieRoutes(router: Router, prismaService: PrismaService) {
   );
   router.put('/movie/updater/:id', (req, res) =>
     expressRouteAdapter(req, res, updaterMovieFactory(prismaService)),
+  );
+  router.get('/movie/comments', (req, res) =>
+    expressRouteAdapter(req, res, commentMovieFactory(prismaService)),
   );
 }

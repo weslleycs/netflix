@@ -1,4 +1,6 @@
 import {
+  CommentMovieInput,
+  CommentMovieOutput,
   CreateMovieInput,
   GetByTitleMovie,
   GetCommentsAndRateMovieById,
@@ -130,11 +132,17 @@ class MovieRepository {
           movieId: Number(input.movieId),
         },
         select: {
+          id: true,
           comment: true,
+          user: true,
         },
       });
       const comments = dataComments.map((comment) => {
-        return comment.comment;
+        return {
+          id: comment.id,
+          comment: comment.comment,
+          userName: comment.user.name,
+        };
       });
       const rate = await prisma.rates.aggregate({
         where: {
@@ -171,6 +179,34 @@ class MovieRepository {
       });
 
       return true;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+
+  async commentMovie(input: CommentMovieInput): Promise<CommentMovieOutput[]> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const commentsMovie = await prisma.comments.findMany({
+        where: {
+          movieId: Number(input.movieId),
+        },
+        select: {
+          id: true,
+          comment: true,
+          user: true,
+        },
+      });
+      const commentsMoviesReturn = commentsMovie.map((comment) => {
+        return {
+          id: comment.id,
+          comment: comment.comment,
+          userName: comment.user.name,
+        };
+      });
+      return commentsMoviesReturn;
     } catch (error) {
       if (error instanceof AppError) throw error;
       const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;

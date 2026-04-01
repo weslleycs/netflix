@@ -53,7 +53,11 @@ export type GetCommentsAndRateMovieById = {
 
 export type GetCommentsAndRateMovieByIdOutput = {
   rate: number;
-  comments: string[];
+  comments: {
+    id: number;
+    comment: string;
+    userName: string;
+  }[];
 };
 
 export type GetById = {
@@ -71,4 +75,13 @@ export type UpdaterMovie = {
   title?: string;
   description?: string;
   imageUrl?: string;
+};
+export type CommentMovieInput = {
+  movieId: number;
+};
+
+export type CommentMovieOutput = {
+  id: number;
+  comment: string;
+  userName: string;
 };
