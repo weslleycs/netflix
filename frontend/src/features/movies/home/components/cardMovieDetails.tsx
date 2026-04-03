@@ -7,7 +7,7 @@ type Props = {
 export default function CardMovieDetails({ movieDetails }: Props) {
   return (
     <li className="p-4 border rounded-xl border-zinc-800 bg-zinc-900">
-      <p className="mt-2 text-sm text-zinc-300">{movieDetails.title}</p>
+      <p className="mt-2 text-sm text-zinc-300">Details Movies</p>
       <p className="text-sm font-semibold text-zinc-100">{movieDetails.description}</p>
       <p className="mt-2 text-sm text-zinc-300">{movieDetails.imageUrl}</p>
       <p className="mt-2 text-sm text-zinc-300">{movieDetails.rate}</p>

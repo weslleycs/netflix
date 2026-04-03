@@ -7,6 +7,7 @@ import {
   GetCommentsAndRateMovieByIdOutput,
   GetMoviesByGenreinput,
   GetMoviesByGenreoutput,
+  MovieDetails,
   MovieListAllInput,
   Movies,
   UpdaterMovie,
@@ -212,6 +213,48 @@ class MovieRepository {
       const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
       throw new AppError(ErrorCode.INTERNAL, message);
     }
+  }
+  async movieDetailsById(movieId: number): Promise<MovieDetails> {
+    const prisma = this.prismaService.getConnection();
+    const [queryMovies, queryRate] = await Promise.all([
+      prisma.movies.findUnique({
+        where: {
+          id: Number(movieId),
+        },
+        include: {
+          moviesGenres: {
+            include: {
+              genre: true,
+            },
+          },
+        },
+      }),
+      prisma.rates.aggregate({
+        where: {
+          movieId: Number(movieId),
+        },
+        _avg: {
+          rate: true,
+        },
+      }),
+    ]);
+    if (!queryMovies) {
+      throw new Error('Not found movie with this ID.');
+    }
+    const movieDetails = {
+      id: queryMovies.id,
+      title: queryMovies.title ?? '',
+      description: queryMovies.description ?? '',
+      imageUrl: queryMovies.imageUrl ?? '',
+      genre:
+        queryMovies.moviesGenres.length === 0
+          ? []
+          : queryMovies.moviesGenres.map((movieGenre) => {
+              return movieGenre.genre.name;
+            }),
+      rate: queryRate._avg.rate ?? 0,
+    };
+    return movieDetails;
   }
 }
 

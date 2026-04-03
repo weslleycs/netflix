@@ -5,8 +5,11 @@ type Props = {
 };
 
 export default function CardMovie({ movie }: Props) {
+  function handleClick(movieId: string){
+      window.location.href = `/movies/details?movieId=${movieId}`;
+  }
   return (
-    <li className="relative w-56 overflow-hidden transition-transform duration-300 cursor-pointer shrink-0 rounded-2xl bg-zinc-900 group hover:scale-105">
+    <li onClick={() => handleClick(movie.id)} className="relative w-56 overflow-hidden transition-transform duration-300 cursor-pointer shrink-0 rounded-2xl bg-zinc-900 group hover:scale-105">
       <img
         src={
           movie.imageUrl ??

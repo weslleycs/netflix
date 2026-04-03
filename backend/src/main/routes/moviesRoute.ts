@@ -4,6 +4,7 @@ import { getAllMovieFactory } from '@infrastructure/factories/movies/getAllFacto
 import { getByTitleMovieFactory } from '@infrastructure/factories/movies/getByTitleFactory';
 import { getCommentsAndRateMovieByIdFactory } from '@infrastructure/factories/movies/getCommentsAndRateMovieByIdFactory';
 import { getMoviesByGenreFactory } from '@infrastructure/factories/movies/getMoviesByGenreFactory';
+import { movieDetailsFactory } from '@infrastructure/factories/movies/movieDetatilsFactory';
 import { registerMovieFactory } from '@infrastructure/factories/movies/registerFactory';
 import { updaterMovieFactory } from '@infrastructure/factories/movies/updaterMovieFactory';
 import PrismaService from '@infrastructure/services/prisma.service';
@@ -32,5 +33,8 @@ export function movieRoutes(router: Router, prismaService: PrismaService) {
   );
   router.get('/movie/comments', (req, res) =>
     expressRouteAdapter(req, res, commentMovieFactory(prismaService)),
+  );
+  router.get('/movie/details', (req, res) =>
+    expressRouteAdapter(req, res, movieDetailsFactory(prismaService)),
   );
 }

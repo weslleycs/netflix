@@ -22,8 +22,8 @@ export default function MoviesDetailPage() {
   const {
     data: movieDetails={
         id: Number(movieId),
-        title: "Movie Title",
-        description: "Movie Description",
+        title: "",
+        description: "",
         imageUrl: "",
         genre:[],
         rate: 0,

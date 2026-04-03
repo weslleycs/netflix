@@ -85,3 +85,16 @@ export type CommentMovieOutput = {
   comment: string;
   userName: string;
 };
+
+export type MovieDetailsInput = {
+  movieId: number;
+};
+
+export type MovieDetails = {
+  id: number;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+  genre: string[];
+  rate: number;
+};
