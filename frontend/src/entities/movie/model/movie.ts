@@ -17,5 +17,10 @@ export type MovieDeatils = {
   rate: number;
 }
 
+export type RateMovieBody = {
+  movieId: number;
+  rate: number;
+};
+
 
 

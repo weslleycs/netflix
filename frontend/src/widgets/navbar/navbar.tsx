@@ -1,5 +1,7 @@
-import { GENRES } from '@/entities/movie/model/genre';
+import { getAllGenres } from '@/entities/genre/api/genres';
+import type { Genres } from '@/entities/genre/model/genres';
 import { useDebounce } from '@/shared/hooks/useDebounce';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -10,11 +12,20 @@ export default function Navbar() {
   const [selectValue, setSelectValue] = useState('');
   const debouncedSearch = useDebounce(search, 400);
 
+  const { data: genres = [], isLoading, isError } = useQuery<Genres[]>({
+    queryKey: ['genres'],
+    queryFn: getAllGenres,
+  });
+
+  function handleClick(genre: string){
+      window.location.href = `/movie/genre?genre=${genre}`;
+  }
+  
   useEffect(() => {
     if (selectValue === 'listAll') {
-      navigate('/list');
+      navigate('/movies/list');
     } else if (selectValue) {
-      navigate(`/list?genre=${selectValue}`);
+      navigate(`/movies/list?genre=${selectValue}`);
     }
 
     setSearch('');
@@ -22,7 +33,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (debouncedSearch.trim()) {
-      navigate(`/list?title=${debouncedSearch}`);
+      navigate(`/movies/list?title=${debouncedSearch}`);
     }
 
     setSelectValue('');
@@ -45,9 +56,13 @@ export default function Navbar() {
             >
               <option value="">Movies</option>
               <option value="listAll">Todos os filmes</option>
-              {GENRES.map((genre) => (
-                <option value={genre.value} key={genre.value}>
-                  {genre.label}
+
+              {isLoading && <option disabled>Carregando gêneros...</option>}
+              {isError && <option disabled>Erro ao carregar gêneros</option>}
+
+              {genres.map((genre) => (
+                <option onClick={() => handleClick(genre.name)} value={genre.name} key={genre.id}>
+                  {genre.name}
                 </option>
               ))}
             </select>

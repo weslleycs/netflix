@@ -1,4 +1,4 @@
-import { CreateGenreInput, InputGenreMovie } from '@domain/types/genreType';
+import { CreateGenreInput, GetAllGenre, InputGenreMovie } from '@domain/types/genreType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
@@ -41,6 +41,17 @@ class GenreRepository {
         data: data,
       });
       return true;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+
+  async listall(): Promise<GetAllGenre[]> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      return prisma.genres.findMany({});
     } catch (error) {
       if (error instanceof AppError) throw error;
       const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;

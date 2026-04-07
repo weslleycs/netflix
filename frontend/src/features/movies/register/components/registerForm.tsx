@@ -1,8 +1,10 @@
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { Button } from '@/shared/ui/button';
 import { FormField } from '@/shared/ui/formField';
-import { GENRES } from '@/entities/movie/model/genre';
 import type { RegisterFormValues } from '../schema/registerSchema';
+import { getAllGenres } from '@/entities/genre/api/genres';
+import type { Genres } from '@/entities/genre/model/genres';
+import { useQuery } from '@tanstack/react-query';
 
 type Props = {
   register: UseFormRegister<RegisterFormValues>;
@@ -12,6 +14,7 @@ type Props = {
   successMessage: string | null;
 };
 
+
 export default function RegisterForm({
   register,
   errors,
@@ -19,6 +22,10 @@ export default function RegisterForm({
   onSubmit,
   successMessage,
 }: Props) {
+  const { data: genres = []} = useQuery<Genres[]>({
+    queryKey: ['genres'],
+    queryFn: getAllGenres,
+  });
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <FormField
@@ -48,7 +55,7 @@ export default function RegisterForm({
       <FormField
         label="Genre"
         as="select"
-        options={GENRES.map((genre) => ({ label: genre.label, value: genre.value }))}
+        options={genres.map((genre) => ({ label: genre.name, value: String(genre.id) }))}
         {...register('genre')}
         error={errors.genre?.message}
       />

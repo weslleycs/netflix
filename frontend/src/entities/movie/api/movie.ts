@@ -1,5 +1,5 @@
 import { http } from '@/shared/api/http';
-import type { Movie, MovieDeatils } from '../model/movie';
+import type { Movie, MovieDeatils, RateMovieBody } from '../model/movie';
 import type { MovieComment } from '../model/comment';
 
 export type RegisterDTO = {
@@ -25,13 +25,6 @@ export async function getMoviesByTitle(title: string) {
   return data;
 }
 
-export async function getMoviesByGenre(genre: string) {
-  const { data } = await http.get('/movie/genre', {
-    params: { genre },
-  });
-  return data;
-}
-
 export async function getMoviesById(id: number): Promise<Movie[]> {
   const res = await http.get('/movie/list', {
     params: { id },
@@ -50,6 +43,11 @@ export async function GetMovieDetails(movieId: number): Promise<MovieDeatils> {
     params: { movieId },
   });
   return res.data;
+}
+
+export async function RateMovie(data: RateMovieBody) {
+  const response = await http.post("/rate/movie", data);
+  return response.data;
 }
 
 
