@@ -1,5 +1,5 @@
 import { http } from '@/shared/api/http';
-import type { Movie, MovieDeatils, RateMovieBody } from '../model/movie';
+import type { Movie, MovieDeatils } from '../model/movie';
 import type { MovieComment } from '../model/comment';
 
 export type RegisterDTO = {
@@ -45,10 +45,7 @@ export async function GetMovieDetails(movieId: number): Promise<MovieDeatils> {
   return res.data;
 }
 
-export async function RateMovie(data: RateMovieBody) {
-  const response = await http.post("/rate/movie", data);
-  return response.data;
-}
+
 
 
 
