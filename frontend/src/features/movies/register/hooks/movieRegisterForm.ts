@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerSchema, type RegisterFormValues } from '../schema/registerSchema';
-import { registerMovie } from '@/entities/movie/api/movie';
+import { registerMovie } from '@/features/movies/api/movie';
 
 export function useMovieRegisterForm() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export function useMovieRegisterForm() {
 
       setSuccessMessage('Movie created successfully! Redirecting...');
 
-      navigate('/movies/list');
+      navigate('/movies');
     } catch (err: any) {
       const status = err?.response?.status;
 

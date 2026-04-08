@@ -1,87 +1,27 @@
-import { getAllGenres } from '@/entities/genre/api/genres';
-import type { Genres } from '@/entities/genre/model/genres';
-import { useDebounce } from '@/shared/hooks/useDebounce';
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
-import { FaUserCircle } from 'react-icons/fa';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
-  const navigate = useNavigate();
-  const [search, setSearch] = useState('');
-  const [selectValue, setSelectValue] = useState('');
-  const debouncedSearch = useDebounce(search, 400);
-
-  const { data: genres = [], isLoading, isError } = useQuery<Genres[]>({
-    queryKey: ['genres'],
-    queryFn: getAllGenres,
-  });
-
-  function handleClick(genre: string){
-      window.location.href = `/movie/genre?genre=${genre}`;
-  }
-  
-  useEffect(() => {
-    if (selectValue === 'listAll') {
-      navigate('/movies/list');
-    } else if (selectValue) {
-      navigate(`/movies/list?genre=${selectValue}`);
-    }
-
-    setSearch('');
-  }, [selectValue, navigate]);
-
-  useEffect(() => {
-    if (debouncedSearch.trim()) {
-      navigate(`/movies/list?title=${debouncedSearch}`);
-    }
-
-    setSelectValue('');
-  }, [debouncedSearch, navigate]);
-
   return (
     <header className="w-full">
       <div className="flex items-center justify-between max-w-6xl px-6 py-6 mx-auto">
-        <NavLink to="/" className="text-2xl font-extrabold tracking-wide text-red-600">
+        <NavLink to="/movies" className="text-2xl font-extrabold tracking-wide text-red-600">
           WESLLEYFLIX
         </NavLink>
 
         <div className="flex gap-3">
-          <nav>
-            <select
-              id="nav-select"
-              onChange={(e) => setSelectValue(e.target.value)}
-              value={selectValue}
-              className="px-4 py-2 text-white border rounded-md bg-zinc-900 border-white/20 focus:outline-none focus:ring-2 focus:ring-red-600"
-            >
-              <option value="">Movies</option>
-              <option value="listAll">Todos os filmes</option>
-
-              {isLoading && <option disabled>Carregando gêneros...</option>}
-              {isError && <option disabled>Erro ao carregar gêneros</option>}
-
-              {genres.map((genre) => (
-                <option onClick={() => handleClick(genre.name)} value={genre.name} key={genre.id}>
-                  {genre.name}
-                </option>
-              ))}
-            </select>
-          </nav>
-
-          <input
-            type="text"
-            placeholder="Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-48 px-4 py-2 pr-10 text-sm text-white border rounded-md bg-zinc-900 border-white/20 focus:outline-none focus:ring-2 focus:ring-red-600 placeholder:text-white/50"
-          />
-
-          <button
-            type="button"
-            className="flex items-center pr-3 text-[2rem] text-white/60 hover:text-white"
+          <NavLink
+            to="/movies"
+            className="px-4 py-2 text-sm font-semibold transition border rounded border-white/20 bg-white/5 hover:bg-white/10"
           >
-            <FaUserCircle />
-          </button>
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/movies/register"
+            className="px-4 py-2 text-sm font-semibold transition bg-red-600 rounded hover:bg-red-700"
+          >
+            Register Movie
+          </NavLink>
         </div>
       </div>
     </header>
