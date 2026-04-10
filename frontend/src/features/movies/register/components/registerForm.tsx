@@ -2,6 +2,9 @@ import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { Button } from '@/shared/ui/button';
 import { FormField } from '@/shared/ui/formField';
 import type { RegisterFormValues } from '../schema/registerSchema';
+import { useQuery } from '@tanstack/react-query';
+import type { Genres } from '@/entities/genre/model/genres';
+import { getAllGenres } from '@/entities/genre/api/genres';
 
 type Props = {
   register: UseFormRegister<RegisterFormValues>;
@@ -18,6 +21,10 @@ export default function RegisterForm({
   onSubmit,
   successMessage,
 }: Props) {
+  const { data: genres = [] } = useQuery<Genres[]>({
+     queryKey: ['genres'],
+     queryFn: getAllGenres,
+   })
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <FormField
@@ -45,11 +52,11 @@ export default function RegisterForm({
       />
 
       <FormField
-        label="Genre"
-        type="text"
-        placeholder="Genre"
-        {...register('genre')}
-        error={errors.genre?.message}
+       label="Genre"
+       as="select"
+       options={genres.map((g) => ({ label: g.name, value: g.name }))}
+       {...register('genre')}
+       error={errors.genre?.message}
       />
 
       {errors.root?.message ? (

@@ -7,14 +7,17 @@ type Props = {
   movies: Movie[];
 };
 
-export default function CardContainerCarouselMovies({ title = 'New Releases', movies }: Props) {
+export default function CardContainerCarouselMovies({
+  title = 'New Releases',
+  movies,
+}: Props) {
   const scrollerRef = useRef<HTMLUListElement | null>(null);
 
   function scrollByCards(direction: 'prev' | 'next') {
     const el = scrollerRef.current;
     if (!el) return;
 
-    const amount = 320 * 4;
+    const amount = 240 * 4; // largura real do card + gap
     el.scrollBy({
       left: direction === 'next' ? amount : -amount,
       behavior: 'smooth',
@@ -34,7 +37,6 @@ export default function CardContainerCarouselMovies({ title = 'New Releases', mo
             type="button"
             onClick={() => scrollByCards('prev')}
             className="w-10 h-10 text-white transition border rounded-full border-zinc-700 bg-black/30 hover:bg-black/50"
-            aria-label="Anterior"
           >
             ‹
           </button>
@@ -42,7 +44,6 @@ export default function CardContainerCarouselMovies({ title = 'New Releases', mo
             type="button"
             onClick={() => scrollByCards('next')}
             className="w-10 h-10 text-white transition border rounded-full border-zinc-700 bg-black/30 hover:bg-black/50"
-            aria-label="Próximo"
           >
             ›
           </button>
@@ -56,13 +57,15 @@ export default function CardContainerCarouselMovies({ title = 'New Releases', mo
           <ul
             ref={scrollerRef}
             className="
-              flex flex-nowrap gap-6 overflow-x-auto scroll-smooth pb-2
+              flex flex-nowrap gap-8 overflow-x-auto scroll-smooth pb-2
               [-ms-overflow-style:none] [scrollbar-width:none]
               [&::-webkit-scrollbar]:hidden
             "
           >
             {movies.map((movie) => (
-              <CardMovie key={movie.id} movie={movie} />
+              <li key={movie.id} className="list-none shrink-0 basis-[220px]">
+                <CardMovie movie={movie} className="w-full" />
+              </li>
             ))}
           </ul>
         )}

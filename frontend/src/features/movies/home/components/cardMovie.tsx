@@ -1,12 +1,17 @@
 import type { Movie } from '@/entities/movie/model/movie';
+import {useNavigate } from 'react-router-dom';
 
 type Props = {
   movie: Movie;
+  className?: string;
 };
 
-export default function CardMovie({ movie }: Props) {
+export default function CardMovie({ movie, className = '' }: Props) {
+  const navigate = useNavigate()
   return (
-    <li className="relative w-56 overflow-hidden transition-transform duration-300 shrink-0 rounded-2xl bg-zinc-900 group hover:scale-105">
+    <li onClick={() => navigate(`/movies/details?movieId=${movie.id}`)}
+      className={`relative w-full overflow-hidden rounded-2xl cursor-pointer bg-zinc-900 transition-transform duration-300 hover:scale-[1.03] ${className}`}
+    >
       <img
         src={
           movie.imageUrl ??
@@ -16,7 +21,7 @@ export default function CardMovie({ movie }: Props) {
         className="object-cover w-full h-80"
       />
 
-      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
       <div className="absolute px-2 py-1 text-xs font-semibold rounded top-3 left-3 bg-sky-500">
         DUB
