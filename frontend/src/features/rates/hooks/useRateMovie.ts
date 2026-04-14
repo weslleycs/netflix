@@ -1,18 +1,22 @@
 import { useAuthStore } from '@/entities/session/model/auth.store'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { rateMovie } from '../api/rate'
+import { rateMovieSerie } from '../api/rate'
 
- export function useRateMovie(movieId: number) {
+ export function useRateMovie(movieId: number,serieId:number) {
    const user = useAuthStore((s) => s.user)
    const queryClient = useQueryClient()
 
    const mutation = useMutation({
      mutationFn: (rate: number) => {
        if (!user) throw new Error('Not logged in')
-       return rateMovie({ userId: user.id, movieId, rate })
+       return rateMovieSerie({ 
+      userId: user.id, 
+      movieId: movieId ?? undefined, 
+      serieId: serieId ?? undefined,
+      rate })
      },
      onSuccess: () => {
-       queryClient.invalidateQueries({ queryKey: ['detailsMovie', movieId] })
+       queryClient.invalidateQueries({ queryKey: [`rate-${serieId?'serie':'movieId'}`, movieId ?? serieId] })
      },
    })
 

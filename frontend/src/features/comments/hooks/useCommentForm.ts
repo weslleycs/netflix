@@ -3,25 +3,44 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { commentSchema } from "../schemas/commentSchema"
-import { commentMovie } from "../api/comment"
+import { comment} from "../api/comment"
 
-export function useCommentForm(movieId: number) {
-   const user = useAuthStore((s) => s.user)  
-   const queryClient = useQueryClient()       
+type CommentFormValues = {
+  comment: string
+}
 
-   const { register, handleSubmit, reset, setError, formState: { errors, isSubmitting } } = useForm({
-     resolver: zodResolver(commentSchema),
-   })
-   const onSubmit = handleSubmit(async (values) => {
-     if (!user) return  
-     try {
-       await commentMovie({ userId: user.id, movieId, comment: values.comment })
-       queryClient.invalidateQueries({ queryKey: ['commentsMovie', movieId] })
-       reset()  
-     } catch {
-       setError('comment', { message: 'Failed to send comment' })
-     }
-   })
+export function useCommentForm(movieId: number, serieId: number) {
+  const user = useAuthStore((s) => s.user)
+  const queryClient = useQueryClient()
 
-   return { register, errors, isSubmitting, onSubmit }
- }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<CommentFormValues>({
+    resolver: zodResolver(commentSchema),
+  })
+
+  const onSubmit = handleSubmit(async (values) => {
+    if (!user) return
+    try {
+      await comment({
+        userId: user.id,
+        movieId: movieId ?? undefined,
+        serieId: serieId ?? undefined,
+        comment: values.comment,
+      })     
+      await queryClient.invalidateQueries({
+        queryKey: [`comment-${serieId?'serie':'movieId'}`, movieId ?? serieId],
+      })
+      
+      reset()
+    } catch {
+      setError("comment", { message: "Failed to send comment" })
+    }
+  })
+
+  return { register, errors, isSubmitting, onSubmit }
+}

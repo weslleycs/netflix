@@ -25,3 +25,33 @@ export type InputGenreMovie = {
   genreId: number[];
   movieId: number;
 };
+
+export type GetAllMoviesByGenresOutput = {
+  id: number;
+  name: string;
+  description: string | null;
+  movies: {
+    id: number;
+    title: string;
+    description: string | null;
+    imageUrl: string | null;
+    userId: number | null;
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
+};
+
+export type GetAllSeriesByGenresOutput = {
+  id: number;
+  name: string;
+  description: string | null;
+  series: {
+    id: number;
+    title: string;
+    description: string | null;
+    imageUrl: string | null;
+    userId: number | null;
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
+};

@@ -20,3 +20,8 @@ export async function getMoviesByTitle(title: string): Promise<Movie[]> {
    const { data } = await http.get('/movie/comments', { params: { movieId } })
    return data
  }
+
+ export async function getMoviesByGenre(genre: string): Promise<Movie[]> {
+  const { data } = await http.get('/movie/list', { params: { genre } })
+  return data
+ }

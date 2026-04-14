@@ -1,16 +1,19 @@
 import { http } from '@/shared/api/http';
-import type { Genres } from '../model/genres';
-import type { Movie } from '@/entities/movie/model/movie';
+import type { Genres, GetAllMoviesByGenresOutput, GetAllSeriesByGenresOutput } from '../model/genres';
 
 export async function getAllGenres(): Promise<Genres[]> {
   const res = await http.get('/genre/list');
   return res.data;
 }
 
-export async function getMoviesByGenre(genre: string): Promise<Movie[]> {
-  const res = await http.get('/genre/list',{ params: { genre } });
+export async function getAllMoviesByGenres(): Promise<GetAllMoviesByGenresOutput[]> {
+  const res = await http.get('/genre/movie-list');
   return res.data;
 }
 
+export async function getAllSeriesByGenres(): Promise<GetAllSeriesByGenresOutput[]> {
+  const res = await http.get('/genre/serie-list');
+  return res.data;
+}
 
 

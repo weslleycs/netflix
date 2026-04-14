@@ -7,6 +7,8 @@ import PublicLayout from '../layout/publicLayout';
 import MoviesHomePage from '@/pages/movies-home';
 import MoviesListPage from '@/pages/movies-list';
 import MovieDetailsPage from '@/pages/movie-detail';
+import MoviesEditPage from '@/pages/movie-edit';
+import SeriesHomePage from '@/pages/series-home';
 
 export const routes = [
   {
@@ -25,8 +27,19 @@ export const routes = [
     children: [
       { index: true, element: <MoviesHomePage /> },
       { path: 'list', element: <MoviesListPage /> },
-      { path: 'details', element: <MovieDetailsPage /> }
+      { path: 'details', element: <MovieDetailsPage /> },
+      { path: 'edit', element: <MoviesEditPage /> }
       //{ path: '*', element: <Navigate to="/" replace /> },
     ],
   },
+  {
+   path: '/series',
+   element: <PrivateLayout />,
+   children: [
+     { index: true, element: <SeriesHomePage /> },
+    //  { path: 'list', element: <SeriesListPage /> },
+    //  { path: 'register', element: <SeriesRegisterPage /> },
+    //  { path: 'details', element: <SerieDetailPage /> },
+   ],
+ }
 ];

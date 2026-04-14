@@ -1,9 +1,8 @@
 import { useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
-import { getMovies, getMoviesByTitle } from '@/entities/movie/api/movie'
+import { getMovies, getMoviesByGenre, getMoviesByTitle } from '@/entities/movie/api/movie'
 import type { Movie } from '@/entities/movie/model/movie'
-import { getMoviesByGenre } from '@/entities/genre/api/genres'
 import CardContainerMovies from '@/features/movies/home/components/cardContainerMovies'
 
 
