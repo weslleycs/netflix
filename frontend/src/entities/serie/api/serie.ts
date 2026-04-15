@@ -7,12 +7,12 @@ export async function getSeries(): Promise<Serie[]> {
 }
 
 export async function getSeriesByTitle(title: string): Promise<Serie[]> {
-  const {data} = await http.get('/movie/title', { params: { title } })
+  const {data} = await http.get('/serie/title', { params: { title } })
   return data
 }
 
 export async function getSerieCommentsRate(serieId: number): Promise<Serie[]> {
-  const {data} = await http.get('/movie/title', { params: { serieId } })
+  const {data} = await http.get('/serie/comments', { params: { serieId } })
   return data
 }
 

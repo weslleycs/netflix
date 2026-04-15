@@ -4,6 +4,13 @@ export type CreateSerieInput = {
   imageUrl?: string | null;
 };
 
+export type SerieListAllInput = {
+  id?: number;
+  title?: string;
+  genre?: string;
+  limit?: number;
+  page?: number;
+};
 export type Serie = {
   id: number;
   title: string;
@@ -12,17 +19,6 @@ export type Serie = {
   userId?: number | null;
   createdAt: Date;
   updatedAt: Date;
-};
-
-export type SerieInput = {
-  title: string;
-  page?: number;
-  limit?: number;
-};
-
-export type GetAllLimite = {
-  page?: number;
-  limit?: number;
 };
 
 export type GetCommentsAndRateSerieById = {
@@ -36,8 +32,15 @@ export type GetCommentsAndRateSerieByIdOutput = {
   comments: string[];
 };
 
-export type GetSeriesByGenre = {
-  genre: string;
-  page?: number;
-  limit?: number;
+export type SerieDetailsInput = {
+  serieId: number;
+};
+
+export type SerieDetailsOutput = {
+  id: number;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+  genre: string[];
+  rate: number;
 };

@@ -4,6 +4,14 @@ export type CreateMovieInput = {
   imageUrl?: string;
 };
 
+export type MovieListAllInput = {
+  id?: number;
+  title?: string;
+  genre?: string;
+  limit?: number;
+  page?: number;
+};
+
 export type Movies = {
   id: number;
   title: string;
@@ -14,29 +22,9 @@ export type Movies = {
   updatedAt: Date;
 };
 
-export type MovieListAllInput = {
-  id?: number;
-  title?: string;
-  genre?: string;
-  limit?: number;
-  page?: number;
-};
-
-export type GetByTitleMovie = {
-  title: string;
-};
-
-export type GetByGenreMovie = {
+export type GetCommentsAndRateMovieById = {
   movieId: number;
 };
-
-export type Genres = {
-  genreId: number[];
-};
-export type GetMoviesByGenreinput = {
-  genre: string;
-};
-
 export type GetMoviesByGenreoutput = {
   id: number;
   title: string;
@@ -46,9 +34,11 @@ export type GetMoviesByGenreoutput = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-export type GetCommentsAndRateMovieById = {
-  movieId: number;
+export type Genres = {
+  genreId: number[];
+};
+export type GetMoviesByGenreinput = {
+  genre: string;
 };
 
 export type GetCommentsAndRateMovieByIdOutput = {
@@ -59,7 +49,29 @@ export type GetCommentsAndRateMovieByIdOutput = {
     userName: string;
   }[];
 };
+export type UpdaterMovie = {
+  id: number;
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+};
 
+export type CommentMovieInput = {
+  movieId: number;
+};
+export type CommentMovieOutput = {
+  id: number;
+  comment: string;
+  userName: string;
+};
+export type MovieDetails = {
+  id: number;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+  genre: string[];
+  rate: number;
+};
 export type GetById = {
   id: number;
 };
@@ -70,31 +82,6 @@ export type UpdaterMovieBody = {
   imageUrl?: string;
 };
 
-export type UpdaterMovie = {
-  id: number;
-  title?: string;
-  description?: string;
-  imageUrl?: string;
-};
-export type CommentMovieInput = {
-  movieId: number;
-};
-
-export type CommentMovieOutput = {
-  id: number;
-  comment: string;
-  userName: string;
-};
-
 export type MovieDetailsInput = {
   movieId: number;
-};
-
-export type MovieDetails = {
-  id: number;
-  title: string;
-  description: string | null;
-  imageUrl: string | null;
-  genre: string[];
-  rate: number;
 };

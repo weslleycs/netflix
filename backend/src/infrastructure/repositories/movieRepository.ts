@@ -2,11 +2,8 @@ import {
   CommentMovieInput,
   CommentMovieOutput,
   CreateMovieInput,
-  GetByTitleMovie,
   GetCommentsAndRateMovieById,
   GetCommentsAndRateMovieByIdOutput,
-  GetMoviesByGenreinput,
-  GetMoviesByGenreoutput,
   MovieDetails,
   MovieListAllInput,
   Movies,
@@ -71,56 +68,6 @@ class MovieRepository {
         updatedAt: movie.updatedAt,
       };
     });
-  }
-
-  async serchByTitle(input: GetByTitleMovie): Promise<Movies[]> {
-    try {
-      const prisma = this.prismaService.getConnection();
-      const movies = await prisma.movies.findMany({
-        where: {
-          title: {
-            contains: input.title,
-          },
-        },
-      });
-      return movies;
-    } catch (error) {
-      if (error instanceof AppError) throw error;
-      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
-      throw new AppError(ErrorCode.INTERNAL, message);
-    }
-  }
-
-  async searchByGenre(input: GetMoviesByGenreinput): Promise<GetMoviesByGenreoutput[]> {
-    try {
-      const prisma = this.prismaService.getConnection();
-
-      return await prisma.movies.findMany({
-        where: {
-          moviesGenres: {
-            some: {
-              genre: {
-                name: input.genre,
-              },
-            },
-          },
-        },
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          imageUrl: true,
-          userId: true,
-          createdAt: true,
-          updatedAt: true,
-        },
-      });
-    } catch (error) {
-      if (error instanceof AppError) throw error;
-
-      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
-      throw new AppError(ErrorCode.INTERNAL, message);
-    }
   }
 
   async GetCommentsAndRate(

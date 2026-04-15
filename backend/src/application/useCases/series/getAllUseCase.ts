@@ -1,4 +1,5 @@
-import { GetAllLimite, Series } from '@domain/types/serieType';
+import { MovieListAllInput } from '@domain/types/movieType';
+import { Serie } from '@domain/types/serieType';
 import SerieRepository from '@infrastructure/repositories/serieRepository';
 
 class GetAllSerieUseCase {
@@ -8,7 +9,7 @@ class GetAllSerieUseCase {
     this.serieRepository = serieRepository;
   }
 
-  async execute(input: GetAllLimite): Promise<Series[]> {
+  async execute(input: MovieListAllInput): Promise<Serie[]> {
     return this.serieRepository.listall(input);
   }
 }

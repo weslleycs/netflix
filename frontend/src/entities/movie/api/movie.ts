@@ -9,7 +9,7 @@ export async function getMovies(): Promise<Movie[]> {
 }
 
 export async function getMoviesByTitle(title: string): Promise<Movie[]> {
-  const { data } = await http.get('/movie/title', { params: { title } })
+  const { data } = await http.get('/movie/list', { params: { title } })
   return data
  }
  export async function getMovieDetails(movieId: number): Promise<MovieDetails> {

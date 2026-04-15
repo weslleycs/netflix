@@ -1,6 +1,7 @@
 import GetAllSerieUseCase from '@application/useCases/series/getAllUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
-import { GetAllLimite, Series } from '@domain/types/serieType';
+import { MovieListAllInput } from '@domain/types/movieType';
+import { Serie } from '@domain/types/serieType';
 
 class GetAllSerieController {
   private readonly serieUseCase: GetAllSerieUseCase;
@@ -10,8 +11,8 @@ class GetAllSerieController {
   }
 
   async run(
-    input: controllerInputType<object, object, GetAllLimite, object>,
-  ): Promise<httpResponseType<Series[]>> {
+    input: controllerInputType<object, object, MovieListAllInput, object>,
+  ): Promise<httpResponseType<Serie[]>> {
     const series = await this.serieUseCase.execute(input.query);
     return { statusCode: 200, data: series };
   }
