@@ -9,6 +9,8 @@ import MoviesListPage from '@/pages/movies-list';
 import MovieDetailsPage from '@/pages/movie-detail';
 import MoviesEditPage from '@/pages/movie-edit';
 import SeriesHomePage from '@/pages/series-home';
+import SeriesListPage from '@/pages/series-list';
+import SerieDetailsPage from '@/pages/serie-detail';
 
 export const routes = [
   {
@@ -37,9 +39,9 @@ export const routes = [
    element: <PrivateLayout />,
    children: [
      { index: true, element: <SeriesHomePage /> },
-    //  { path: 'list', element: <SeriesListPage /> },
+     { path: 'list', element: <SeriesListPage /> },
+     { path: 'details', element: <SerieDetailsPage /> },
     //  { path: 'register', element: <SeriesRegisterPage /> },
-    //  { path: 'details', element: <SerieDetailPage /> },
    ],
  }
 ];

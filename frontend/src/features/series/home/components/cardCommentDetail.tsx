@@ -1,7 +1,7 @@
-import type { MovieComment } from "@/entities/movie/model/movieComment"
+import type { SerieComments } from "@/entities/serie/model/serieComments"
 
 type Props = {
-    comment: MovieComment
+    comment: SerieComments
 }
 
 export default function CardCommentDetail({comment}:Props){

@@ -6,7 +6,7 @@ type Props = {
   series: Serie[];
 };
 
-export default function CardContainerMovies({ title, series }: Props) {
+export default function CardContainerSeries({ title, series }: Props) {
   return (
     <section className="p-6 border rounded-2xl border-zinc-800 bg-zinc-950/60">
       {title && <h2 className="mb-4 text-xl font-semibold">{title}</h2>}

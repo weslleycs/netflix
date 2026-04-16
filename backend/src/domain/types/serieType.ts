@@ -21,22 +21,11 @@ export type Serie = {
   updatedAt: Date;
 };
 
-export type GetCommentsAndRateSerieById = {
-  serieId: number;
-  page?: number;
-  limit?: number;
-};
-
-export type GetCommentsAndRateSerieByIdOutput = {
-  rate: number;
-  comments: string[];
-};
-
 export type SerieDetailsInput = {
-  serieId: number;
+  id: number;
 };
 
-export type SerieDetailsOutput = {
+export type SerieDetails = {
   id: number;
   title: string;
   description: string | null;

@@ -1,26 +1,26 @@
 import { useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import CardContainerSeries from '@/features/series/home/components/cardContainerSeries'
+import { getSeries } from '@/entities/serie/api/serie'
+import { getMoviesByGenre, getMoviesByTitle } from '@/entities/movie/api/movie'
+import type { Serie } from '@/entities/serie/model/serie'
 
-import { getMovies, getMoviesByGenre, getMoviesByTitle } from '@/entities/movie/api/movie'
-import type { Movie } from '@/entities/movie/model/movie'
-import CardContainerMovies from '@/features/movies/home/components/cardContainerMovies'
 
-
-export default function MoviesListPage() {
+export default function SeriesListPage() {
   const [params] = useSearchParams()
 
   const title = params.get('title')
   const genre = params.get('genre')
 
-  const { data: movies = [], isLoading } = useQuery<Movie[]>({
+  const { data: series = [], isLoading } = useQuery<Serie[]>({
     queryKey: ['movies', { title, genre }],
     queryFn: async () => {
-      if (title) return await getMoviesByTitle(title)
-      if (genre) return await getMoviesByGenre(genre)
-      return await getMovies()
+       if (title) return await getMoviesByTitle(title)
+       if (genre) return await getMoviesByGenre(genre)
+      return await getSeries()
     },
   })
-  let pageTitle = 'All movies'
+  let pageTitle = 'All Series'
   if (title) {
     pageTitle = `Results for: ${title}`
   } else if (genre) {
@@ -32,9 +32,9 @@ export default function MoviesListPage() {
     </p>
   )
   return (
-    <CardContainerMovies
+    <CardContainerSeries
       title={pageTitle}
-      movies={movies}
+      series={series}
     />
   )
 }

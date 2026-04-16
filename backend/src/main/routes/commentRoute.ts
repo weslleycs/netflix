@@ -1,6 +1,7 @@
 import expressRouteAdapter from '@infrastructure/adapters/expressRoute.adapter';
 import { deleteCommentFactory } from '@infrastructure/factories/comments/deleteCommentFactory';
 import { editCommentFactory } from '@infrastructure/factories/comments/editCommentFactory';
+import { getCommentsSerieFactory } from '@infrastructure/factories/comments/getCommentsSerieFactory';
 import { registerCommentMovieFactory } from '@infrastructure/factories/comments/registerCommentMovieFactory';
 import { registerCommentSerieFactory } from '@infrastructure/factories/comments/registerCommentSerieFactory';
 import PrismaService from '@infrastructure/services/prisma.service';
@@ -18,5 +19,8 @@ export function commentRoutes(router: Router, prismaService: PrismaService) {
   );
   router.patch('/comment/:id', (req, res) =>
     expressRouteAdapter(req, res, editCommentFactory(prismaService)),
+  );
+  router.get('/comments/serie', (req, res) =>
+    expressRouteAdapter(req, res, getCommentsSerieFactory(prismaService)),
   );
 }

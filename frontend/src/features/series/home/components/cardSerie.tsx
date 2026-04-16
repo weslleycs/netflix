@@ -7,9 +7,10 @@ type Props = {
 };
 
 export default function CardSerie({ serie, className = '' }: Props) {
+  
   const navigate = useNavigate()
   return (
-    <li onClick={() => navigate(`/series/details?movieId=${serie.id}`)}
+    <li onClick={() => navigate(`/series/Details?serieId=${serie.id}`)}
       className={`relative w-full overflow-hidden rounded-2xl cursor-pointer bg-zinc-900 transition-transform duration-300 hover:scale-[1.03] ${className}`}
     >
       <img

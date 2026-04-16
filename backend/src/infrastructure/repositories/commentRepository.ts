@@ -1,8 +1,10 @@
 import {
   DeleteCommentInput,
   EditComment,
+  GetCommentSerie,
   RegisterCommentMovie,
   RegisterCommentSerie,
+  SerieInput,
 } from '@domain/types/commentType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
@@ -90,6 +92,36 @@ class CommentRepository {
 
       const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
 
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+
+  async getCommentsSerie(input: SerieInput): Promise<GetCommentSerie[]> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const datacomments = await prisma.comments.findMany({
+        where: {
+          serieId: Number(input.serieId),
+        },
+        select: {
+          id: true,
+          user: true,
+          comment: true,
+        },
+      });
+      const comments = datacomments.map((comment) => {
+        return {
+          id: comment.id,
+          userId: comment.user.id,
+          userName: comment.user.name,
+          comment: comment.comment,
+        };
+      });
+
+      return comments;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
       throw new AppError(ErrorCode.INTERNAL, message);
     }
   }

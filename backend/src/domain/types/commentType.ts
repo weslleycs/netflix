@@ -35,3 +35,14 @@ export type EditCommentParams = {
 export type EditCommentBody = {
   comment: string;
 };
+
+export type SerieInput = {
+  serieId: number;
+};
+
+export type GetCommentSerie = {
+  id: number;
+  userId: number;
+  userName: string;
+  comment: string;
+};

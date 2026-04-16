@@ -1,38 +1,39 @@
-import { getCommentsMovieById, getMovieDetails } from "@/entities/movie/api/movie"
+import { getCommentSerieById } from "@/entities/comments/api/comments"
+import { getDetailsSerie } from "@/entities/serie/api/serie"
 import CommentForm from "@/features/comments/components/cardcommentForm"
 import { useCommentForm } from "@/features/comments/hooks/useCommentForm"
 import CardContainerComment from "@/features/movies/home/components/cardContainerComment"
-import { CardMovieDetails } from "@/features/movies/home/components/cardMovieDetails"
 import { RateStars } from "@/features/rates/components/rateStars"
 import { useRate } from "@/features/rates/hooks/useRate"
+import { CardSerieDetails } from "@/features/series/home/components/cardSerieDetails"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
 
 
-export default function MovieDetailsPage() {
+export default function SerieDetailsPage() {
   const [params] = useSearchParams()
-  const movieId = Number(params.get("movieId"))
+  const serieId = Number(params.get("serieId"))
 
   const {
-    data: movieDetails,
+    data: serieDetails,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["detailsMovie", movieId],
-    queryFn: () => getMovieDetails(movieId),
-    enabled: !!movieId,
+    queryKey: ["detailsSerie", serieId],
+    queryFn: () => getDetailsSerie(serieId),
+    enabled: !!serieId,
   })
 
   const { data: comments = [] } = useQuery({
-    queryKey: ["commentsMovie", movieId],
-    queryFn: () => getCommentsMovieById(movieId),
-    enabled: !!movieId,
+    queryKey: ["commentsSerie", serieId],
+    queryFn: () => getCommentSerieById(serieId),
+    enabled: !!serieId,
   })
 
-  const { register, errors, isSubmitting, onSubmit } = useCommentForm({movieId})
-  const { handleRate, isRating } = useRate({movieId})
+  const { register, errors, isSubmitting, onSubmit } = useCommentForm({serieId})
+  const { handleRate, isRating } = useRate({serieId})
 
   const [selectedRate, setSelectedRate] = useState(0)
 
@@ -45,7 +46,7 @@ export default function MovieDetailsPage() {
     <p>Loading</p>
   )
 
-  if (isError || !movieDetails) {
+  if (isError || !serieDetails) {
     return (
         <p>Error</p>
     )
@@ -53,7 +54,7 @@ export default function MovieDetailsPage() {
 
   return (
     <div className="space-y-6">
-      <CardMovieDetails movieDetails={movieDetails} />
+      <CardSerieDetails serieDetails={serieDetails} />
 
       <RateStars
         currentRate={selectedRate}

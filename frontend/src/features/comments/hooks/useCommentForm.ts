@@ -2,14 +2,15 @@ import { useAuthStore } from "@/entities/session/model/auth.store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
-import { commentSchema } from "../schemas/commentSchema"
+import { commentSchema, type CommentFormValues } from "../schemas/commentSchema"
 import { comment} from "../api/comment"
 
-type CommentFormValues = {
-  comment: string
+type Props = {
+  movieId?: number, 
+  serieId?: number
 }
 
-export function useCommentForm(movieId: number, serieId: number) {
+export function useCommentForm(input:Props) {
   const user = useAuthStore((s) => s.user)
   const queryClient = useQueryClient()
 
@@ -28,12 +29,12 @@ export function useCommentForm(movieId: number, serieId: number) {
     try {
       await comment({
         userId: user.id,
-        movieId: movieId ?? undefined,
-        serieId: serieId ?? undefined,
+        movieId: input.movieId ?? undefined,
+        serieId: input.serieId ?? undefined,
         comment: values.comment,
       })     
       await queryClient.invalidateQueries({
-        queryKey: [`comment-${serieId?'serie':'movieId'}`, movieId ?? serieId],
+        queryKey: [`comment-${input.serieId?'serie':'movieId'}`, input.movieId ?? input.serieId],
       })
       
       reset()

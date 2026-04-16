@@ -1,10 +1,4 @@
-import {
-  CreateSerieInput,
-  GetCommentsAndRateSerieById,
-  GetCommentsAndRateSerieByIdOutput,
-  Serie,
-  SerieListAllInput,
-} from '@domain/types/serieType';
+import { CreateSerieInput, Serie, SerieDetails, SerieListAllInput } from '@domain/types/serieType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
@@ -42,7 +36,7 @@ class SerieRepository {
           title: {
             contains: input.title,
           },
-          moviesGenres: {
+          seriesGenres: {
             some: {
               genre: {
                 name: input.genre,
@@ -60,43 +54,47 @@ class SerieRepository {
     }
   }
 
-  async GetCommentsAndRateSerie(
-    input: GetCommentsAndRateSerieById,
-  ): Promise<GetCommentsAndRateSerieByIdOutput> {
-    try {
-      const prisma = this.prismaService.getConnection();
-      const { limit = 100, page = 1 } = input;
-      const dataComments = await prisma.comments.findMany({
-        take: Number(limit),
-        skip: Number((page - 1) * limit),
+  async serieDetailsById(serieId: number): Promise<SerieDetails> {
+    const prisma = this.prismaService.getConnection();
+    const [queryMovies, queryRate] = await Promise.all([
+      prisma.series.findUnique({
         where: {
-          serieId: Number(input.serieId),
+          id: Number(serieId),
         },
-        select: {
-          comment: true,
+        include: {
+          seriesGenres: {
+            include: {
+              genre: true,
+            },
+          },
         },
-      });
-      const comments = dataComments.map((comment) => {
-        return comment.comment;
-      });
-      const rate = await prisma.rates.aggregate({
+      }),
+      prisma.rates.aggregate({
         where: {
-          serieId: Number(input.serieId),
+          serieId: Number(serieId),
         },
         _avg: {
           rate: true,
         },
-      });
-      return {
-        comments,
-        rate: rate._avg.rate ?? 0,
-      };
-    } catch (error) {
-      if (error instanceof AppError) throw error;
-
-      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
-      throw new AppError(ErrorCode.INTERNAL, message);
+      }),
+    ]);
+    if (!queryMovies) {
+      throw new Error('Not found movie with this ID.');
     }
+    const serieDetails = {
+      id: queryMovies.id,
+      title: queryMovies.title ?? '',
+      description: queryMovies.description ?? '',
+      imageUrl: queryMovies.imageUrl ?? '',
+      genre:
+        queryMovies.seriesGenres.length === 0
+          ? []
+          : queryMovies.seriesGenres.map((movieGenre) => {
+              return movieGenre.genre.name;
+            }),
+      rate: queryRate._avg.rate ?? 0,
+    };
+    return serieDetails;
   }
 }
 

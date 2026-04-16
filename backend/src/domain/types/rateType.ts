@@ -8,3 +8,19 @@ export type RegisterRateSerie = {
   serieId: number;
   rate: number;
 };
+
+export type SerieInput = {
+  serieId: number;
+};
+
+export type GetRateSerie = {
+  rate: number;
+};
+
+export type MovieInput = {
+  movieId: number;
+};
+
+export type GetRateMovie = {
+  rate: number;
+};

@@ -1,4 +1,11 @@
-import { RegisterRateMovie, RegisterRateSerie } from '@domain/types/rateType';
+import { SerieInput } from '@domain/types/commentType';
+import {
+  GetRateMovie,
+  GetRateSerie,
+  MovieInput,
+  RegisterRateMovie,
+  RegisterRateSerie,
+} from '@domain/types/rateType';
 import PrismaService from '@infrastructure/services/prisma.service';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
@@ -36,6 +43,46 @@ class RateRepository {
         },
       });
       return true;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+  async getRateSerie(input: SerieInput): Promise<GetRateSerie> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const dataRate = await prisma.rates.aggregate({
+        where: {
+          serieId: Number(input.serieId),
+        },
+        _avg: {
+          rate: true,
+        },
+      });
+      return {
+        rate: dataRate._avg.rate ?? 0,
+      };
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
+  }
+  async getRateMovie(input: MovieInput): Promise<GetRateMovie> {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const dataRate = await prisma.rates.aggregate({
+        where: {
+          movieId: Number(input.movieId),
+        },
+        _avg: {
+          rate: true,
+        },
+      });
+      return {
+        rate: dataRate._avg.rate ?? 0,
+      };
     } catch (error) {
       if (error instanceof AppError) throw error;
       const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;

@@ -17,7 +17,6 @@ export function CardMovieDetails({ movieDetails }: Props) {
 
       <div className="flex-1 space-y-4">
         
-        {/* Título + botão Edit */}
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-bold">
             {movieDetails.title}
