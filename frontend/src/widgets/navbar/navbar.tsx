@@ -25,6 +25,10 @@ export default function Navbar() {
       navigate('/movies/list')
     } else if (value) {
       navigate(`/movies/list?genre=${value}`)
+    }else if (value === 'listAllSeries') {
+      navigate('/series/list')
+    }else if (value === 'listt') {
+      navigate(`/movies/list?genre=${value}`)
     }
   }
 
@@ -51,6 +55,19 @@ export default function Navbar() {
           >
             <option value="">Movies</option>
             <option value="listAll">All movies</option>
+
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.name}>
+                {genre.name}
+              </option>
+            ))}
+          </select>
+          <select
+            onChange={handleGenreChange}
+            className="px-4 py-2 text-white border rounded-md bg-zinc-900 border-white/20 focus:outline-none focus:ring-2 focus:ring-red-600"
+          >
+            <option value="">Series</option>
+            <option value="listAllSeries">All Series</option>
 
             {genres.map((genre) => (
               <option key={genre.id} value={genre.name}>
