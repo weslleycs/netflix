@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerSchema, type RegisterFormValues } from '../schema/registerSchema';
 import { registerMovie } from '@/features/movies/api/movie';
+import { getStatus } from '@/shared/api/errors';
 
 export function useMovieRegisterForm() {
   const navigate = useNavigate();
@@ -28,13 +29,11 @@ export function useMovieRegisterForm() {
       setSuccessMessage('Movie created successfully! Redirecting...');
 
       navigate('/movies');
-    } catch (err: any) {
-      const status = err?.response?.status;
-
-      if (status === 409) {
+    } catch (err) {
+      if (getStatus(err) === 409) {
         setError('title', {
           type: 'server',
-          message: 'Movie already in use',
+          message: 'Title already in use',
         });
         return;
       }

@@ -1,15 +1,16 @@
 import RegisterCommentSerieUseCase from '@application/useCases/comments/registerCommentSerieUseCase';
-import { registerCommentSerie } from '@domain/types/commentType';
+import { RegisterCommentSerie } from '@domain/types/commentType';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 
 class RegisterCommentSerieController {
-  registerCommentSerieUseCase: RegisterCommentSerieUseCase;
+  private readonly registerCommentSerieUseCase: RegisterCommentSerieUseCase;
 
   constructor(registerCommentSerieUseCase: RegisterCommentSerieUseCase) {
     this.registerCommentSerieUseCase = registerCommentSerieUseCase;
   }
+
   async run(
-    input: controllerInputType<object, object, object, registerCommentSerie>,
+    input: controllerInputType<object, object, object, RegisterCommentSerie>,
   ): Promise<httpResponseType<string>> {
     await this.registerCommentSerieUseCase.execute(input.body);
     return {
@@ -18,4 +19,5 @@ class RegisterCommentSerieController {
     };
   }
 }
+
 export default RegisterCommentSerieController;

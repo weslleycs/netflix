@@ -2,6 +2,8 @@ import { useSearchParams } from 'react-router-dom'
 import { Card } from '@/shared/ui/card'
 import EditForm from '@/features/movies/edit/components/editForm'
 import { useMovieEditForm } from '@/features/movies/edit/hooks/useMovieEditForm'
+import { Loading } from '@/shared/ui/loading'
+import { ErrorMessage } from '@/shared/ui/errorMessage'
 
 export default function MoviesEditPage() {
   const [searchParams] = useSearchParams()
@@ -13,16 +15,11 @@ export default function MoviesEditPage() {
     isSubmitting,
     onSubmit,
     isLoading,
-    successMessage
+    successMessage,
   } = useMovieEditForm(movieId)
 
-  if (isLoading) {
-    return (
-        <div>
-            Loading
-        </div>
-    )
-  }
+  if (!movieId) return <ErrorMessage title="Missing movie id" message="No movie was selected." />
+  if (isLoading) return <Loading label="Loading movie..." />
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center">

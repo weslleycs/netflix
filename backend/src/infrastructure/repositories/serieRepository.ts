@@ -33,17 +33,12 @@ class SerieRepository {
       return prisma.series.findMany({
         where: {
           id: input.id ? Number(input.id) : undefined,
-          title: {
-            contains: input.title,
-          },
-          seriesGenres: {
-            some: {
-              genre: {
-                name: input.genre,
-              },
-            },
-          },
+          title: input.title ? { contains: input.title } : undefined,
+          seriesGenres: input.genre
+            ? { some: { genre: { name: input.genre } } }
+            : undefined,
         },
+        orderBy: { createdAt: 'desc' },
         take: Number(limit),
         skip: Number((page - 1) * limit),
       });

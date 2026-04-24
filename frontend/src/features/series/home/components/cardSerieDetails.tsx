@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom'
 import type { SerieDetails } from '@/entities/serie/model/serieDetails'
 
 type Props = {
@@ -6,9 +5,8 @@ type Props = {
 }
 
 export function CardSerieDetails({ serieDetails }: Props) {
-  return (  
+  return (
     <div className="flex flex-col gap-6 md:flex-row">
-      
       <img
         src={serieDetails.imageUrl}
         alt={serieDetails.title}
@@ -16,19 +14,7 @@ export function CardSerieDetails({ serieDetails }: Props) {
       />
 
       <div className="flex-1 space-y-4">
-        
-        <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-bold">
-            {serieDetails.title}
-          </h1>
-
-          <NavLink
-            to={`/movies/edit?movieId=${serieDetails.id}`}
-            className="px-4 py-2 text-sm font-semibold transition border rounded border-white/20 bg-white/5 hover:bg-white/10"
-          >
-            Edit
-          </NavLink>
-        </div>
+        <h1 className="text-3xl font-bold">{serieDetails.title}</h1>
 
         <div className="flex flex-wrap gap-2">
           {serieDetails.genre.map((g) => (
@@ -43,16 +29,11 @@ export function CardSerieDetails({ serieDetails }: Props) {
 
         <div className="flex items-center gap-2">
           <span className="text-xl text-yellow-400">★</span>
-          <span className="text-lg font-semibold">
-            {serieDetails.rate.toFixed(1)}
-          </span>
+          <span className="text-lg font-semibold">{serieDetails.rate.toFixed(1)}</span>
           <span className="text-zinc-400">/ 10</span>
         </div>
 
-        <p className="leading-relaxed text-zinc-300">
-          {serieDetails.description}
-        </p>
-
+        <p className="leading-relaxed text-zinc-300">{serieDetails.description}</p>
       </div>
     </div>
   )

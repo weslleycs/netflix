@@ -4,7 +4,6 @@ import { Outlet, Navigate } from 'react-router-dom';
 
 export default function PrivateLayout() {
   const token = useAuthStore((s) => s.token);
-  console.log('token: ',token)
   if (!token) return <Navigate to="/login" replace />;
   return (
     <div className="min-h-screen text-white bg-black">

@@ -1,9 +1,25 @@
 import { Request, Response } from 'express';
-import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError'; // ajuste o path
+import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
-export default async function expressRouteAdapter(req: Request, res: Response, controller: any) {
+type AnyInput = {
+  body: unknown;
+  params: unknown;
+  query: unknown;
+  headers: unknown;
+};
+
+type Controller<T = unknown> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  run: (input: any) => Promise<{ statusCode: number; data: T }>;
+};
+
+export default async function expressRouteAdapter<T>(
+  req: Request,
+  res: Response,
+  controller: Controller<T>,
+) {
   try {
-    const input = {
+    const input: AnyInput = {
       body: req.body,
       params: req.params,
       query: req.query,
@@ -11,9 +27,8 @@ export default async function expressRouteAdapter(req: Request, res: Response, c
     };
 
     const response = await controller.run(input);
-
     return res.status(response.statusCode).json(response.data);
-  } catch (err: any) {
+  } catch (err) {
     if (err instanceof AppError) {
       return res.status(err.statusCode).json({ message: err.message });
     }

@@ -43,7 +43,7 @@ export function useMovieEditForm(movieId: number) {
       await updateMovie(movieId, values)
       setSuccessMessage('Movie updated successfully!')
       navigate(`/movies/details?movieId=${movieId}`)
-    } catch (err: any) {
+    } catch {
       setError('root', {
         type: 'server',
         message: 'Something went wrong. Please try again.',

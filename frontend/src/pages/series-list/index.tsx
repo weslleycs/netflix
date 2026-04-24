@@ -1,40 +1,48 @@
 import { useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import CardContainerSeries from '@/features/series/home/components/cardContainerSeries'
-import { getSeries } from '@/entities/serie/api/serie'
-import { getMoviesByGenre, getMoviesByTitle } from '@/entities/movie/api/movie'
-import type { Serie } from '@/entities/serie/model/serie'
 
+import {
+  getSeries,
+  getSeriesByGenre,
+  getSeriesByTitle,
+} from '@/entities/serie/api/serie'
+import type { Serie } from '@/entities/serie/model/serie'
+import CardContainerSeries from '@/features/series/home/components/cardContainerSeries'
+import { Loading } from '@/shared/ui/loading'
+import { ErrorMessage } from '@/shared/ui/errorMessage'
+import { EmptyState } from '@/shared/ui/emptyState'
 
 export default function SeriesListPage() {
   const [params] = useSearchParams()
-
   const title = params.get('title')
   const genre = params.get('genre')
 
-  const { data: series = [], isLoading } = useQuery<Serie[]>({
-    queryKey: ['movies', { title, genre }],
-    queryFn: async () => {
-       if (title) return await getMoviesByTitle(title)
-       if (genre) return await getMoviesByGenre(genre)
-      return await getSeries()
+  const { data: series = [], isLoading, isError, refetch } = useQuery<Serie[]>({
+    queryKey: ['series', { title, genre }],
+    queryFn: () => {
+      if (title) return getSeriesByTitle(title)
+      if (genre) return getSeriesByGenre(genre)
+      return getSeries()
     },
   })
-  let pageTitle = 'All Series'
-  if (title) {
-    pageTitle = `Results for: ${title}`
-  } else if (genre) {
-    pageTitle = `Genre: ${genre}`
-  }
-  if (isLoading) return (
-    <p>
-        Loading
-    </p>
-  )
-  return (
-    <CardContainerSeries
-      title={pageTitle}
-      series={series}
-    />
-  )
+
+  let pageTitle = 'All series'
+  if (title) pageTitle = `Results for: ${title}`
+  else if (genre) pageTitle = `Genre: ${genre}`
+
+  if (isLoading) return <Loading label="Loading series..." />
+  if (isError) return <ErrorMessage onRetry={() => refetch()} />
+  if (series.length === 0)
+    return (
+      <EmptyState
+        title="No series found"
+        description={
+          title || genre
+            ? 'Try a different search or genre.'
+            : 'Be the first to add a series.'
+        }
+      />
+    )
+
+  return <CardContainerSeries title={pageTitle} series={series} />
 }

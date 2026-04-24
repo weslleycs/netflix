@@ -4,6 +4,7 @@ import type {
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { Button } from '@/shared/ui/button';
 import { FormField } from '@/shared/ui/formField';
 import type { LoginFormValues } from '../schema/loginSchema';
@@ -54,6 +55,12 @@ export default function LoginForm({
       <Button type="submit" disabled={isSubmitting} className="w-full">
         {isSubmitting ? 'Logging in...' : 'Login'}
       </Button>
+      <p className="text-sm text-center text-white/60">
+        Don't have an account?{' '}
+        <Link to="/register" className="text-red-500 hover:underline">
+          Create one
+        </Link>
+      </p>
     </form>
   );
 }

@@ -43,17 +43,12 @@ class MovieRepository {
     const queryMovies = await prisma.movies.findMany({
       where: {
         id: input.id ? Number(input.id) : undefined,
-        title: {
-          contains: input.title,
-        },
-        moviesGenres: {
-          some: {
-            genre: {
-              name: input.genre,
-            },
-          },
-        },
+        title: input.title ? { contains: input.title } : undefined,
+        moviesGenres: input.genre
+          ? { some: { genre: { name: input.genre } } }
+          : undefined,
       },
+      orderBy: { createdAt: 'desc' },
       take: Number(limit),
       skip: Number((page - 1) * limit),
     });
