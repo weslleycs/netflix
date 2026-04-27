@@ -1,8 +1,11 @@
 import GetAllMoviesByGenresUseCase from '@application/useCases/genres/getAllMoviesByGenresUseCase';
 import { httpResponseType } from '@domain/types/controller.type';
 import { GetAllMoviesByGenresOutput } from '@domain/types/genreType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class GetAllMoviesByGenresController {
+class GetAllMoviesByGenresController
+  implements IController<object, object, object, object, GetAllMoviesByGenresOutput[]>
+{
   private readonly getAllMoviesByGenresUseCase: GetAllMoviesByGenresUseCase;
   constructor(getAllMoviesByGenresUseCase: GetAllMoviesByGenresUseCase) {
     this.getAllMoviesByGenresUseCase = getAllMoviesByGenresUseCase;

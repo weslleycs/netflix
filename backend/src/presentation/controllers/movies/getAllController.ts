@@ -1,8 +1,11 @@
 import GetAllMovieUseCase from '@application/useCases/movies/getAllUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { MovieListAllInput, Movies } from '@domain/types/movieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class GetAllMovieController {
+class GetAllMovieController
+  implements IController<object, object, MovieListAllInput, object, Movies[]>
+{
   private readonly movieUseCase: GetAllMovieUseCase;
 
   constructor(movieUseCase: GetAllMovieUseCase) {

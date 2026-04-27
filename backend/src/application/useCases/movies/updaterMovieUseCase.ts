@@ -1,10 +1,11 @@
 import { UpdaterMovie } from '@domain/types/movieType';
-import MovieRepository from '@infrastructure/repositories/movieRepository';
+import { IMovieRepository } from '@application/repositories/ports/IMovieRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class UpdaterMovieUseCase {
-  private readonly movieRepository: MovieRepository;
+class UpdaterMovieUseCase implements IUseCase<UpdaterMovie, boolean> {
+  private readonly movieRepository: IMovieRepository;
 
-  constructor(movieRepository: MovieRepository) {
+  constructor(movieRepository: IMovieRepository) {
     this.movieRepository = movieRepository;
   }
 

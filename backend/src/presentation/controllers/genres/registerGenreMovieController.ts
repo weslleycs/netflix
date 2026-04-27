@@ -1,8 +1,11 @@
 import RegisterGenreMovieUseCase from '@application/useCases/genres/registerGenreMovieUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { InputGenreMovie } from '@domain/types/genreType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class RegisterGenreMovieController {
+class RegisterGenreMovieController
+  implements IController<object, object, object, InputGenreMovie, string>
+{
   private readonly genreMovieUseCase: RegisterGenreMovieUseCase;
 
   constructor(genreMovieUseCase: RegisterGenreMovieUseCase) {

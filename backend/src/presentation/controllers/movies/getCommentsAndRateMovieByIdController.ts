@@ -4,8 +4,18 @@ import {
   GetCommentsAndRateMovieById,
   GetCommentsAndRateMovieByIdOutput,
 } from '@domain/types/movieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class GetCommentsAndRateMovieByIdController {
+class GetCommentsAndRateMovieByIdController
+  implements
+    IController<
+      object,
+      object,
+      GetCommentsAndRateMovieById,
+      object,
+      GetCommentsAndRateMovieByIdOutput
+    >
+{
   private readonly getMommentsAndRateMovieByIdUseCase: GetCommentsAndRateMovieByIdUseCase;
 
   constructor(getMommentsAndRateMovieByIdUseCase: GetCommentsAndRateMovieByIdUseCase) {

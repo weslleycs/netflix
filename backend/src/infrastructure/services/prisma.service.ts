@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
+import { IPrismaService } from '@infrastructure/services/ports/IPrismaService';
 
-class PrismaService {
+class PrismaService implements IPrismaService {
   private readonly prisma: PrismaClient;
 
   constructor() {

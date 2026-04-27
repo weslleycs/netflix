@@ -1,8 +1,11 @@
 import MovieDetailsUseCase from '@application/useCases/movies/movieDetailsUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { MovieDetails, MovieDetailsInput } from '@domain/types/movieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class MovieDetailsController {
+class MovieDetailsController
+  implements IController<object, object, MovieDetailsInput, object, MovieDetails>
+{
   private readonly movieDetailsUseCase: MovieDetailsUseCase;
   constructor(movieDetailsUseCase: MovieDetailsUseCase) {
     this.movieDetailsUseCase = movieDetailsUseCase;

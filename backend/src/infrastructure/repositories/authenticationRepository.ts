@@ -1,11 +1,12 @@
 import { registerInput, User } from '@domain/types/authenticationTypes';
-import PrismaService from '@infrastructure/services/prisma.service';
+import { IAuthenticationRepository } from '@application/repositories/ports/IAuthenticationRepository';
+import { IPrismaService } from '@infrastructure/services/ports/IPrismaService';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
-class AuthenticationRepository {
-  private readonly prismaService: PrismaService;
+class AuthenticationRepository implements IAuthenticationRepository {
+  private readonly prismaService: IPrismaService;
 
-  constructor(prismaService: PrismaService) {
+  constructor(prismaService: IPrismaService) {
     this.prismaService = prismaService;
   }
   async findByEmail(email: string): Promise<User | null> {

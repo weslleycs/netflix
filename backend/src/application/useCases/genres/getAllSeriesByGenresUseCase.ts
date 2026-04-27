@@ -1,11 +1,14 @@
 import { GetAllSeriesByGenresOutput } from '@domain/types/genreType';
-import GenreRepository from '@infrastructure/repositories/genreRepository';
+import { IGenreRepository } from '@application/repositories/ports/IGenreRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class GetAllSeriesByGenresUseCase {
-  private readonly genreRepository: GenreRepository;
-  constructor(genreRepository: GenreRepository) {
+class GetAllSeriesByGenresUseCase implements IUseCase<void, GetAllSeriesByGenresOutput[]> {
+  private readonly genreRepository: IGenreRepository;
+
+  constructor(genreRepository: IGenreRepository) {
     this.genreRepository = genreRepository;
   }
+
   async execute(): Promise<GetAllSeriesByGenresOutput[]> {
     return this.genreRepository.getAllSeriesByGenres();
   }

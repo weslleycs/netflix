@@ -1,8 +1,11 @@
 import RegisterGenreUseCase from '@application/useCases/genres/registerUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { CreateGenreInput } from '@domain/types/genreType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class RegisterGenreController {
+class RegisterGenreController
+  implements IController<object, object, object, CreateGenreInput, string>
+{
   private readonly genreUseCase: RegisterGenreUseCase;
 
   constructor(genreUseCase: RegisterGenreUseCase) {

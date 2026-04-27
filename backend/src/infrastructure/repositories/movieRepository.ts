@@ -9,13 +9,14 @@ import {
   Movies,
   UpdaterMovie,
 } from '@domain/types/movieType';
-import PrismaService from '@infrastructure/services/prisma.service';
+import { IMovieRepository } from '@application/repositories/ports/IMovieRepository';
+import { IPrismaService } from '@infrastructure/services/ports/IPrismaService';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
-class MovieRepository {
-  private readonly prismaService: PrismaService;
+class MovieRepository implements IMovieRepository {
+  private readonly prismaService: IPrismaService;
 
-  constructor(prismaService: PrismaService) {
+  constructor(prismaService: IPrismaService) {
     this.prismaService = prismaService;
   }
 
@@ -38,22 +39,22 @@ class MovieRepository {
   }
 
   async listAll(input: MovieListAllInput): Promise<Movies[]> {
-    const prisma = this.prismaService.getConnection();
-    const { limit = 100, page = 1 } = input;
-    const queryMovies = await prisma.movies.findMany({
-      where: {
-        id: input.id ? Number(input.id) : undefined,
-        title: input.title ? { contains: input.title } : undefined,
-        moviesGenres: input.genre
-          ? { some: { genre: { name: input.genre } } }
-          : undefined,
-      },
-      orderBy: { createdAt: 'desc' },
-      take: Number(limit),
-      skip: Number((page - 1) * limit),
-    });
-    return queryMovies.map((movie) => {
-      return {
+    try {
+      const prisma = this.prismaService.getConnection();
+      const { limit = 100, page = 1 } = input;
+      const queryMovies = await prisma.movies.findMany({
+        where: {
+          id: input.id ? Number(input.id) : undefined,
+          title: input.title ? { contains: input.title } : undefined,
+          moviesGenres: input.genre
+            ? { some: { genre: { name: input.genre } } }
+            : undefined,
+        },
+        orderBy: { createdAt: 'desc' },
+        take: Number(limit),
+        skip: Number((page - 1) * limit),
+      });
+      return queryMovies.map((movie) => ({
         id: movie.id,
         title: movie.title,
         description: movie.description,
@@ -61,8 +62,12 @@ class MovieRepository {
         userId: movie.userId,
         createdAt: movie.createdAt,
         updatedAt: movie.updatedAt,
-      };
-    });
+      }));
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
+    }
   }
 
   async GetCommentsAndRate(
@@ -157,46 +162,34 @@ class MovieRepository {
     }
   }
   async movieDetailsById(movieId: number): Promise<MovieDetails> {
-    const prisma = this.prismaService.getConnection();
-    const [queryMovies, queryRate] = await Promise.all([
-      prisma.movies.findUnique({
-        where: {
-          id: Number(movieId),
-        },
-        include: {
-          moviesGenres: {
-            include: {
-              genre: true,
-            },
-          },
-        },
-      }),
-      prisma.rates.aggregate({
-        where: {
-          movieId: Number(movieId),
-        },
-        _avg: {
-          rate: true,
-        },
-      }),
-    ]);
-    if (!queryMovies) {
-      throw new Error('Not found movie with this ID.');
+    try {
+      const prisma = this.prismaService.getConnection();
+      const [queryMovies, queryRate] = await Promise.all([
+        prisma.movies.findUnique({
+          where: { id: Number(movieId) },
+          include: { moviesGenres: { include: { genre: true } } },
+        }),
+        prisma.rates.aggregate({
+          where: { movieId: Number(movieId) },
+          _avg: { rate: true },
+        }),
+      ]);
+      if (!queryMovies) {
+        throw new AppError(ErrorCode.NOT_FOUND, 'Movie not found');
+      }
+      return {
+        id: queryMovies.id,
+        title: queryMovies.title ?? '',
+        description: queryMovies.description ?? '',
+        imageUrl: queryMovies.imageUrl ?? '',
+        genre: queryMovies.moviesGenres.map((mg) => mg.genre.name),
+        rate: queryRate._avg.rate ?? 0,
+      };
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      const message = error instanceof Error ? error.message : ErrorMessage.INTERNAL;
+      throw new AppError(ErrorCode.INTERNAL, message);
     }
-    const movieDetails = {
-      id: queryMovies.id,
-      title: queryMovies.title ?? '',
-      description: queryMovies.description ?? '',
-      imageUrl: queryMovies.imageUrl ?? '',
-      genre:
-        queryMovies.moviesGenres.length === 0
-          ? []
-          : queryMovies.moviesGenres.map((movieGenre) => {
-              return movieGenre.genre.name;
-            }),
-      rate: queryRate._avg.rate ?? 0,
-    };
-    return movieDetails;
   }
 }
 

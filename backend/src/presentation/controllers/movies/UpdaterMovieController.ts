@@ -1,8 +1,11 @@
 import UpdaterMovieUseCase from '@application/useCases/movies/updaterMovieUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { GetById, UpdaterMovieBody } from '@domain/types/movieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class UpdaterMovieController {
+class UpdaterMovieController
+  implements IController<object, GetById, object, UpdaterMovieBody, string>
+{
   private readonly updaterUseCase: UpdaterMovieUseCase;
 
   constructor(updaterUseCase: UpdaterMovieUseCase) {

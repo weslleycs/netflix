@@ -3,6 +3,7 @@ export type controllerInputType<H = object, P = object, Q = object, B = object> 
   params: P;
   query: Q;
   body: B;
+  userId?: number;
 };
 
 export type httpResponseType<T = unknown> = {

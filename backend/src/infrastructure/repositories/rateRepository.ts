@@ -6,12 +6,14 @@ import {
   RegisterRateMovie,
   RegisterRateSerie,
 } from '@domain/types/rateType';
-import PrismaService from '@infrastructure/services/prisma.service';
+import { IRateRepository } from '@application/repositories/ports/IRateRepository';
+import { IPrismaService } from '@infrastructure/services/ports/IPrismaService';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
-class RateRepository {
-  prismaService: PrismaService;
-  constructor(prismaService: PrismaService) {
+class RateRepository implements IRateRepository {
+  private readonly prismaService: IPrismaService;
+
+  constructor(prismaService: IPrismaService) {
     this.prismaService = prismaService;
   }
   async registerRateMovie(input: RegisterRateMovie): Promise<boolean> {

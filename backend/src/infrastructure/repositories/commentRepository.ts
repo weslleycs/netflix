@@ -6,12 +6,14 @@ import {
   RegisterCommentSerie,
   SerieInput,
 } from '@domain/types/commentType';
-import PrismaService from '@infrastructure/services/prisma.service';
+import { ICommentRepository } from '@application/repositories/ports/ICommentRepository';
+import { IPrismaService } from '@infrastructure/services/ports/IPrismaService';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
-class CommentRepository {
-  prismaService: PrismaService;
-  constructor(prismaService: PrismaService) {
+class CommentRepository implements ICommentRepository {
+  private readonly prismaService: IPrismaService;
+
+  constructor(prismaService: IPrismaService) {
     this.prismaService = prismaService;
   }
 
@@ -62,7 +64,7 @@ class CommentRepository {
       if (result.count === 0) {
         throw new AppError(
           ErrorCode.NOT_FOUND,
-          'Comentário não encontrado ou sem permissão para apagar',
+          'Comment not found or you do not have permission to delete it',
         );
       }
       return true;
@@ -77,15 +79,21 @@ class CommentRepository {
   async editComment(data: EditComment): Promise<boolean> {
     try {
       const prisma = this.prismaService.getConnection();
-      await prisma.comments.update({
+      const result = await prisma.comments.updateMany({
         where: {
           id: data.id,
+          userId: data.userId,
         },
         data: {
           comment: data.comment,
         },
       });
-
+      if (result.count === 0) {
+        throw new AppError(
+          ErrorCode.NOT_FOUND,
+          'Comment not found or you do not have permission to edit it',
+        );
+      }
       return true;
     } catch (error) {
       if (error instanceof AppError) throw error;

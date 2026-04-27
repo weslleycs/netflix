@@ -1,10 +1,11 @@
 import { CreateSerieInput } from '@domain/types/serieType';
-import SerieRepository from '@infrastructure/repositories/serieRepository';
+import { ISerieRepository } from '@application/repositories/ports/ISerieRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class RegisterSerieUseCase {
-  private readonly serieRepository: SerieRepository;
+class RegisterSerieUseCase implements IUseCase<CreateSerieInput, boolean> {
+  private readonly serieRepository: ISerieRepository;
 
-  constructor(serieRepository: SerieRepository) {
+  constructor(serieRepository: ISerieRepository) {
     this.serieRepository = serieRepository;
   }
 

@@ -1,8 +1,11 @@
 import RegisterMovieUseCase from '@application/useCases/movies/registerUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { CreateMovieInput } from '@domain/types/movieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class RegisterMovieController {
+class RegisterMovieController
+  implements IController<object, object, object, CreateMovieInput, string>
+{
   private readonly movieUseCase: RegisterMovieUseCase;
 
   constructor(movieUseCase: RegisterMovieUseCase) {

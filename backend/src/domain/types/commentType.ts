@@ -25,6 +25,7 @@ export type DeleteCommentInput = {
 
 export type EditComment = {
   id: number;
+  userId: number;
   comment: string;
 };
 

@@ -1,15 +1,16 @@
 import { EditComment } from '@domain/types/commentType';
-import CommentRepository from '@infrastructure/repositories/commentRepository';
+import { ICommentRepository } from '@application/repositories/ports/ICommentRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class EditCommentUseCase {
-  commentRepository: CommentRepository;
+class EditCommentUseCase implements IUseCase<EditComment, boolean> {
+  private readonly commentRepository: ICommentRepository;
 
-  constructor(commentRepository: CommentRepository) {
+  constructor(commentRepository: ICommentRepository) {
     this.commentRepository = commentRepository;
   }
 
   async execute(data: EditComment): Promise<boolean> {
-    return await this.commentRepository.editComment(data);
+    return this.commentRepository.editComment(data);
   }
 }
 

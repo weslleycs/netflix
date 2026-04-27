@@ -5,13 +5,14 @@ import {
   GetAllSeriesByGenresOutput,
   InputGenreMovie,
 } from '@domain/types/genreType';
-import PrismaService from '@infrastructure/services/prisma.service';
+import { IGenreRepository } from '@application/repositories/ports/IGenreRepository';
+import { IPrismaService } from '@infrastructure/services/ports/IPrismaService';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
 
-class GenreRepository {
-  private readonly prismaService: PrismaService;
+class GenreRepository implements IGenreRepository {
+  private readonly prismaService: IPrismaService;
 
-  constructor(prismaService: PrismaService) {
+  constructor(prismaService: IPrismaService) {
     this.prismaService = prismaService;
   }
   async register(input: CreateGenreInput): Promise<boolean> {

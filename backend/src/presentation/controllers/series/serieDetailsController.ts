@@ -2,8 +2,11 @@ import SerieDetailsUseCase from '@application/useCases/series/serieDetailsUseCas
 import { SerieInput } from '@domain/types/commentType';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { SerieDetails } from '@domain/types/serieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class SerieDetailsController {
+class SerieDetailsController
+  implements IController<object, object, SerieInput, object, SerieDetails>
+{
   private readonly serieDetailsUseCase: SerieDetailsUseCase;
   constructor(serieDetailsUseCase: SerieDetailsUseCase) {
     this.serieDetailsUseCase = serieDetailsUseCase;

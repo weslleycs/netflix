@@ -2,8 +2,11 @@ import GetAllSerieUseCase from '@application/useCases/series/getAllUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { MovieListAllInput } from '@domain/types/movieType';
 import { Serie } from '@domain/types/serieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class GetAllSerieController {
+class GetAllSerieController
+  implements IController<object, object, MovieListAllInput, object, Serie[]>
+{
   private readonly serieUseCase: GetAllSerieUseCase;
 
   constructor(serieUseCase: GetAllSerieUseCase) {

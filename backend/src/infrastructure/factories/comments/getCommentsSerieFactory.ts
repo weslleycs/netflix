@@ -1,7 +1,7 @@
 import GetCommentsSerieUseCase from '@application/useCases/comments/getCommentsSerieUseCase';
 import CommentRepository from '@infrastructure/repositories/commentRepository';
 import PrismaService from '@infrastructure/services/prisma.service';
-import GetCommentsSerieController from '@presentation/controllers/comments/GetCommetsSerieController';
+import GetCommentsSerieController from '@presentation/controllers/comments/getCommentsSerieController';
 
 export function getCommentsSerieFactory(prismaService: PrismaService): GetCommentsSerieController {
   const commentRepository = new CommentRepository(prismaService);

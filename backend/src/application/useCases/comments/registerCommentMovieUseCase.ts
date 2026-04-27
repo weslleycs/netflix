@@ -1,13 +1,16 @@
 import { RegisterCommentMovie } from '@domain/types/commentType';
-import CommentRepository from '@infrastructure/repositories/commentRepository';
+import { ICommentRepository } from '@application/repositories/ports/ICommentRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class RegisterCommentMovieUseCase {
-  commentRepositoy: CommentRepository;
-  constructor(commentRepository: CommentRepository) {
-    this.commentRepositoy = commentRepository;
+class RegisterCommentMovieUseCase implements IUseCase<RegisterCommentMovie, boolean> {
+  private readonly commentRepository: ICommentRepository;
+
+  constructor(commentRepository: ICommentRepository) {
+    this.commentRepository = commentRepository;
   }
+
   async execute(input: RegisterCommentMovie): Promise<boolean> {
-    return await this.commentRepositoy.registerCommentMovie(input);
+    return this.commentRepository.registerCommentMovie(input);
   }
 }
 

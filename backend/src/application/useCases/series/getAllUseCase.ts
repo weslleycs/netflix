@@ -1,15 +1,15 @@
-import { MovieListAllInput } from '@domain/types/movieType';
-import { Serie } from '@domain/types/serieType';
-import SerieRepository from '@infrastructure/repositories/serieRepository';
+import { Serie, SerieListAllInput } from '@domain/types/serieType';
+import { ISerieRepository } from '@application/repositories/ports/ISerieRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class GetAllSerieUseCase {
-  private readonly serieRepository: SerieRepository;
+class GetAllSerieUseCase implements IUseCase<SerieListAllInput, Serie[]> {
+  private readonly serieRepository: ISerieRepository;
 
-  constructor(serieRepository: SerieRepository) {
+  constructor(serieRepository: ISerieRepository) {
     this.serieRepository = serieRepository;
   }
 
-  async execute(input: MovieListAllInput): Promise<Serie[]> {
+  async execute(input: SerieListAllInput): Promise<Serie[]> {
     return this.serieRepository.listall(input);
   }
 }

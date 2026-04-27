@@ -1,13 +1,16 @@
 import { GetRateMovie, MovieInput } from '@domain/types/rateType';
-import RateRepository from '@infrastructure/repositories/rateRepository';
+import { IRateRepository } from '@application/repositories/ports/IRateRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class GetRateMovieUseCase {
-  private readonly rateRepository: RateRepository;
-  constructor(rateRepository: RateRepository) {
+class GetRateMovieUseCase implements IUseCase<MovieInput, GetRateMovie> {
+  private readonly rateRepository: IRateRepository;
+
+  constructor(rateRepository: IRateRepository) {
     this.rateRepository = rateRepository;
   }
+
   async execute(input: MovieInput): Promise<GetRateMovie> {
-    return await this.rateRepository.getRateMovie(input);
+    return this.rateRepository.getRateMovie(input);
   }
 }
 

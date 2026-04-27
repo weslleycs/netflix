@@ -1,9 +1,11 @@
 import { GetCommentSerie, SerieInput } from '@domain/types/commentType';
-import CommentRepository from '@infrastructure/repositories/commentRepository';
+import { ICommentRepository } from '@application/repositories/ports/ICommentRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class GetCommentsSerieUseCase {
-  private readonly commentRepository: CommentRepository;
-  constructor(commentRepository: CommentRepository) {
+class GetCommentsSerieUseCase implements IUseCase<SerieInput, GetCommentSerie[]> {
+  private readonly commentRepository: ICommentRepository;
+
+  constructor(commentRepository: ICommentRepository) {
     this.commentRepository = commentRepository;
   }
 

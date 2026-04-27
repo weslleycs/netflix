@@ -1,11 +1,14 @@
 import { MovieDetails } from '@domain/types/movieType';
-import MovieRepository from '@infrastructure/repositories/movieRepository';
+import { IMovieRepository } from '@application/repositories/ports/IMovieRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class MovieDetailsUseCase {
-  private readonly movieRepository: MovieRepository;
-  constructor(movieRepository: MovieRepository) {
+class MovieDetailsUseCase implements IUseCase<number, MovieDetails> {
+  private readonly movieRepository: IMovieRepository;
+
+  constructor(movieRepository: IMovieRepository) {
     this.movieRepository = movieRepository;
   }
+
   async execute(movieId: number): Promise<MovieDetails> {
     return this.movieRepository.movieDetailsById(movieId);
   }

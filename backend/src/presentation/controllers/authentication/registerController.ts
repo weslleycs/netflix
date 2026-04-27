@@ -1,8 +1,11 @@
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { registerInput } from '@domain/types/authenticationTypes';
 import RegisterUserUseCase from '@application/useCases/authentication/registerUseCase';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class RegisterUserController {
+class RegisterUserController
+  implements IController<object, object, object, registerInput, string>
+{
   private readonly registerUserUseCase: RegisterUserUseCase;
 
   constructor(registerUserUseCase: RegisterUserUseCase) {

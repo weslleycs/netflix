@@ -1,13 +1,17 @@
 import { SerieDetails } from '@domain/types/serieType';
-import SerieRepository from '@infrastructure/repositories/serieRepository';
+import { ISerieRepository } from '@application/repositories/ports/ISerieRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class SerieDetailsUseCase {
-  private readonly serieRepository: SerieRepository;
-  constructor(serieRepository: SerieRepository) {
+class SerieDetailsUseCase implements IUseCase<number, SerieDetails> {
+  private readonly serieRepository: ISerieRepository;
+
+  constructor(serieRepository: ISerieRepository) {
     this.serieRepository = serieRepository;
   }
+
   async execute(serieId: number): Promise<SerieDetails> {
-    return await this.serieRepository.serieDetailsById(serieId);
+    return this.serieRepository.serieDetailsById(serieId);
   }
 }
+
 export default SerieDetailsUseCase;

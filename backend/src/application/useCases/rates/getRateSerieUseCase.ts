@@ -1,14 +1,17 @@
 import { SerieInput } from '@domain/types/commentType';
 import { GetRateSerie } from '@domain/types/rateType';
-import RateRepository from '@infrastructure/repositories/rateRepository';
+import { IRateRepository } from '@application/repositories/ports/IRateRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class GetRateSerieUseCase {
-  private readonly rateRepository: RateRepository;
-  constructor(rateRepository: RateRepository) {
+class GetRateSerieUseCase implements IUseCase<SerieInput, GetRateSerie> {
+  private readonly rateRepository: IRateRepository;
+
+  constructor(rateRepository: IRateRepository) {
     this.rateRepository = rateRepository;
   }
+
   async execute(input: SerieInput): Promise<GetRateSerie> {
-    return await this.rateRepository.getRateSerie(input);
+    return this.rateRepository.getRateSerie(input);
   }
 }
 

@@ -1,7 +1,7 @@
 import EditCommentUseCase from '@application/useCases/comments/editCommentUseCase';
 import CommentRepository from '@infrastructure/repositories/commentRepository';
 import PrismaService from '@infrastructure/services/prisma.service';
-import EditCommentController from '@presentation/controllers/comments/edidtCommentController';
+import EditCommentController from '@presentation/controllers/comments/editCommentController';
 
 export function editCommentFactory(prismaService: PrismaService) {
   const commentRepository = new CommentRepository(prismaService);

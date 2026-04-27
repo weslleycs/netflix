@@ -1,8 +1,11 @@
 import RegisterSerieUseCase from '@application/useCases/series/registerUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { CreateSerieInput } from '@domain/types/serieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class RegisterSerieController {
+class RegisterSerieController
+  implements IController<object, object, object, CreateSerieInput, string>
+{
   private readonly movieUseCase: RegisterSerieUseCase;
 
   constructor(movieUseCase: RegisterSerieUseCase) {

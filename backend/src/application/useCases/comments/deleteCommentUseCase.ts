@@ -1,15 +1,16 @@
 import { DeleteCommentInput } from '@domain/types/commentType';
-import CommentRepository from '@infrastructure/repositories/commentRepository';
+import { ICommentRepository } from '@application/repositories/ports/ICommentRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class DeleteCommentUseCase {
-  commentRepository: CommentRepository;
+class DeleteCommentUseCase implements IUseCase<DeleteCommentInput, boolean> {
+  private readonly commentRepository: ICommentRepository;
 
-  constructor(commentRepository: CommentRepository) {
+  constructor(commentRepository: ICommentRepository) {
     this.commentRepository = commentRepository;
   }
 
   async execute(data: DeleteCommentInput): Promise<boolean> {
-    return await this.commentRepository.deleteComment(data);
+    return this.commentRepository.deleteComment(data);
   }
 }
 

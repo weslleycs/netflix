@@ -1,8 +1,11 @@
 import CommentMovieUseCase from '@application/useCases/movies/commentMovieUseCase';
 import { controllerInputType, httpResponseType } from '@domain/types/controller.type';
 import { CommentMovieInput, CommentMovieOutput } from '@domain/types/movieType';
+import { IController } from '@presentation/controllers/ports/IController';
 
-class CommentMovieController {
+class CommentMovieController
+  implements IController<object, object, CommentMovieInput, object, CommentMovieOutput[]>
+{
   commentMovieUseCase: CommentMovieUseCase;
   constructor(commentMovieUseCase: CommentMovieUseCase) {
     this.commentMovieUseCase = commentMovieUseCase;

@@ -1,10 +1,11 @@
 import { CreateGenreInput } from '@domain/types/genreType';
-import GenreRepository from '@infrastructure/repositories/genreRepository';
+import { IGenreRepository } from '@application/repositories/ports/IGenreRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
 
-class RegisterGenreUseCase {
-  private readonly genreRepository: GenreRepository;
+class RegisterGenreUseCase implements IUseCase<CreateGenreInput, boolean> {
+  private readonly genreRepository: IGenreRepository;
 
-  constructor(genreRepository: GenreRepository) {
+  constructor(genreRepository: IGenreRepository) {
     this.genreRepository = genreRepository;
   }
 
