@@ -18,7 +18,7 @@ export async function getSeriesByGenre(genre: string): Promise<Serie[]> {
 }
 
 export async function getDetailsSerie(serieId: number): Promise<SerieDetails> {
-  const { data } = await http.get('/serie/Details', { params: { serieId } })
+  const { data } = await http.get('/serie/details', { params: { serieId } })
   return data
 }
 

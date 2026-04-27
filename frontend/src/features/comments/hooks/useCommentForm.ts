@@ -1,4 +1,3 @@
-import { useAuthStore } from '@/entities/session/model/auth.store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
@@ -11,7 +10,6 @@ type Props = {
 }
 
 export function useCommentForm(input: Props) {
-  const user = useAuthStore((s) => s.user)
   const queryClient = useQueryClient()
 
   const {
@@ -25,10 +23,8 @@ export function useCommentForm(input: Props) {
   })
 
   const onSubmit = handleSubmit(async (values) => {
-    if (!user) return
     try {
       await comment({
-        userId: user.id,
         movieId: input.movieId,
         serieId: input.serieId,
         comment: values.comment,
