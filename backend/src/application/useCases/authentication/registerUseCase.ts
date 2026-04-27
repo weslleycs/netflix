@@ -1,22 +1,22 @@
 import { registerInput } from '@domain/types/authenticationTypes';
-import AuthenticationRepository from '@infrastructure/repositories/authenticationRepository';
+import { IAuthenticationRepository } from '@application/repositories/ports/IAuthenticationRepository';
+import { IUseCase } from '@application/useCases/ports/IUseCase';
+import { AppError, ErrorCode } from '@shared/errors/AppError';
 import bcrypt from 'bcrypt';
 
-class RegisterUserUseCase {
-  private readonly authenticationRepository: AuthenticationRepository;
+class RegisterUserUseCase implements IUseCase<registerInput, boolean> {
+  private readonly authenticationRepository: IAuthenticationRepository;
 
-  constructor(authenticationRepository: AuthenticationRepository) {
+  constructor(authenticationRepository: IAuthenticationRepository) {
     this.authenticationRepository = authenticationRepository;
   }
 
   async execute(input: registerInput): Promise<boolean> {
     const userExists = await this.authenticationRepository.findByEmail(input.email);
-
     if (userExists) {
-      throw new Error('Usuário já existe');
+      throw new AppError(ErrorCode.CONFLICT, 'Email already in use');
     }
     const passwordHash = await bcrypt.hash(input.password, 10);
-
     return await this.authenticationRepository.create({
       name: input.name,
       email: input.email,

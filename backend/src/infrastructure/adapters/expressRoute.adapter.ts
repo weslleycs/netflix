@@ -1,29 +1,28 @@
 import { Request, Response } from 'express';
 import { AppError, ErrorCode, ErrorMessage } from '@shared/errors/AppError';
+import { IController } from '@presentation/controllers/ports/IController';
 
 type AnyInput = {
   body: unknown;
   params: unknown;
   query: unknown;
   headers: unknown;
-};
-
-type Controller<T = unknown> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  run: (input: any) => Promise<{ statusCode: number; data: T }>;
+  userId?: number;
 };
 
 export default async function expressRouteAdapter<T>(
   req: Request,
   res: Response,
-  controller: Controller<T>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  controller: IController<any, any, any, any, T>,
 ) {
   try {
     const input: AnyInput = {
       body: req.body,
-      params: req.params,
-      query: req.query,
+      params: req.validatedParams ?? req.params,
+      query: req.validatedQuery ?? req.query,
       headers: req.headers,
+      userId: req.userId,
     };
 
     const response = await controller.run(input);

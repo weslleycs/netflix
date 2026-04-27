@@ -15,5 +15,5 @@ export function errorHandler(
 
   console.error(`[ERROR] ${statusCode} - ${err.message}`);
 
-  return res.status(statusCode).json({ error: err.message });
+  return res.status(statusCode).json({ message: err.message });
 }
