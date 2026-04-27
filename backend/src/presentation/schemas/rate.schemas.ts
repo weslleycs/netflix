@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const rateValue = z.coerce.number().min(0).max(10);
+const rateValue = z.coerce.number().int().min(1).max(10);
 
 export const registerRateMovieBodySchema = z.object({
   movieId: z.coerce.number().int().positive(),

@@ -11,10 +11,23 @@ came to the right place.
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/landing.png" alt="Landing page" width="49%" />
+  <img src="docs/screenshots/movies-home.png" alt="Movies home" width="49%" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/movie-details.png" alt="Movie details" width="49%" />
+  <img src="docs/screenshots/login.png" alt="Login" width="49%" />
+</p>
+
+---
+
 ## Stack
 
-**Backend** — Node 20+, Express 5, TypeScript, Prisma ORM, MySQL 8, JWT for
-auth, bcrypt for password hashing.
+**Backend** — Node 20+, Express 5, TypeScript, Prisma ORM, MySQL 8, Zod for
+input validation, JWT for auth, bcrypt for password hashing.
 
 **Frontend** — React 19, TypeScript, Vite, Tailwind CSS, React Router 7,
 TanStack Query, Zustand (with `persist`), React Hook Form + Zod.
@@ -59,11 +72,13 @@ cd backend
 cp .env.example .env       # if you don't have one yet, see "Env vars" below
 npm install
 npx prisma migrate deploy  # applies the existing migrations
+npm run db:seed            # optional: populate demo data (10 genres, 12 movies, 10 series)
 npm run dev                # starts on http://localhost:3000
 ```
 
 You should see `Server running on port 3000`. Hit `GET /ping` and you'll get
-`"pong"` back.
+`"pong"` back. If you ran the seed, log in with
+`demo@wflix.test` / `demo1234`.
 
 ### 4. Frontend
 
@@ -111,7 +126,10 @@ Each request walks through the same lanes:
 HTTP request
    │
    ▼
-main/routes/*.ts          ── Express wiring. No logic here, just maps URLs to factories.
+main/routes/*.ts          ── Express wiring. Each private route stacks
+                             `requireAuth` and `validate(schema)` before the
+                             handler, so by the time the controller runs the
+                             caller is authenticated and the input is typed.
    │
    ▼
 infrastructure/factories  ── Composition root. Builds the controller graph
@@ -124,19 +142,24 @@ presentation/controllers  ── Translates the HTTP envelope into a typed input
                              framework code beyond the input/output types.
    │
    ▼
-application/useCases      ── The actual business logic. Knows nothing about
-                             Express or Prisma — only domain types and the
-                             repository interface.
+application/useCases      ── The actual business logic. Depends on a
+                             repository port (`I*Repository`), never on the
+                             concrete Prisma class.
    │
    ▼
 infrastructure/repositories
-                          ── Talks to the database via Prisma. Swap this layer
-                             for a different data source and nothing above
-                             needs to change.
+                          ── Implements its port. Talks to the database via
+                             Prisma. Swap this layer and nothing above needs
+                             to change.
 ```
 
-`shared/` holds cross-cutting bits (the `AppError` class, the logger). `domain/`
-is just the type contracts that flow between layers — no behavior.
+`shared/` holds cross-cutting bits (`AppError`, the logger, the JWT helper).
+`presentation/middlewares/` carries `requireAuth` and the Zod `validate`
+factory; `presentation/schemas/` holds one schema file per resource.
+Repository, use-case and controller ports live next to the layer that owns
+the contract — see `application/repositories/ports/`,
+`application/useCases/ports/` and `presentation/controllers/ports/`.
+`domain/` is just the type contracts that flow between layers — no behavior.
 
 The reason for the layering: I wanted to be able to add a new endpoint by
 copying an existing slice and changing a handful of lines, and to be able to
@@ -148,6 +171,8 @@ The Express adapter (`infrastructure/adapters/expressRoute.adapter.ts`) is the
 one piece of glue that bridges the framework to the controller. Errors from
 any layer that throw an `AppError` get translated to the right HTTP status; the
 rest fall through to a 500 with a generic message and a server-side log.
+Failed validation produces a 401 (missing/invalid bearer) or a 400 with the
+offending field paths in the response body.
 
 ### Frontend: Feature-Sliced Design
 
@@ -206,14 +231,14 @@ React mounts, every request already carries the bearer token.
 | PUT    | `/movie/updater/:id`       | Update a movie                            |
 | POST   | `/serie/register`          | Create a series                           |
 | GET    | `/serie/list`              | List/filter series (`title`, `genre`)     |
-| GET    | `/serie/Details`           | Series + average rating + genres          |
+| GET    | `/serie/details`           | Series + average rating + genres          |
 | POST   | `/comment/movie`           | Comment on a movie                        |
 | POST   | `/comment/serie`           | Comment on a series                       |
 | GET    | `/comments/serie`          | Comments on a series                      |
 | PATCH  | `/comment/:id`             | Edit a comment                            |
 | DELETE | `/comment/:id`             | Delete a comment                          |
-| POST   | `/rate/register-movie`     | Rate a movie (1–10)                       |
-| POST   | `/rate/register-serie`     | Rate a series (1–10)                      |
+| POST   | `/rate/register-movie`     | Rate a movie (integer 1–10)               |
+| POST   | `/rate/register-serie`     | Rate a series (integer 1–10)              |
 | GET    | `/rate/movie`              | Aggregate movie rating                    |
 | GET    | `/rate/serie`              | Aggregate series rating                   |
 | POST   | `/genre/register`          | Create a genre                            |
@@ -271,12 +296,13 @@ npx prisma generate                            # regenerates the client
 
 From `backend/`:
 
-| Command         | What it runs                                |
-| --------------- | ------------------------------------------- |
-| `npm run dev`   | `ts-node-dev` with auto-restart             |
-| `npm run build` | TypeScript compile to `dist/`               |
-| `npm run start` | Run the compiled output                     |
-| `npm run lint`  | ESLint                                      |
+| Command           | What it runs                                |
+| ----------------- | ------------------------------------------- |
+| `npm run dev`     | `ts-node-dev` with auto-restart             |
+| `npm run build`   | TypeScript compile to `dist/`               |
+| `npm run start`   | Run the compiled output                     |
+| `npm run lint`    | ESLint                                      |
+| `npm run db:seed` | Populate the database with demo data        |
 
 From `frontend/`:
 
