@@ -30,6 +30,10 @@ type Entry = {
   poster: string;
 };
 
+type SerieEntry = Entry & {
+  seasons: number[];
+};
+
 const TMDB = (path: string): string => `https://image.tmdb.org/t/p/w500/${path}`;
 
 const MOVIES: Entry[] = [
@@ -47,17 +51,17 @@ const MOVIES: Entry[] = [
   { title: 'Knives Out', description: 'A detective investigates the death of a patriarch of an eccentric, combative family.', genres: ['Comedy', 'Thriller'], rate: 8, poster: TMDB('pThyQovXQrw2m0s9x82twj48Jq4.jpg') },
 ];
 
-const SERIES: Entry[] = [
-  { title: 'Stranger Things', description: 'When a young boy vanishes, a small town uncovers a mystery involving secret experiments and supernatural forces.', genres: ['Sci-Fi', 'Horror', 'Drama'], rate: 9, poster: TMDB('49WJfeN0moxb9IPfGn8AIqMGskD.jpg') },
-  { title: 'Breaking Bad', description: 'A high school chemistry teacher diagnosed with terminal cancer turns to manufacturing methamphetamine.', genres: ['Drama', 'Thriller'], rate: 10, poster: TMDB('ggFHVNu6YYI5L9pCfOacjizRGt.jpg') },
-  { title: 'The Office', description: 'A mockumentary on a group of typical office workers, where the workday consists of ego clashes and inappropriate behaviour.', genres: ['Comedy'], rate: 9, poster: TMDB('qWnJzyZhyy74gjpSjIXWmuk0ifX.jpg') },
-  { title: 'Black Mirror', description: 'An anthology series exploring a twisted, high-tech multiverse where humanity’s greatest innovations collide with its darkest instincts.', genres: ['Sci-Fi', 'Drama'], rate: 8, poster: TMDB('5UaYsGZOFhjFDwQh6GuLjjA1WlF.jpg') },
-  { title: 'Arcane', description: 'The origins of two iconic League of Legends champions, set in the utopian Piltover and the oppressed underground of Zaun.', genres: ['Animation', 'Action', 'Drama'], rate: 9, poster: TMDB('fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg') },
-  { title: 'The Crown', description: 'Follows the political rivalries and romance of Queen Elizabeth II’s reign and the events that shaped the second half of the twentieth century.', genres: ['Drama'], rate: 8, poster: TMDB('1M876KPjulVwppEpldhdc8V4o68.jpg') },
-  { title: 'Chernobyl', description: 'In April 1986, an explosion at the Chernobyl nuclear power plant becomes one of the world’s worst man-made catastrophes.', genres: ['Drama', 'Thriller', 'Documentary'], rate: 10, poster: TMDB('hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg') },
-  { title: 'The Mandalorian', description: 'The travels of a lone bounty hunter in the outer reaches of the galaxy, far from the authority of the New Republic.', genres: ['Sci-Fi', 'Action'], rate: 8, poster: TMDB('sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg') },
-  { title: 'Fleabag', description: 'A young woman tries to cope with life in London while coming to terms with a recent tragedy.', genres: ['Comedy', 'Drama'], rate: 9, poster: TMDB('2KGxQFV9Wp1MshPBf8BuqWUgVAz.jpg') },
-  { title: 'The Last of Us', description: 'After a global pandemic destroys civilization, a hardened survivor takes charge of a teenager who may hold the key to a cure.', genres: ['Drama', 'Horror'], rate: 9, poster: TMDB('uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg') },
+const SERIES: SerieEntry[] = [
+  { title: 'Stranger Things', description: 'When a young boy vanishes, a small town uncovers a mystery involving secret experiments and supernatural forces.', genres: ['Sci-Fi', 'Horror', 'Drama'], rate: 9, poster: TMDB('49WJfeN0moxb9IPfGn8AIqMGskD.jpg'), seasons: [8, 9, 8, 9] },
+  { title: 'Breaking Bad', description: 'A high school chemistry teacher diagnosed with terminal cancer turns to manufacturing methamphetamine.', genres: ['Drama', 'Thriller'], rate: 10, poster: TMDB('ggFHVNu6YYI5L9pCfOacjizRGt.jpg'), seasons: [7, 13, 13, 13, 16] },
+  { title: 'The Office', description: 'A mockumentary on a group of typical office workers, where the workday consists of ego clashes and inappropriate behaviour.', genres: ['Comedy'], rate: 9, poster: TMDB('qWnJzyZhyy74gjpSjIXWmuk0ifX.jpg'), seasons: [6, 22, 25, 19, 28, 26, 26, 24, 25] },
+  { title: 'Black Mirror', description: 'An anthology series exploring a twisted, high-tech multiverse where humanity’s greatest innovations collide with its darkest instincts.', genres: ['Sci-Fi', 'Drama'], rate: 8, poster: TMDB('5UaYsGZOFhjFDwQh6GuLjjA1WlF.jpg'), seasons: [3, 3, 6, 3, 3, 5] },
+  { title: 'Arcane', description: 'The origins of two iconic League of Legends champions, set in the utopian Piltover and the oppressed underground of Zaun.', genres: ['Animation', 'Action', 'Drama'], rate: 9, poster: TMDB('fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg'), seasons: [9, 9] },
+  { title: 'The Crown', description: 'Follows the political rivalries and romance of Queen Elizabeth II’s reign and the events that shaped the second half of the twentieth century.', genres: ['Drama'], rate: 8, poster: TMDB('1M876KPjulVwppEpldhdc8V4o68.jpg'), seasons: [10, 10, 10, 10, 10, 10] },
+  { title: 'Chernobyl', description: 'In April 1986, an explosion at the Chernobyl nuclear power plant becomes one of the world’s worst man-made catastrophes.', genres: ['Drama', 'Thriller', 'Documentary'], rate: 10, poster: TMDB('hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg'), seasons: [5] },
+  { title: 'The Mandalorian', description: 'The travels of a lone bounty hunter in the outer reaches of the galaxy, far from the authority of the New Republic.', genres: ['Sci-Fi', 'Action'], rate: 8, poster: TMDB('sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg'), seasons: [8, 8, 8] },
+  { title: 'Fleabag', description: 'A young woman tries to cope with life in London while coming to terms with a recent tragedy.', genres: ['Comedy', 'Drama'], rate: 9, poster: TMDB('2KGxQFV9Wp1MshPBf8BuqWUgVAz.jpg'), seasons: [6, 6] },
+  { title: 'The Last of Us', description: 'After a global pandemic destroys civilization, a hardened survivor takes charge of a teenager who may hold the key to a cure.', genres: ['Drama', 'Horror'], rate: 9, poster: TMDB('uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg'), seasons: [9, 7] },
 ];
 
 const SAMPLE_COMMENTS = [
@@ -90,6 +94,7 @@ async function main(): Promise<void> {
   await prisma.rates.deleteMany({ where: { userId: demo.id } });
   await prisma.movies_genres.deleteMany({ where: { movie: { userId: demo.id } } });
   await prisma.series_genres.deleteMany({ where: { serie: { userId: demo.id } } });
+  await prisma.seasons.deleteMany({ where: { series: { userId: demo.id } } });
   await prisma.movies.deleteMany({ where: { userId: demo.id } });
   await prisma.series.deleteMany({ where: { userId: demo.id } });
 
@@ -126,6 +131,12 @@ async function main(): Promise<void> {
         userId: demo.id,
         seriesGenres: {
           create: s.genres.map((name) => ({ genreId: requireGenre(genreIds, name) })),
+        },
+        seasons: {
+          create: s.seasons.map((episodes, idx) => ({
+            seasons: idx + 1,
+            episodes,
+          })),
         },
       },
     });

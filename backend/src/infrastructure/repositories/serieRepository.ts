@@ -56,7 +56,10 @@ class SerieRepository implements ISerieRepository {
       const [querySerie, queryRate] = await Promise.all([
         prisma.series.findUnique({
           where: { id: Number(serieId) },
-          include: { seriesGenres: { include: { genre: true } } },
+          include: {
+            seriesGenres: { include: { genre: true } },
+            seasons: { orderBy: { seasons: 'asc' } },
+          },
         }),
         prisma.rates.aggregate({
           where: { serieId: Number(serieId) },
@@ -73,6 +76,11 @@ class SerieRepository implements ISerieRepository {
         imageUrl: querySerie.imageUrl ?? '',
         genre: querySerie.seriesGenres.map((sg) => sg.genre.name),
         rate: queryRate._avg.rate ?? 0,
+        seasons: querySerie.seasons.map((s) => ({
+          id: s.id,
+          seasonNumber: s.seasons,
+          episodeCount: s.episodes,
+        })),
       };
     } catch (error) {
       if (error instanceof AppError) throw error;

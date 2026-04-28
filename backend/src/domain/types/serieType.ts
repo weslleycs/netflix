@@ -25,6 +25,12 @@ export type SerieDetailsInput = {
   id: number;
 };
 
+export type SerieSeason = {
+  id: number;
+  seasonNumber: number;
+  episodeCount: number;
+};
+
 export type SerieDetails = {
   id: number;
   title: string;
@@ -32,4 +38,5 @@ export type SerieDetails = {
   imageUrl: string | null;
   genre: string[];
   rate: number;
+  seasons: SerieSeason[];
 };
