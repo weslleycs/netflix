@@ -10,6 +10,7 @@ import CardContainerComment from '@/features/movies/home/components/cardContaine
 import { RateStars } from '@/features/rates/components/rateStars'
 import { useRate } from '@/features/rates/hooks/useRate'
 import { CardSerieDetails } from '@/features/series/home/components/cardSerieDetails'
+import { SeasonsEpisodes } from '@/features/series/home/components/seasonsEpisodes'
 import { Loading } from '@/shared/ui/loading'
 import { ErrorMessage } from '@/shared/ui/errorMessage'
 
@@ -57,6 +58,8 @@ export default function SerieDetailsPage() {
   return (
     <div className="py-8 space-y-8">
       <CardSerieDetails serieDetails={serieDetails} />
+
+      <SeasonsEpisodes seasons={serieDetails.seasons} />
 
       <RateStars currentRate={selectedRate} onRate={onRate} disabled={isRating} />
 
